@@ -1,5 +1,3 @@
-Here's a cleaner and more polished version of your text:
-
 # ABM – Agent-Based Modelling
 
 ### Neighborhood Initialization
@@ -33,9 +31,12 @@ Here's a cleaner and more polished version of your text:
 
 *An agent's utility function could include:
 
-[
-U_i = \text{Neighborhood Quality} + \text{Amenities} - \text{Housing Cost} - \text{Commuting Cost} - \text{Moving Cost}
-]
+$$
+U_i = \text{Neighborhood Quality} + \text{Amenities}
+- \text{Housing Cost}
+- \text{Commuting Cost}
+- \text{Moving Cost}
+$$
 
 * Each individual chooses the neighborhood that maximizes their utility subject to affordability constraints.
 
