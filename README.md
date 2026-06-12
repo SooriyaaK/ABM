@@ -32,11 +32,15 @@
 *An agent's utility function could include:
 
 $$
+
 U_i = \text{Neighborhood Quality} + \text{Amenities}
 - \text{Housing Cost}
 - \text{Commuting Cost}
 - \text{Moving Cost}
+
 $$
+
+$\frac{1}{2}$
 
 * Each individual chooses the neighborhood that maximizes their utility subject to affordability constraints.
 
