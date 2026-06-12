@@ -54,3 +54,8 @@ That stable configuration can be interpreted as a Nash equilibrium.
 * The equilibrium may not be socially optimal.
 * Multiple equilibria may exist.
 * The system may never converge if the environment changes continuously.
+
+### Model Converge
+In order to determine when the model converges, we need some metrics that measure the (macro) neighbourhoods' stability.
+* EXAMPLE: for each neighbourhood, measure average income level. Define model stability as the average neighborhood income of all neighbourhoods to not have changed more than some threshold $\epsilon$ for some number of $n$ iterations, i.e
+    * $\max_{T-n < t \leq T} \;\max_{k} \left|\mu_t(k) - \mu_{t-1}(k)\right| < \epsilon$
