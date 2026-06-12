@@ -1,7 +1,7 @@
 from mesa import Model
 from mesa.datacollection import DataCollector
 from mesa.discrete_space import OrthogonalMooreGrid
-from mesa.examples.basic.schelling.agents import SchellingAgent
+from Agents import SchellingAgent
 from mesa.experimental.scenarios import Scenario
 
 
@@ -18,10 +18,12 @@ class SchellingScenario(Scenario):
         rng: Seed for reproducibility
     """
 
-    height: int = 20
-    width: int = 20
+    height: int = 50
+    width: int = 50
     density: float = 0.8
-    minority_pc: float = 0.5
+    frac1: float = 0.33
+    frac2: float = 0.33
+    frac3: float = 0.33
     homophily: float = 0.4
     radius: int = 1
 
@@ -39,7 +41,9 @@ class Schelling(Model):
 
         # Model parameters
         self.density = scenario.density
-        self.minority_pc = scenario.minority_pc
+        self.frac1 = scenario.frac1
+        self.frac2 = scenario.frac2
+        self.frac3 = max(0.0, 1.0 - self.frac1 - self.frac2)
 
         # Initialize grid
         self.grid = OrthogonalMooreGrid(
@@ -57,21 +61,26 @@ class Schelling(Model):
                     (m.happy / len(m.agents)) * 100 if len(m.agents) > 0 else 0
                 ),
                 "population": lambda m: len(m.agents),
-                "minority_pct": lambda m: (
-                    sum(1 for agent in m.agents if agent.type == 1)
-                    / len(m.agents)
-                    * 100
-                    if len(m.agents) > 0
-                    else 0
-                ),
+                "frac1": "frac1",
+                "frac2": "frac2",
+                "frac3": "frac3",
+                #"minority_pct": lambda m: (
+                #    sum(1 for agent in m.agents if agent.type == 1)
+                #    / len(m.agents)
+                #    * 100
+                #    if len(m.agents) > 0
+                #    else 0
+                #),
             },
-            agent_reporters={"agent_type": "type"},
+            agent_reporters={"agent_type": "type"}, #add more things to type, like economic state
         )
 
         # Create agents and place them on the grid
         for cell in self.grid.all_cells:
             if self.random.random() < self.density:
-                agent_type = 1 if self.random.random() < scenario.minority_pc else 0
+                #new types added with different values. The values were assigned to make the multiplier
+                #function easier in the future
+                agent_type = self.random.choices([1, 2, 3], weights = (scenario.frac1, scenario.frac2, scenario.frac3))[0]
                 SchellingAgent(
                     self,
                     cell,

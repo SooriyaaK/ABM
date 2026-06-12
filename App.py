@@ -2,7 +2,7 @@ import os
 
 import solara
 
-from mesa.examples.basic.schelling.model import Schelling, SchellingScenario
+from Model import Schelling, SchellingScenario
 from mesa.visualization import (
     Slider,
     SolaraViz,
@@ -21,40 +21,20 @@ path = os.path.dirname(os.path.abspath(__file__))
 
 
 def agent_portrayal(agent):
+    #base initial visualization of the agents
     style = AgentPortrayalStyle(
         x=agent.cell.coordinate[0],
         y=agent.cell.coordinate[1],
-        marker=os.path.join(path, "resources", "orange_happy.png"),
+        marker="o",
+        color="tab:gray",
         size=75,
     )
-    if agent.type == 0:
-        if agent.happy:
-            style.update(
-                (
-                    "marker",
-                    os.path.join(path, "resources", "blue_happy.png"),
-                ),
-            )
-        else:
-            style.update(
-                (
-                    "marker",
-                    os.path.join(path, "resources", "blue_unhappy.png"),
-                ),
-                ("size", 50),
-                ("zorder", 2),
-            )
-    else:
-        if not agent.happy:
-            style.update(
-                (
-                    "marker",
-                    os.path.join(path, "resources", "orange_unhappy.png"),
-                ),
-                ("size", 50),
-                ("zorder", 2),
-            )
-
+    #colours of agents when they are happy
+    colors_happy = {1: "tab:blue", 2: "tab:orange", 3: "tab:green"}
+    style.update(("color", colors_happy[agent.type]))
+    if not agent.happy:
+        colors_unhappy = {1: "lightblue", 2: "moccasin", 3: "lightgreen"}
+        style.update(("color", colors_unhappy[agent.type]), ("size", 50), ("zorder", 2),)
     return style
 
 
@@ -65,7 +45,8 @@ model_params = {
         "label": "Random Seed",
     },
     "density": Slider("Agent density", 0.8, 0.1, 1.0, 0.1),
-    "minority_pc": Slider("Fraction minority", 0.2, 0.0, 1.0, 0.05),
+    "frac1": Slider("Type 1 percentage", 0.33, 0.0, 1.0, 0.05),
+    "frac2": Slider("Type 2 percentage", 0.33, 0.0, 1.0, 0.05),
     "homophily": Slider("Homophily", 0.4, 0.0, 1.0, 0.125),
     "width": 20,
     "height": 20,
