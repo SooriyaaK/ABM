@@ -7,23 +7,37 @@ import numpy as np
 from typing import List
 
 def rank_agents_percentile(agents: List[SchellingAgent]) -> None:
-    """Ranks agents on percentiles between low and high"""
+    """
+    Ranks agents on percentiles between low (0.0) and high (1.0)
+
+    Params:
+    - Agents: list of SchellingAgent objects which to rank
+    Returns:
+    - None
+    """
 
     #TODO: somehow get agent's income !!
     incomes = np.array([a.income for a in agents])
     T = len(agents)
 
-    # argsort twice: positions -> ranks
+    # argsort twice: positions & ranks
     order = np.argsort(incomes)
     ranks = np.empty(T, dtype=float)
-    ranks[order] = np.arange(T) / T  # or /(T-1) if you prefer 0..1 inclusive
+    ranks[order] = np.arange(T) / T 
 
     for agent, r in zip(agents, ranks):
         agent.rank = r
 
 
-def create_thresholds(n:int=99):
-    """Creates n percentile thresholds between 0.01 and 0.99 in rank space."""
+def create_thresholds(n:int=99) -> np.array(float):
+    """
+    Creates n percentile thresholds between 0.01 and 0.99 in rank space.
+
+    Params:
+    - n: number of thersholds to create
+    Returns:
+    - thresholds: list of n evenly spaced thresholds between 0.01 and 0.99
+    """
     thresholds = np.linspace(0.01, 0.99, n)
     return thresholds
 
@@ -33,13 +47,12 @@ def f_global_entropy_split(threshold:float) -> float:
     return E_g
 
 def f_local_entropy_split(threshold:float, neighbourhood) -> float:
-    # TODO: how is a neighbourhood class defined?
     """compute local entropy split for certain threshold"""
 
-    ranks = np.array([a.rank for a in neighbourhood.agents]) # NOTE problem with empty neighbourhoods
-    pnk = np.count_nonzero(ranks <= threshold) / len(ranks) # fraction of agents with income below thershold in current neighbourhood; had to be an np.array I think
+    ranks = np.array([a.rank for a in neighbourhood.agents])
+    pnk = np.count_nonzero(ranks <= threshold) / len(ranks) # fraction of agents with income below thershold in current neighbourhood
     
-    if pnk == 0 or pnk == 1: #avoiding log(0)
+    if pnk == 0 or pnk == 1: # avoiding log(0)
         E_l = 0
     else:
         E_l = -(pnk * np.log2(pnk) + (1-pnk) *np.log2(1-pnk))
@@ -48,9 +61,20 @@ def f_local_entropy_split(threshold:float, neighbourhood) -> float:
 
 
 def f_Hk(threshold:float, neighbourhood: Neighbourhood, tot_agents:int, Eg:float) -> float:
-    """H_k formula provided by Reardon (2011) (one value of the pairwise information theory index)"""
+    """
+    H_k formula provided by Reardon (2011) (one value of the pairwise information theory index)
+    
+    Params:
+    - threshold: the percentile threshold (between 0 and 1)
+    - neighbourhood: the current macro-neighbourhood
+    - tot_agents: total number of agents in the simulation
+    - Eg: global entropy split
+
+    Returns:
+    - H_ki: one value of the pairwise information theory index
+    """
     El = f_local_entropy_split(threshold, neighbourhood)
-    tn = len(neighbourhood.agents) # or smth like this; NOTE probem with empty neighbourhoods
+    tn = len(neighbourhood.agents) # or smth like this
 
     if tn == 0 or Eg == 0.0: # avoid problems with empty neighbourhoods
         return 0.0
@@ -60,8 +84,17 @@ def f_Hk(threshold:float, neighbourhood: Neighbourhood, tot_agents:int, Eg:float
     return H_ki
 
 
-def compute_HR(neighbourhoods: List[Neighbourhood], agents: List[SchellingAgent], n_threshold=99):
-    """ Does numerical integration to retrieve H_R value for full simulation at current timestep""" 
+def compute_HR(neighbourhoods: List[Neighbourhood], agents: List[SchellingAgent], n_threshold=99) -> float:
+    """ 
+    Does numerical integration to retrieve H_R value for full simulation at current timestep
+    
+    Params:
+    - neighbourhoods: list of Neighbourhood objects
+    - agents: list of all agent objects in the simulation
+    - n_threshold: number of percentile threshold values to evaluate for H_r
+    Returns:
+    - H_R: Reardon's rank-order information theory index for current simulation iteration. Value between 0.0 and 1.0
+    """ 
     # 1. rank agents
     rank_agents_percentile(agents)
     T = len(agents)
