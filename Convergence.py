@@ -8,7 +8,7 @@ from typing import List
 
 def rank_agents_percentile(agents: List[SchellingAgent]) -> None:
     """
-    Ranks agents on percentiles between low (0.0) and high (1.0)
+    Ranks agents on percentiles based on income between low (0.0) and high (1.0)
 
     Params:
     - Agents: list of SchellingAgent objects which to rank
