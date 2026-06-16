@@ -58,3 +58,20 @@ That stable configuration can be interpreted as a Nash equilibrium.
 * The equilibrium may not be socially optimal.
 * Multiple equilibria may exist.
 * The system may never converge if the environment changes continuously.
+
+
+### Summary: Lecture 4
+
+Housing costs depend on population density. As more agents move into a neighborhood, demand for housing increases, leading to higher housing expenses.
+This creates a dynamic feedback loop:
+
+1. Agents choose neighborhoods that maximize their utility.
+2. Popular neighborhoods attract more residents.
+3. Increased population density raises housing costs.
+4. Some agents can no longer afford to remain in the neighborhood.
+5. Agents relocate to less dense and more affordable areas.
+6. The composition and density of neighborhoods evolve over time.
+
+These relocation decisions can be modeled using discrete choice models, where agents evaluate trade-offs between housing costs, neighborhood quality, accessibility, and travel time. Such local interactions may lead to emergent patterns such as urban expansion, segregation, and gentrification.
+
+
