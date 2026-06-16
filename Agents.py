@@ -5,7 +5,7 @@ class SchellingAgent(CellAgent):
     """Schelling segregation agent."""
 
     def __init__(
-        self, model, cell, agent_type: int, homophily: float = 0.4, radius: int = 1
+        self, model, cell, agent_type: int, income: int, homophily: float = 0.4, radius: int = 1
     ) -> None:
         """Create a new Schelling agent.
         Args:
@@ -20,6 +20,7 @@ class SchellingAgent(CellAgent):
         self.homophily = homophily
         self.radius = radius
         self.happy = False
+        self.income = income
 
     def assign_state(self) -> None:
         """Determine if agent is happy and move if necessary."""

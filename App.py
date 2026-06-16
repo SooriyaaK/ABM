@@ -48,8 +48,8 @@ model_params = {
     "frac1": Slider("Type 1 percentage", 0.33, 0.0, 1.0, 0.05),
     "frac2": Slider("Type 2 percentage", 0.33, 0.0, 1.0, 0.05),
     "homophily": Slider("Homophily", 0.4, 0.0, 1.0, 0.125),
-    "width": 20,
-    "height": 20,
+    "width": 50,
+    "height": 50,
 }
 
 # Note: Models with images as markers are very performance intensive.

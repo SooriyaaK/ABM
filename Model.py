@@ -1,9 +1,31 @@
+import math
 from mesa import Model
 from mesa.datacollection import DataCollector
 from mesa.discrete_space import OrthogonalMooreGrid
 from Agents import SchellingAgent
 from mesa.experimental.scenarios import Scenario
 
+class Neighbourhood:
+    def __init__(self, id, cells, seed_coord):
+        self.id = id
+        self.cells = cells
+        self.cost = 0.0
+        self.seed = seed_coord
+
+    @property
+    def agents(self):
+        agents_list = []
+        for cell in self.cells:
+            for a in cell.agents:
+                agents_list.append(a)
+        return agents_list
+    
+    def update_cost(self):
+        agents = self.agents
+        if agents:
+            self.cost = sum(a.income for a in agents) / len(agents)
+        else:
+            self.cost = 0.0    
 
 class SchellingScenario(Scenario):
     """Scenario for the Schelling model.
@@ -26,6 +48,7 @@ class SchellingScenario(Scenario):
     frac3: float = 0.33
     homophily: float = 0.4
     radius: int = 1
+    neighbourhood_count = 25
 
 
 class Schelling(Model):
@@ -75,6 +98,8 @@ class Schelling(Model):
             agent_reporters={"agent_type": "type"}, #add more things to type, like economic state
         )
 
+        self.build_neighbourhoods(scenario.neighbourhood_count)
+
         # Create agents and place them on the grid
         for cell in self.grid.all_cells:
             if self.random.random() < self.density:
@@ -85,18 +110,45 @@ class Schelling(Model):
                     self,
                     cell,
                     agent_type,
+                    agent_type * 1000,
                     homophily=scenario.homophily,
                     radius=scenario.radius,
                 )
-
+        for i in self.neighbourhoods.values():
+            i.update_cost()
         # Collect initial state
         self.agents.do("assign_state")
         self.datacollector.collect(self)
+
+    def build_neighbourhoods(self, n):
+        all_cells = list(self.grid.all_cells)
+        seeds = self.random.sample(all_cells, n)
+        seed_coords = [s.coordinate for s in seeds]
+
+        self.neighbourhoods = {i: Neighbourhood(i, [], seed_coords[i]) for i in range(n)}
+        self.cell_to_neighbourhood = {}
+
+        for cell in all_cells:
+            x, y = cell.coordinate
+            best_seed = None
+            best_dist = math.inf
+            for i in range(n):
+                dist = (x - seed_coords[i][0])**2 + (y - seed_coords[i][1])**2
+                if dist < best_dist:
+                    best_dist = dist
+                    best_seed = i
+            nid = best_seed
+            nb = self.neighbourhoods[nid]
+            nb.cells.append(cell)
+            self.cell_to_neighbourhood[cell.coordinate] = nb
+
 
     def step(self):
         """Run one step of the model."""
         self.happy = 0  # Reset counter of happy agents
         self.agents.shuffle_do("step")  # Activate all agents in random order
         self.agents.do("assign_state")
+        for i in self.neighbourhoods.values():
+            i.update_cost()
         self.datacollector.collect(self)  # Collect data
         self.running = self.happy < len(self.agents)  # Continue until everyone is happy
