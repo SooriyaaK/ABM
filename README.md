@@ -83,7 +83,7 @@ This module implements the **income segregation metric** and tools needed to det
 
 #### What it measures
 
-We compute **Reardon’s rank‑order information theory index** $H^R$, which measures how strongly agents are spatially sorted by **income rank** across neighborhoods:
+We compute **Reardon’s rank‑order information theory index** $H^R$ (https://cepa.stanford.edu/sites/default/files/reardon%20measures%20of%20income%20segregation%20sept2011.pdf), which measures how strongly agents are spatially sorted by **income rank** across neighborhoods:
 
 - $H^R = 0$ → no income segregation (every neighborhood has the same income distribution as the whole population).
 - $H^R \approx 1$ → extreme segregation (neighborhoods are almost perfectly stratified by income).
@@ -123,9 +123,9 @@ Given a list of `SchellingAgent` objects and `Neighbourhood` objects, the module
    - Runs steps (1)–(3), building up the sequence $\{H_k\}$ over all thresholds.
    - Computes the entropy weights $E(p_k)$ at each threshold.
    - Uses the **trapezoidal rule** (`numpy.trapz`) to numerically approximate
-     $$
+     $
      H^R \approx 2 \ln(2) \int_0^1 E(p)\,H(p)\,dp
-     $$
+     $
    - Returns a single scalar $H^R$ for the current iteration.
 
 ---
@@ -139,9 +139,9 @@ In the main model loop (not in this file), you typically:
 3. Append the value to a history list, e.g. `H_history`.
 4. Check a **convergence criterion**, for example:
    - The absolute change in $H^R$ is below some threshold $\epsilon$ for several consecutive iterations:
-     $$
+     $
      |H^R_t - H^R_{t-1}| < \epsilon
-     $$
+     $
    - If this holds (and/or a max number of iterations is reached), we declare the system converged and stop the run.
 
 ---
