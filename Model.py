@@ -26,6 +26,7 @@ class SchellingScenario(Scenario):
     frac3: float = 0.33
     homophily: float = 0.4
     radius: int = 1
+    housing_cost: float = 10.0
 
 
 class Schelling(Model):
@@ -47,8 +48,19 @@ class Schelling(Model):
 
         # Initialize grid
         self.grid = OrthogonalMooreGrid(
-            (scenario.width, scenario.height), random=self.random, capacity=1
+            (scenario.width, 
+             scenario.height), 
+             random=self.random, 
+             capacity=1,
         )
+
+        for cell in self.grid.all_cells.cells:
+            x, y = cell.coordinate
+
+            housing_cost = 1000
+            distance = x + y 
+            cell.housing_cost = housing_cost + distance * 10
+
 
         # Track happiness
         self.happy = 0
