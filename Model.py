@@ -4,6 +4,8 @@ from mesa.datacollection import DataCollector
 from mesa.discrete_space import OrthogonalMooreGrid
 from Agents import SchellingAgent
 from mesa.experimental.scenarios import Scenario
+from mesa.discrete_space import PropertyLayer
+
 
 class Neighbourhood:
     def __init__(self, id, cells, seed_coord):
@@ -20,10 +22,11 @@ class Neighbourhood:
                 agents_list.append(a)
         return agents_list
     
-    def update_cost(self):
+    def update_cost(self, adjust = 0.3):
         agents = self.agents
         if agents:
-            self.cost = sum(a.income for a in agents) / len(agents)
+            target = sum((a.income) for a in agents) / len(agents)
+            self.cost += adjust * (target - self.cost) #costs dont rise instantly but slowly
         else:
             self.cost = 0.0    
 
@@ -72,6 +75,8 @@ class Schelling(Model):
         self.grid = OrthogonalMooreGrid(
             (scenario.width, scenario.height), random=self.random, capacity=1
         )
+        self.nb_layer = PropertyLayer("neighbourhood", (scenario.width, scenario.height), default_value=0, dtype=int)
+        self.grid.add_property_layer(self.nb_layer)
 
         # Track happiness
         self.happy = 0
@@ -106,11 +111,17 @@ class Schelling(Model):
                 #new types added with different values. The values were assigned to make the multiplier
                 #function easier in the future
                 agent_type = self.random.choices([1, 2, 3], weights = (scenario.frac1, scenario.frac2, scenario.frac3))[0]
+                if agent_type == 1:
+                    income = 1000
+                elif agent_type == 2:
+                    income = 2000
+                else:
+                    income = 4000
                 SchellingAgent(
                     self,
                     cell,
                     agent_type,
-                    agent_type * 1000,
+                    income,
                     homophily=scenario.homophily,
                     radius=scenario.radius,
                 )
@@ -138,6 +149,7 @@ class Schelling(Model):
                     best_dist = dist
                     best_seed = i
             nid = best_seed
+            self.nb_layer.data[x, y] = nid
             nb = self.neighbourhoods[nid]
             nb.cells.append(cell)
             self.cell_to_neighbourhood[cell.coordinate] = nb
