@@ -1,5 +1,3 @@
-Here's a cleaner and more polished version of your text:
-
 # ABM – Agent-Based Modelling
 
 ### Neighborhood Initialization
@@ -33,9 +31,7 @@ Here's a cleaner and more polished version of your text:
 
 *An agent's utility function could include:
 
-[
-U_i = \text{Neighborhood Quality} + \text{Amenities} - \text{Housing Cost} - \text{Commuting Cost} - \text{Moving Cost}
-]
+$U_i = \text{Neighborhood Quality} + \text{Amenities} - \text{Housing Cost} - \text{Commuting Cost} - \text{Moving Cost}$
 
 * Each individual chooses the neighborhood that maximizes their utility subject to affordability constraints.
 
@@ -74,4 +70,7 @@ This creates a dynamic feedback loop:
 
 These relocation decisions can be modeled using discrete choice models, where agents evaluate trade-offs between housing costs, neighborhood quality, accessibility, and travel time. Such local interactions may lead to emergent patterns such as urban expansion, segregation, and gentrification.
 
-
+### Model Converge
+In order to determine when the model converges, we need some metrics that measure the (macro) neighbourhoods' stability.
+* EXAMPLE: for each neighbourhood, measure average income level. Define model stability as the average neighborhood income of all neighbourhoods to not have changed more than some threshold $\epsilon$ for some number of $n$ iterations, i.e
+    * $\max_{T-n < t \leq T} \;\max_{k} \left|\mu_t(k) - \mu_{t-1}(k)\right| < \epsilon$
