@@ -125,7 +125,8 @@ model_params = {
     "frac2": Slider("Type 2 percentage", 0.33, 0.0, 1.0, 0.05),
     "homophily": Slider("Homophily", 0.4, 0.0, 1.0, 0.125),
     "width": 50,
-    "height": 50,
+    "height": 50, 
+    "defector_frac": Slider("Defector fraction", 0.5, 0.0, 1.0, 0.05),
 }
 
 # Note: Models with images as markers are very performance intensive.

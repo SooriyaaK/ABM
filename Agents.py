@@ -21,7 +21,13 @@ class SchellingAgent(CellAgent):
         self.radius = radius
         self.happy = False
         self.income = income
-        self.choose_strategy()
+
+        # Choose initial cooperation strategy
+        if self.model.random.random() < self.model.defector_frac:
+            self.strategy = "D"
+        else:
+            self.strategy = "C"
+
         self.contribution = 0
         self.contribution_percentage = 0.05 # choose how much of their income they contribute to the neighbourhood
 
@@ -83,11 +89,16 @@ class SchellingAgent(CellAgent):
             #if empty:
             #    self.cell = self.model.random.choice(empty)
 
-    def choose_strategy(self): # first basic strategy to randomly contribute or not
-        self.strategy = self.model.random.choice(["C", "D"])
+    def choose_strategy(self):
+        neighbors = self.cell.get_neighborhood(radius=1).agents #moore neighborhood
+
+        if not neighbors:
+            return
+
+        best = max(neighbors, key=lambda a: a.utility) # NEEDS UTILITY TO WORK
+        self.strategy = best.strategy
 
     def contribute(self):
-
         if self.strategy == "D":
             self.contribution = 0
         else:

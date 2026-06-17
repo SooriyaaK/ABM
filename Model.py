@@ -65,6 +65,7 @@ class SchellingScenario(Scenario):
     homophily: float = 0.4
     radius: int = 1
     neighbourhood_count = 25
+    defector_frac: float = 0.1
 
 
 class Schelling(Model):
@@ -83,6 +84,7 @@ class Schelling(Model):
         self.frac1 = scenario.frac1
         self.frac2 = scenario.frac2
         self.frac3 = max(0.0, 1.0 - self.frac1 - self.frac2)
+        self.defector_frac = scenario.defector_frac
 
         # Segregation tracking
         self.H_history = [] # tracking H values
