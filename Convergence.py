@@ -2,6 +2,8 @@
 # This code is a rough outline currently, since not all classes are properly defined yet
 # So: DO NOT ATTEMPT TO RUN THIS
 #
+# turn off calc_second_order in SALib
+#
 
 import numpy as np
 from typing import List
