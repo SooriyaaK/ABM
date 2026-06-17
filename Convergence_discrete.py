@@ -1,6 +1,4 @@
 #
-# This code is a rough outline currently, since not all classes are properly defined yet
-# So: DO NOT ATTEMPT TO RUN THIS
 #
 # turn off calc_second_order in SALib
 # 
@@ -12,7 +10,7 @@ import numpy as np
 from typing import List
 
 
-def f_overall_entropy(agents: f_local_entropy_split) -> float:
+def f_overall_entropy(agents: List) -> float:
     """
     Compute global entropy E_T over income groups, all agents
     This value will be used to compute the Multigroup Entropy Index
