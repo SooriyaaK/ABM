@@ -65,14 +65,34 @@ class SchellingAgent(CellAgent):
                 if self.can_afford(cell):
                     affordable_cells.append(cell)
 
-
             if affordable_cells:
                     new_cell = random.choice(affordable_cells)
                     self.move_to(new_cell)
                     
             # self.cell = self.model.grid.select_random_empty_cell()
 
-    
+    def avg_neighbor_income(self, cell) -> float:
+        """
+        Calculate the average income of neighbors in the given cell's neighborhood.
+        """
+        neighbors = list(cell.get_neighborhood(radius=self.radius).agents)
+      
+        if not neighbors:
+            return 0.0
+        else:
+            total_income = 0.0
+            count = 0
+
+            for neighbor in neighbors:
+                total_income += neighbor.income
+                count += 1
+
+            avg_income = total_income / count
+            
+            return avg_income
+
+                
+
     def calculate_utility(self, cell, neighborhood, alpha, beta) -> float:
         """
         Calculate the utility of a given cell based on the similarity of neighbors.
