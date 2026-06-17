@@ -1,6 +1,8 @@
 import os
 
 import solara
+from mesa.visualization.components import AgentPortrayalStyle, PropertyLayerStyle
+from matplotlib.collections import LineCollection
 
 from Model import Schelling, SchellingScenario
 from mesa.visualization import (
@@ -19,6 +21,20 @@ def get_happy_agents(model):
 
 path = os.path.dirname(os.path.abspath(__file__))
 
+def neighbourhood_portrayal(layer):
+    return PropertyLayerStyle(colormap="tab20", alpha=0.4, colorbar=False)
+
+def neighbourhood_borders(ax):
+    cton = model1.cell_to_neighbourhood
+    segments = []
+    for (x, y), nb in cton.items():
+        right_nb = cton.get((x + 1, y))
+        if right_nb == None or right_nb.id != nb.id:
+            segments.append([(x + 0.5, y - 0.5), (x + 0.5, y + 0.5)])
+        top_nb = cton.get((x, y + 1))
+        if top_nb == None or top_nb.id != nb.id:
+            segments.append([(x - 0.5, y + 0.5), (x + 0.5, y + 0.5)])
+    ax.add_collection(LineCollection(segments, colors="black", linewidths=1.5))
 
 def agent_portrayal(agent):
     #base initial visualization of the agents
@@ -55,6 +71,18 @@ model_params = {
 # Note: Models with images as markers are very performance intensive.
 model1 = Schelling(scenario=SchellingScenario())
 renderer = SpaceRenderer(model1, backend="matplotlib").setup_agents(agent_portrayal)
+renderer.post_process = neighbourhood_borders
+
+class _RerunRenderer(type(renderer)):
+    @property
+    def _post_process_applied(self):
+        return False
+    @_post_process_applied.setter
+    def _post_process_applied(self, value):
+        pass
+
+renderer.__dict__.pop("_post_process_applied", None)
+renderer.__class__ = _RerunRenderer
 # Here we use renderer.render() to render the agents and grid in one go.
 # This function always renders the grid and then renders the agents or
 # property layers on top of it if specified.
