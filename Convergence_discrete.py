@@ -12,7 +12,7 @@ import numpy as np
 from typing import List
 
 
-def f_overall_entropy(agents) -> float:
+def f_overall_entropy(agents: list[SchellingAgent]) -> float:
     """
     Compute global entropy E_T over income groups, all agents
     This value will be used to compute the Multigroup Entropy Index
@@ -38,7 +38,7 @@ def f_overall_entropy(agents) -> float:
     return Et
 
 
-def f_neighbourhood_entropy(neighbourhood) -> float:
+def f_neighbourhood_entropy(neighbourhood: Neighbourhood) -> float:
     """
     Compute neighbourhood entropy E_n over income groups, only in this neighbourhood.
     This value will be used to compute the Multigroup Entropy Index
@@ -64,7 +64,7 @@ def f_neighbourhood_entropy(neighbourhood) -> float:
     return En
 
 
-def compute_H(neighbourhoods, agents) -> float:
+def compute_H(neighbourhoods: List[Neighbourhood], agents: List[SchellingAgent]) -> float:
     """
     Computes Multigroup Entropy Index H; i.e segregation metric for macro-neighbourhoods.
     Works for discrete income groups, can be either numerical (1,2,3) or non-numeric (e.g strings).
