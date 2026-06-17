@@ -79,3 +79,4 @@ class SchellingAgent(CellAgent):
             #empty = [c for n in affordable for c in n.cells if c.is_empty]
             #if empty:
             #    self.cell = self.model.random.choice(empty)
+

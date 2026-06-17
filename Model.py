@@ -75,7 +75,7 @@ class Schelling(Model):
         # Segregation tracking
         self.H_history = [] # tracking H values
         self.epsilon = 1e-3 # convergence threshold
-        self.convergence_window = 20 # number of steps that H must be stable for to call it 'convergence'
+        self.convergence_window = 50 # number of steps that H must be stable for to call it 'convergence'
 
         # Initialize grid
         self.grid = OrthogonalMooreGrid(
