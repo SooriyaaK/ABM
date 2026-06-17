@@ -18,6 +18,64 @@ def get_happy_agents(model):
     """Display a text count of how many happy agents there are."""
     return solara.Markdown(f"**Happy agents: {model.happy}**")
 
+def get_segregation_status(model):
+    """Display current H value, segregation level, and convergence status."""
+
+    # H value
+    H = model.H_history[-1] if model.H_history else None
+
+    # Segregation level
+    if H is None:
+        level = "N/A"
+        color = "gray"
+    elif H >= 0.8:
+        level = "*** High segregation"
+        color = "red"
+    elif H >= 0.4:
+        level = "** Moderate segregation"
+        color = "orange"
+    else:
+        level = "* Low segregation"
+        color = "green"
+
+    h_str = f"{H:.4f}" if H is not None else "N/A"
+
+    # Convergence status
+    if not model.running:
+        all_happy = model.happy >= len(model.agents)
+
+        segregation_converged = (
+            len(model.H_history) >= model.convergence_window
+            and (
+                max(model.H_history[-model.convergence_window:])
+                - min(model.H_history[-model.convergence_window:])
+            ) < model.epsilon
+        )
+
+        if all_happy and segregation_converged:
+            convergence_str = (
+                f"**Converged** : all agents happy "
+                f"and H stable within ε={model.epsilon} "
+                f"for {model.convergence_window} steps."
+            )
+        elif all_happy:
+            convergence_str = "**Converged** : all agents are happy."
+        elif segregation_converged:
+            convergence_str = (
+                f"**Converged** : H stable within ε={model.epsilon} "
+                f"for {model.convergence_window} steps."
+            )
+        else:
+            convergence_str = "**Stopped** : maximum iterations reached."
+    else:
+        convergence_str = "**Running...**"
+
+    return solara.Markdown(
+        f"**Segregation index H:** `{h_str}` — <span style='color:{color}'>{level}</span>\n\n"
+        f"{convergence_str}"
+    )
+
+
 
 path = os.path.dirname(os.path.abspath(__file__))
 
@@ -89,13 +147,16 @@ renderer.__class__ = _RerunRenderer
 renderer.render()
 
 HappyPlot = make_plot_component({"happy": "tab:green"})
+HPlot = make_plot_component({"H": "tab:red"}) # plots segregation metric
 
 page = SolaraViz(
     model1,
     renderer,
     components=[
         HappyPlot,
+        HPlot,
         get_happy_agents,
+        get_segregation_status,
     ],
     model_params=model_params,
 )
