@@ -177,7 +177,7 @@ class Schelling(Model):
         )
         self.H_history.append(H)
 
-        self.datacollector.collect(self)
+        self.datacollector.collect(self) # Collect data
 
         # Convergence check
         # Stop if everyone is happy OR if H has been stable for some number 'convergence_window' of steps
@@ -186,6 +186,5 @@ class Schelling(Model):
             and (max(self.H_history[-self.convergence_window:])
                 - min(self.H_history[-self.convergence_window:])) < self.epsilon
         )
-
-        self.datacollector.collect(self)  # Collect data
+        
         self.running = (self.happy < len(self.agents)) and not segregation_converged  # Continue until everyone is happy or H stable
