@@ -83,15 +83,17 @@ def neighbourhood_portrayal(layer):
     return PropertyLayerStyle(colormap="tab20", alpha=0.4, colorbar=False)
 
 def neighbourhood_borders(ax):
-    cton = model1.cell_to_neighbourhood
+    grid = renderer.space
+    data = grid.neighbourhood.data
+    width, height = data.shape
     segments = []
-    for (x, y), nb in cton.items():
-        right_nb = cton.get((x + 1, y))
-        if right_nb == None or right_nb.id != nb.id:
-            segments.append([(x + 0.5, y - 0.5), (x + 0.5, y + 0.5)])
-        top_nb = cton.get((x, y + 1))
-        if top_nb == None or top_nb.id != nb.id:
-            segments.append([(x - 0.5, y + 0.5), (x + 0.5, y + 0.5)])
+    for x in range(width):
+        for y in range(height):
+            nid = data[x,y]
+            if x + 1 >= width or data[x + 1, y] != nid:
+                segments.append([(x + 0.5, y - 0.5), (x + 0.5, y + 0.5)])
+            if y + 1 >= height or data[x, y + 1] != nid:
+                segments.append([(x - 0.5, y + 0.5), (x + 0.5, y + 0.5)])
     ax.add_collection(LineCollection(segments, colors="black", linewidths=1.5))
 
 def agent_portrayal(agent):
