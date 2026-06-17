@@ -5,6 +5,7 @@ from mesa.discrete_space import OrthogonalMooreGrid
 from Agents import SchellingAgent
 from mesa.experimental.scenarios import Scenario
 from mesa.discrete_space import PropertyLayer
+from Convergence_discrete import compute_H
 
 
 class Neighbourhood:
@@ -71,6 +72,11 @@ class Schelling(Model):
         self.frac2 = scenario.frac2
         self.frac3 = max(0.0, 1.0 - self.frac1 - self.frac2)
 
+        # Segregation tracking
+        self.H_history = [] # tracking H values
+        self.epsilon = 1e-3 # convergence threshold
+        self.convergence_window = 20 # number of steps that H must be stable for to call it 'convergence'
+
         # Initialize grid
         self.grid = OrthogonalMooreGrid(
             (scenario.width, scenario.height), random=self.random, capacity=1
@@ -92,6 +98,7 @@ class Schelling(Model):
                 "frac1": "frac1",
                 "frac2": "frac2",
                 "frac3": "frac3",
+                "H": lambda m: m.H_history[-1] if m.H_history else None, # convergence metric
                 #"minority_pct": lambda m: (
                 #    sum(1 for agent in m.agents if agent.type == 1)
                 #    / len(m.agents)
@@ -162,5 +169,23 @@ class Schelling(Model):
         self.agents.do("assign_state")
         for i in self.neighbourhoods.values():
             i.update_cost()
+
+        # Segregation metric H
+        H = compute_H(
+            list(self.neighbourhoods.values()),
+            list(self.agents)
+        )
+        self.H_history.append(H)
+
+        self.datacollector.collect(self)
+
+        # Convergence check
+        # Stop if everyone is happy OR if H has been stable for some number 'convergence_window' of steps
+        segregation_converged = (
+            len(self.H_history) >= self.convergence_window
+            and (max(self.H_history[-self.convergence_window:])
+                - min(self.H_history[-self.convergence_window:])) < self.epsilon
+        )
+
         self.datacollector.collect(self)  # Collect data
-        self.running = self.happy < len(self.agents)  # Continue until everyone is happy
+        self.running = (self.happy < len(self.agents)) and not segregation_converged  # Continue until everyone is happy or H stable

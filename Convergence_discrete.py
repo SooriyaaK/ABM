@@ -12,13 +12,13 @@ import numpy as np
 from typing import List
 
 
-def f_overall_entropy(agents: list[SchellingAgent]) -> float:
+def f_overall_entropy(agents: f_local_entropy_split) -> float:
     """
     Compute global entropy E_T over income groups, all agents
     This value will be used to compute the Multigroup Entropy Index
     
     Params:
-    - agents: all agents in the simulation
+    - agents: (SchellingAgent) list of all agents in the simulation
     Returns:
     - Et: float of the global entropy over income groups, over all neighbourhoods
     """
@@ -38,13 +38,13 @@ def f_overall_entropy(agents: list[SchellingAgent]) -> float:
     return Et
 
 
-def f_neighbourhood_entropy(neighbourhood: Neighbourhood) -> float:
+def f_neighbourhood_entropy(neighbourhood) -> float:
     """
     Compute neighbourhood entropy E_n over income groups, only in this neighbourhood.
     This value will be used to compute the Multigroup Entropy Index
 
     Params:
-    - neighbourhood: one Neighbourhood object
+    - neighbourhood:one Neighbourhood object
     Returns:
     - En: float of the entropy over income groups, only in this neighbourhood
     """
@@ -64,7 +64,7 @@ def f_neighbourhood_entropy(neighbourhood: Neighbourhood) -> float:
     return En
 
 
-def compute_H(neighbourhoods: List[Neighbourhood], agents: List[SchellingAgent]) -> float:
+def compute_H(neighbourhoods: List, agents: List) -> float:
     """
     Computes Multigroup Entropy Index H; i.e segregation metric for macro-neighbourhoods.
     Works for discrete income groups, can be either numerical (1,2,3) or non-numeric (e.g strings).
@@ -73,7 +73,7 @@ def compute_H(neighbourhoods: List[Neighbourhood], agents: List[SchellingAgent])
 
     Params:
     - neighbourhoods: list of Neighbourhood objects with all neighbourhoods in the simulation
-    - agents: list of all agents in the simulation
+    - agents: list of all SchellingAgent objects in the simulation
     Returns:
     - H: float of the Multigroup Entropy Index for one iteration of the simulation
     """
