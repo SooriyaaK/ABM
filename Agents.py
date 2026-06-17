@@ -21,6 +21,9 @@ class SchellingAgent(CellAgent):
         self.radius = radius
         self.happy = False
         self.income = income
+        self.choose_strategy()
+        self.contribution = 0
+        self.contribution_percentage = 0.05 # choose how much of their income they contribute to the neighbourhood
 
     @property
     def neighbourhood(self):
@@ -79,4 +82,14 @@ class SchellingAgent(CellAgent):
             #empty = [c for n in affordable for c in n.cells if c.is_empty]
             #if empty:
             #    self.cell = self.model.random.choice(empty)
+
+    def choose_strategy(self): # first basic strategy to randomly contribute or not
+        self.strategy = self.model.random.choice(["C", "D"])
+
+    def contribute(self):
+
+        if self.strategy == "D":
+            self.contribution = 0
+        else:
+            self.contribution = self.income * self.contribution_percentage
 

@@ -14,6 +14,7 @@ class Neighbourhood:
         self.cells = cells
         self.cost = 0.0
         self.seed = seed_coord
+        self.attractiveness = 0.0
 
     @property
     def agents(self):
@@ -30,6 +31,17 @@ class Neighbourhood:
             self.cost += adjust * (target - self.cost) #costs dont rise instantly but slowly
         else:
             self.cost = 0.0    
+
+    def update_attractiveness(self):
+        total_contributions = 0
+
+        for agent in self.agents:
+            total_contributions += agent.contribution
+
+        if len(self.agents) > 0:
+            self.attractiveness = total_contributions / len(self.agents)
+        else:
+            self.attractiveness = 0
 
 class SchellingScenario(Scenario):
     """Scenario for the Schelling model.
@@ -165,6 +177,10 @@ class Schelling(Model):
     def step(self):
         """Run one step of the model."""
         self.happy = 0  # Reset counter of happy agents
+        self.agents.do("contribute") # Decide contribution
+        for nb in self.neighbourhoods.values():
+            nb.update_attractiveness()
+            #print(nb.id, nb.attractiveness)
         self.agents.shuffle_do("step")  # Activate all agents in random order
         self.agents.do("assign_state")
         for i in self.neighbourhoods.values():
