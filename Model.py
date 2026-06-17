@@ -179,11 +179,12 @@ class Schelling(Model):
     def step(self):
         """Run one step of the model."""
         self.happy = 0  # Reset counter of happy agents
+        self.agents.shuffle_do("step")  # Activate all agents in random order
+        # self.agents.do("choose_strategy") # not used yet
         self.agents.do("contribute") # Decide contribution
         for nb in self.neighbourhoods.values():
             nb.update_attractiveness()
             #print(nb.id, nb.attractiveness)
-        self.agents.shuffle_do("step")  # Activate all agents in random order
         self.agents.do("assign_state")
         for i in self.neighbourhoods.values():
             i.update_cost()
