@@ -1,4 +1,5 @@
 from mesa.discrete_space import CellAgent
+import random
 
 
 class SchellingAgent(CellAgent):
@@ -17,7 +18,11 @@ class SchellingAgent(CellAgent):
         super().__init__(model)
         self.cell = cell
         self.type = agent_type
-        self.homophily = homophily
+        # self.homophily = homophily
+
+        self.cost_weight = max(0, min(1, random.gauss(0.5, 0.2)))  # random (gaussian) float between [0,1]
+        self.homophily_weight = 1 - self.cost_weight  # weights sum to 1
+
         self.radius = radius
         self.happy = False
         self.income = income
@@ -63,20 +68,61 @@ class SchellingAgent(CellAgent):
 
     def step(self) -> None:
         # Move if unhappy
-        if self.happy: 
-            return
-        if self.type == 3:
-            higher_nb = [nb for nb in self.model.neighbourhoods.values() if nb.cost > self.neighbourhood.cost]
-            candidate_nbs = [c for n in higher_nb for c in n.cells if c.is_empty]
-            if candidate_nbs:
-                self.cell = self.model.random.choice(candidate_nbs)
-        else:
-            lower_nb = [nb for nb in self.model.neighbourhoods.values() if nb.cost < self.neighbourhood.cost]
-            candidate_nbs = [c for n in lower_nb for c in n.cells if c.is_empty]
-            if candidate_nbs:
-                self.cell = self.model.random.choice(candidate_nbs)
+        # if self.happy: 
+        #     return
+        # if self.type == 3:
+        #     higher_nb = [nb for nb in self.model.neighbourhoods.values() if nb.cost > self.neighbourhood.cost]
+        #     candidate_nbs = [c for n in higher_nb for c in n.cells if c.is_empty]
+        #     if candidate_nbs:
+        #         self.cell = self.model.random.choice(candidate_nbs)
+        # else:
+        #     lower_nb = [nb for nb in self.model.neighbourhoods.values() if nb.cost < self.neighbourhood.cost]
+        #     candidate_nbs = [c for n in lower_nb for c in n.cells if c.is_empty]
+        #     if candidate_nbs:
+        #         self.cell = self.model.random.choice(candidate_nbs)
             #affordable = [nb for nb in self.model.neighbourhoods.values() if nb.cost <= self.income]
             #empty = [c for n in affordable for c in n.cells if c.is_empty]
             #if empty:
             #    self.cell = self.model.random.choice(empty)
+
+        max_income = 4000 #TODO: this is now hardcoded; bad idea
+        current_nb = self.model.cell_to_neighbourhood[self.cell.coordinate]
+
+        def utility(nb):
+            """Calculates utility of a macro-neighbourhood"""
+            agents = nb.agents
+            if agents:
+                homophily_score = sum(1 for a in agents if a.type == self.type) / len(agents)
+            else:
+                homophily_score = 1.0  # empty neighbourhood -> no dissimilar neighbours
+            cost_score = max(0.0, 1 - abs(nb.cost - self.income) / max_income)
+            epsilon = self.model.random.gauss(0, 1)  # noise factor from gumbel distr.
+            return self.homophily_weight * homophily_score + self.cost_weight * cost_score + epsilon # basic RUM func
+
+        U_stay = utility(current_nb) # utility of current neighbourhood
+
+        # Find best candidate neighbourhood (excluding current; must have empty cell)
+        best_nb = None
+        best_utility = U_stay  # only move if better than staying
+
+        for nb in self.model.neighbourhoods.values():
+            # loop over all neighbourhoods
+            if nb is current_nb:
+                # skip current neighbourhood
+                continue
+            if not any(c.is_empty for c in nb.cells):
+                # skip all neighbourhoods without empty cells since we can't move ther anyway
+                continue
+            U = utility(nb) # calculate utility of neighbourhood
+            if U > best_utility:
+                best_utility = U
+                best_nb = nb
+
+        # Move to a random empty cell in the best neighbourhood
+        if best_nb is not None:
+            empty_cells = [c for c in best_nb.cells if c.is_empty]
+            self.cell = self.model.random.choice(empty_cells)
+        
+
+
 
