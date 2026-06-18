@@ -14,4 +14,4 @@ module load Python/3.11.3-GCCcore-12.3.0  # check what's available with: module 
 source /gpfs/home4/scur0391/projects/ABM/.venv/bin/activate
 
 # Run
-uv run python /gpfs/home4/scur0391/projects/ABM/run_no_solara.py
+uv run python /gpfs/home4/scur0391/projects/ABM/Run_no_solara.py

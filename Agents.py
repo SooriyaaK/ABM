@@ -243,7 +243,8 @@ class SchellingAgent(CellAgent):
             # The chosen neighbourhood is full, the agent is unhappy.
             self.happy = False
         
-        self.current_utility = self.utility(current_neighbourhood, is_current=False)
+        # self.current_utility = self.utility(current_neighbourhood, is_current=False)
+        self.current_utility = self.utility(chosen_neighbourhood, is_current=(chosen_neighbourhood.id == current_neighbourhood.id))
             
 
     def assign_state(self) -> None:

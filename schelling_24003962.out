@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/gpfs/home4/scur0391/projects/ABM/Run_no_solara.py", line 3, in <module>
+    from Model import Schelling, SchellingScenario
+  File "/gpfs/home4/scur0391/projects/ABM/Model.py", line 4, in <module>
+    from mesa.discrete_space import OrthogonalMooreGrid
+ModuleNotFoundError: No module named 'mesa.discrete_space'

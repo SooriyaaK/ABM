@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from Model import Schelling, SchellingScenario
 
+# sbatch run_job.sh
 
 def run_multiple_time(N=10):
     """

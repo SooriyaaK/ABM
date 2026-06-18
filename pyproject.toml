@@ -5,7 +5,7 @@ requires-python = ">=3.12"
 dependencies = [
     "altair>=6.2.1",
     "matplotlib>=3.11.0",
-    "mesa>=3.5.1",
+    "mesa==3.0.0",
     "networkx>=3.6.1",
     "solara>=1.57.4",
 ]
