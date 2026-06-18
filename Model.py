@@ -106,7 +106,8 @@ class Schelling(Model):
         Args:
             scenario: SchellingScenario containing model parameters.
         """
-        super().__init__(scenario=scenario)
+        super().__init__()
+        self.scenario = scenario
 
         # Model parameters
         self.density = scenario.density
