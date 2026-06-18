@@ -13,7 +13,7 @@ class SchellingAgent(CellAgent):
     def __init__(self, model, cell, agent_type: int, income: int, radius: int = 1,
         beta_mean: float = 1.0, beta_sigma: float = 1.0, utility_form: str = "continuous", 
         baseline_benefit: float = 1.0, move_cost: float = 0.5, logit_scale: float = 1.0, 
-        budget_fraction: float = 0.5, quality_weight: float = 2.0, homophily_weight: float = 2.0) -> None:
+        budget_fraction: float = 0.5, quality_weight: float = 2.0, homophily_weight: float = 2.0, cost_weight: float = 3.0) -> None:
         """
         Create and initialize a new Schellingagent.
 
@@ -55,6 +55,7 @@ class SchellingAgent(CellAgent):
         self.budget_fraction = budget_fraction
         self.quality_weight = quality_weight
         self.homophily_weight = homophily_weight
+        self.cost_weight = cost_weight
 
         # Draw individual beta from a log-normal distribution to introduce heterogeneity in cost sensitivity
         if beta_sigma > 0:
@@ -86,15 +87,19 @@ class SchellingAgent(CellAgent):
         If the agent is a defector, their contribution is zero.
         """
         if self.strategy == "D":
-            self.contribution = 0.0
+            new_contribution = 0.0
+            #self.contribution = 0.0
         else:
-            self.contribution = self.income * self.contribution_percentage
+            new_contribution = self.income * self.contribution_percentage
+            #self.contribution = self.income * self.contribution_percentage
+        self.neighbourhood.total_contribution += new_contribution - self.contribution
+        self.contribution = new_contribution
 
     def choose_strategy(self):
         """
-        Copy the strategy of the most successful neighbor.
+        Copy the strategy of the most successful neighbor by a 50% chance.
         """
-        neighbors = self.cell.get_neighborhood(radius=1).agents # moore neighborhood
+        neighbors = list(self.cell.get_neighborhood(radius=1).agents) # moore neighborhood
 
         if not neighbors:
             return
@@ -119,24 +124,12 @@ class SchellingAgent(CellAgent):
         else:
             penalty = 0.0
 
-        local_agents = neighbourhood.agents 
-        num_local_agents = len(local_agents)
-        total_contribution = 0.0
+        num_local_agents = neighbourhood.num_agents
 
         if num_local_agents > 0:
-            same_type_count = 0
-
-            for agent in local_agents:
-                if agent.type == self.type:
-                    same_type_count += 1
-                total_contribution += agent.contribution
-            
-            macro_score = same_type_count / len(local_agents)
-            average_contribution = total_contribution / num_local_agents
-           
+            macro_score = neighbourhood.type_counts.get(self.type) / num_local_agents
         else:
             macro_score = 1.0
-            average_contribution = 0.0
 
         
         if is_current:
@@ -161,7 +154,7 @@ class SchellingAgent(CellAgent):
             homophily_score = macro_score
 
         # neighborhood's attractiveness
-        dynamic_quality = neighbourhood.quality + average_contribution
+        dynamic_quality = neighbourhood.quality
 
         total_utility = (self.baseline_benefit + 
                          (self.quality_weight * dynamic_quality) +
@@ -173,33 +166,38 @@ class SchellingAgent(CellAgent):
 
         if not is_current:
             total_utility -= self.move_cost
-
-        return total_utility
+        total_utility -= self.cost_weight * (self.contribution / self.income)
+        return total_utility 
 
     def step(self) -> None:
         """
         Make a conditional choice over the available neighbourhoods.
         """
         current_neighbourhood = self.neighbourhood
-
         # Choose between the current neighbourhood and every neighbourhood with a vacancy.
+        utilities = []
         choice_set = [current_neighbourhood]
         for neighbourhood in self.model.neighbourhoods.values():
             if neighbourhood.id == current_neighbourhood.id:
+                is_current = True
+                utilities.append(self.utility(neighbourhood, is_current))
                 continue
             for cell in neighbourhood.cells:
                 if cell.is_empty:
                     choice_set.append(neighbourhood)
+                    # Score each neighbourhood in the choice set.
+                    is_current = False
+                    utilities.append(self.utility(neighbourhood, is_current))
                     break
 
-        # Score each neighbourhood in the choice set.
-        utilities = []
-        for neighbourhood in choice_set:
-            if neighbourhood.id == current_neighbourhood.id:
-                is_current = True
-            else:
-                is_current = False
-            utilities.append(self.utility(neighbourhood, is_current))
+    
+        #utilities = []
+        #for neighbourhood in choice_set:
+            #if neighbourhood.id == current_neighbourhood.id:
+                #is_current = True
+            #else:
+                #is_current = False
+            #utilities.append(self.utility(neighbourhood, is_current))
 
         max_utility = max(utilities)
         choice_weights = []
@@ -220,25 +218,25 @@ class SchellingAgent(CellAgent):
                 self.happy = True
             else:
                 self.happy = False
-            
             self.current_utility = self.utility(current_neighbourhood, is_current=True)
 
-        
-        # Otherwise move into one of the empty cells of the chosen neighbourhood.
-        empty_cells = []
-
-        for cell in chosen_neighbourhood.cells:
-            if cell.is_empty:
-                empty_cells.append(cell)
-
-        if empty_cells:
-            self.cell = self.model.random.choice(empty_cells)
-            self.happy = True
         else:
-            # The chosen neighbourhood is full, the agent is unhappy.
-            self.happy = False
-        
-        self.current_utility = self.utility(current_neighbourhood, is_current=False)
+            # Otherwise move into one of the empty cells of the chosen neighbourhood.
+            empty_cells = []
+
+            for cell in chosen_neighbourhood.cells:
+                if cell.is_empty:
+                    empty_cells.append(cell)
+
+            if empty_cells:
+                new_cell = self.model.random.choice(empty_cells)
+                self.move_to(new_cell)
+                self.happy = False #the agent isnt settled and is not yet happy
+            else:
+                # The chosen neighbourhood is full, the agent is unhappy.
+                self.happy = False
+            
+            self.current_utility = self.utility(current_neighbourhood, is_current=False)
             
 
     def assign_state(self) -> None:
@@ -251,7 +249,13 @@ class SchellingAgent(CellAgent):
         if self.happy:
             self.model.happy += 1
 
-
+    def move_to(self, new_cell):
+        old_nb = self.neighbourhood
+        self.cell = new_cell
+        new_nb = self.neighbourhood
+        if old_nb != new_nb:
+            old_nb.remove_agent(self)
+            new_nb.add_agent(self)
     # def assign_state(self) -> None:
     #     """Determine if agent is happy and move if necessary."""
     #     neighbors = list(self.cell.get_neighborhood(radius=self.radius).agents)
