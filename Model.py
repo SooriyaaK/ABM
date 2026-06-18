@@ -155,7 +155,6 @@ class Schelling(Model):
                     radius = scenario.radius,
                     baseline_benefit = scenario.baseline_benefit,
                     move_cost = scenario.move_cost,
-                    homophily = scenario.homophily,
                     logit_scale = scenario.logit_scale,
                     budget_fraction = scenario.budget_fraction,
                     quality_weight = scenario.quality_weight,
