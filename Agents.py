@@ -5,29 +5,41 @@ from mesa.discrete_space import CellAgent
 class SchellingAgent(CellAgent):
     """
     Schelling Segregation Agent.
-    Each agent has randomlt assigned an income, based on that income a housing cost is calculated.
-    The agent then makes a choice of neighbourhood to live in, based on the cost and their income.
+    The agent makes probabilistic neighborhood relocation choices based on housing affordability,
+    local structural quality, and multi-scale demographic preferences, while dynamically 
+    adapting their cooperation - defect strategy through localized social learning.
     """
 
-    def __init__(self, model, cell, agent_type: int, income: int, beta_mean: float = 1.0, beta_sigma: float = 1.0, utility_form: str = "continuous", radius: int = 1, baseline_benefit: float = 1.0, move_cost: float = 0.5, logit_scale: float = 1.0, budget_fraction: float = 0.5, quality_weight: float = 2.0, homophily_weight: float = 2.0) -> None:
+    def __init__(self, model, cell, agent_type: int, income: int, radius: int = 1,
+        beta_mean: float = 1.0, beta_sigma: float = 1.0, utility_form: str = "continuous", 
+        baseline_benefit: float = 1.0, move_cost: float = 0.5, logit_scale: float = 1.0, 
+        budget_fraction: float = 0.5, quality_weight: float = 2.0, homophily_weight: float = 2.0) -> None:
         """
-        Create a new Schelling agent.
+        Create and initialize a new Schellingagent.
 
-        parameters:
-        model: The model instance the agent belongs to.
-        cell: The grid cell the agent starts on.
-        agent_type: Income indicator (1, 2, or 3).
-        income: Agent's income.
-        beta_mean: Sensitivity to cost-benefit utility. Population median.
-        beta_sigma: Spread of the sensitivity to cost-benefit utility.
-        utility_form: .
-        radius: Search radius.
-        baseline_benefit: Utility of being housed.
-        move_cost: Penalty for relocating.
-        logit_scale: Converts money units into utility units.
-        budget_fraction: Fraction of income the agent is comfortable spending on housing.
-        quality_weight: Weight of neighbourhood quality in utility calculation.
-        homophily_weight: Weight of homophily in utility calculation.
+        Parameters:
+        model : SchellingModel. The model instance to which this agent belongs.
+        cell : Cell. The specific grid cell coordinate where this agent currently resides.
+        agent_type : int. Income indicator upper class, medium class and lower class (e.g., 1, 2, or 3).
+        income : int.The total income available to the agent.
+        radius : int, default 1. The micro-level search radius for checking immediate neighbor similarity.
+        beta_mean : float, default 1.0. The baseline population median sensitivity to cost-benefit and budget penalties.
+        beta_sigma : float, default 1.0. The standard deviation of cost sensitivity across the population.
+        utility_form : str, default "continuous". Structural identifier toggle used to configure the active choice equations.
+        baseline_benefit : float, default 1.0. The fundamental baseline utility derived from being housed in the system.
+        move_cost : float, default 0.5. The behavioral friction or relocation penalty applied when changing locations.
+        logit_scale : float, default 1.0. A normalization scalar translating raw financial calculations into utility.
+        budget_fraction : float, default 0.5. The maximum fraction of income the agent is willing to spend on the rent.
+        quality_weight : float, default 2.0. The structural preference weight assigned to neighborhood infrastructure and public goods.
+        homophily_weight : float, default 2.0. The sociological preference weight assigned to neighborhood demographic similarity.
+
+        Attributes:
+        beta : float. The agent's individual price sensitivity coefficient, drawn from a log-normal distribution.
+        strategy : str. Active cooperative strategy, either C (Cooperator) or D (Defector).
+        contribution : float. The actual currency amount currently contributed to the local public goods pool.
+        contribution_percentage : float. The fixed tax fraction of total income contributed if the agent is a cooperator (5%).
+        current_utility : float. The agents current utility score, inspected by local peers for social learning.
+        happy : bool. Flag indicating if the agent is happy.
         """
         super().__init__(model)
         self.cell = cell
@@ -35,6 +47,7 @@ class SchellingAgent(CellAgent):
         self.income = income
         self.radius = radius
 
+        # Utility function parameters
         self.utility_form = utility_form
         self.baseline_benefit = baseline_benefit
         self.move_cost = move_cost
@@ -43,6 +56,7 @@ class SchellingAgent(CellAgent):
         self.quality_weight = quality_weight
         self.homophily_weight = homophily_weight
 
+        # Draw individual beta from a log-normal distribution to introduce heterogeneity in cost sensitivity
         if beta_sigma > 0:
             z = self.model.random.gauss(0, 1)
             log_beta = math.log(beta_mean) + beta_sigma * z
@@ -50,21 +64,52 @@ class SchellingAgent(CellAgent):
         else:
             self.beta = beta_mean
 
+        # Choose initial cooperation strategy
+        if self.model.random.random() < self.model.defector_frac:
+            self.strategy = "D"
+        else:
+            self.strategy = "C"
+
+        self.contribution = 0.0
+        self.contribution_percentage = 0.05
+        self.current_utility = 0.0
+
         self.happy = False
 
     @property
     def neighbourhood(self):
         return self.model.cell_to_neighbourhood[self.cell.coordinate]
+    
+    def contribute(self) -> None:
+        """
+        Calculate financial contribution based on strategy.
+        If the agent is a cooperator, they contribute a fixed percentage of their income to the community.
+        If the agent is a defector, their contribution is zero.
+        """
+        if self.strategy == "D":
+            self.contribution = 0.0
+        else:
+            self.contribution = self.income * self.contribution_percentage
+
+    def choose_strategy(self):
+        """
+        Copy the strategy of the most successful neighbor.
+        """
+        neighbors = self.cell.get_neighborhood(radius=1).agents # moore neighborhood
+
+        if not neighbors:
+            return
+
+        best_neighbor = max(neighbors, key=lambda a: a.current_utility)
+       
+        if best_neighbor.current_utility > self.current_utility:
+            self.strategy = best_neighbor.strategy
 
     def utility(self, neighbourhood, is_current: bool) -> float:
         """
         Cost-benefit utility of one neighbourhood for this agent.
-
-        Affordability is a burden ratio: neighbourhood price divided by income.
-        An agent is comfortable spending up to budget_fraction of its income
-        (e.g. 50%) on housing. If a neighbourhood costs more than the agent's
-        budget, it gets a penalty, and the penalty grows with how far over
-        budget it is.
+        The utility is a function of the neighbourhood's cost, quality, and demographic composition,
+        as well as the agent's income, preferences, and the potential move cost if it's not the current neighbourhood.
         """
         price = neighbourhood.cost
         burden = price / self.income
@@ -76,17 +121,23 @@ class SchellingAgent(CellAgent):
             penalty = 0.0
 
         local_agents = neighbourhood.agents 
-        if local_agents:
+        num_local_agents = len(local_agents)
+        total_contribution = 0.0
+
+        if local_agents > 0:
             same_type_count = 0
 
             for agent in local_agents:
                 if agent.type == self.type:
                     same_type_count += 1
+                total_contribution += agent.contribution
             
             macro_score = same_type_count / len(local_agents)
-        
+            average_contribution = total_contribution / num_local_agents
+           
         else:
             macro_score = 1.0
+            average_contribution = 0.0
 
         
         if is_current:
@@ -110,7 +161,15 @@ class SchellingAgent(CellAgent):
         else:
             homophily_score = macro_score
 
-        total_utility = self.baseline_benefit + self.quality_weight * neighbourhood.quality + self.homophily_weight * homophily_score +  (0.5 * self.homophily_weight) * macro_score
+        # neighborhood's attractiveness
+        dynamic_quality = neighbourhood.quality + average_contribution
+
+        total_utility = (self.baseline_benefit + 
+                         (self.quality_weight * dynamic_quality) +
+                         (self.homophily_weight * homophily_score) +  
+                         (0.5 * self.homophily_weight) * macro_score
+                        )
+        
         total_utility -= self.beta * self.logit_scale * penalty
 
         if not is_current:
@@ -161,10 +220,13 @@ class SchellingAgent(CellAgent):
                 self.happy = True
             else:
                 self.happy = False
-            return
+            
+            self.current_utility = self.utility(current_neighbourhood, is_current=True)
 
+        
         # Otherwise move into one of the empty cells of the chosen neighbourhood.
         empty_cells = []
+
         for cell in chosen_neighbourhood.cells:
             if cell.is_empty:
                 empty_cells.append(cell)
@@ -172,9 +234,13 @@ class SchellingAgent(CellAgent):
         if empty_cells:
             self.cell = self.model.random.choice(empty_cells)
             self.happy = False
+            self.current_utility = self.utility(chosen_neighbourhood, is_current=False)
+        
         else:
             # The chosen neighbourhood is full, the agent is unhappy.
             self.happy = False
+            self.current_utility = self.utility(current_neighbourhood, is_current=True)
+            
 
     def assign_state(self) -> None:
         """

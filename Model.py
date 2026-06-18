@@ -14,7 +14,7 @@ class Neighbourhood:
         self.model = model
         self.cells = []
         self.seed = seed_coord
-        self.quality = quality   # how desirable the area is, fixed (0 to 1)
+        self.quality = quality
         self.cost = 0.0
 
     @property
@@ -24,14 +24,37 @@ class Neighbourhood:
             for agent in cell.agents:
                 agents_list.append(agent)
         return agents_list
+    
+    def update_quality(self):
+        """
+        Contribution of agents to the neighboorhood quality.
+        """
+        current_residents = self.agents
+        total_contributions = 0.0
+
+        for agent in current_residents:
+            total_contributions += agent.contribution
+                
+        # Neighborhood quality becomes the average contribution per resident
+        residents_count = len(current_residents)
+
+        if residents_count > 0:
+            self.quality = total_contributions / residents_count
+        
+        else:
+            self.quality = 0.0
 
     def update_cost(self, adjust = 0.3):
-        agents = self.agents
-        if agents:
+
+        current_residents = self.agents
+
+        if len(current_residents) > 0:
             total_income = 0
-            for agent in agents:
+
+            for agent in current_residents:
                 total_income += agent.income
-            avg_income = total_income / len(agents)
+
+            avg_income = total_income / len(current_residents)
             rent_fraction = self.model.base_rent + self.model.quality_premium * self.quality
             target = avg_income * rent_fraction
             self.cost += adjust * (target - self.cost) #prices adjust slowly, not instantly
@@ -57,7 +80,8 @@ class SchellingScenario(Scenario):
     frac3: float = 0.33
     homophily: float = 0.4
     radius: int = 1
-    neighbourhood_count = 25
+    neighbourhood_count: int = 25
+    defector_frac: float = 0.1
     
     # Mixed-logit parameters
     beta_mean: float = 1.0  # population mean      
@@ -91,6 +115,7 @@ class Schelling(Model):
         self.frac3 = max(0.0, 1.0 - self.frac1 - self.frac2)
         self.base_rent = scenario.base_rent
         self.quality_premium = scenario.quality_premium
+        self.defector_frac = scenario.defector_frac
 
         # Segregation tracking
         self.H_history = [] # tracking H values
