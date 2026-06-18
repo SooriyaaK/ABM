@@ -94,9 +94,9 @@ class SchellingAgent(CellAgent):
         """
         Copy the strategy of the most successful neighbor.
         """
-        neighbors = self.cell.get_neighborhood(radius=1).agents # moore neighborhood
+        neighbors = list(self.cell.get_neighborhood(radius=1).agents)
 
-        if not neighbors:
+        if len(neighbors) == 0:
             return
 
         best_neighbor = max(neighbors, key=lambda a: a.current_utility)

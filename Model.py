@@ -231,6 +231,7 @@ class Schelling(Model):
         """
         self.happy = 0  # Reset counter of happy agents
         self.agents.shuffle_do("step")  # Activate all agents in random order
+        self.agents.do("choose_strategy")
         self.agents.do("assign_state")
         for i in self.neighbourhoods.values():
             i.update_cost()
