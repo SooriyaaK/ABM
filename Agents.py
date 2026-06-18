@@ -45,10 +45,10 @@ class SchellingAgent(CellAgent):
         super().__init__(model)
         self.cell = cell
         self.type = agent_type
-        # self.income = income
+        self.income = income
 
-        self.cost_weight = max(0, min(1, random.gauss(0.5, 0.2)))  # random (gaussian) float between [0,1]
-        self.homophily_weight = 1 - self.cost_weight  # weights sum to 1
+        # self.cost_weight = max(0, min(1, random.gauss(0.5, 0.2)))  # random (gaussian) float between [0,1]
+        # self.homophily_weight = 1 - self.cost_weight  # weights sum to 1
 
         self.radius = radius
 
