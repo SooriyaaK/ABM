@@ -96,6 +96,9 @@ class SchellingAgent(CellAgent):
         """
         neighbors = list(self.cell.get_neighborhood(radius=1).agents)
 
+        if not neighbors:
+            return
+
         best_neighbor = max(neighbors, key=lambda a: a.current_utility)
        
         if best_neighbor.current_utility > self.current_utility:
@@ -177,8 +180,8 @@ class SchellingAgent(CellAgent):
         """
         Make a conditional choice over the available neighbourhoods.
         """
-        self.choose_strategy()
-        self.contribute()
+        # self.choose_strategy()
+        # self.contribute()
         current_neighbourhood = self.neighbourhood
 
         # Choose between the current neighbourhood and every neighbourhood with a vacancy.
