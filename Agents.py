@@ -124,7 +124,7 @@ class SchellingAgent(CellAgent):
         num_local_agents = len(local_agents)
         total_contribution = 0.0
 
-        if local_agents > 0:
+        if num_local_agents > 0:
             same_type_count = 0
 
             for agent in local_agents:
