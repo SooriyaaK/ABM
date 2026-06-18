@@ -155,12 +155,14 @@ class Schelling(Model):
                     radius = scenario.radius,
                     baseline_benefit = scenario.baseline_benefit,
                     move_cost = scenario.move_cost,
+                    homophily = scenario.homophily,
                     logit_scale = scenario.logit_scale,
                     budget_fraction = scenario.budget_fraction,
                     quality_weight = scenario.quality_weight,
                 )
         for i in self.neighbourhoods.values():
             i.update_cost()
+
         # Collect initial state
         self.agents.do("assign_state")
         self.datacollector.collect(self)
@@ -195,7 +197,9 @@ class Schelling(Model):
 
 
     def step(self):
-        """Run one step of the model."""
+        """
+        Run one step of the model.
+        """
         self.happy = 0  # Reset counter of happy agents
         self.agents.shuffle_do("step")  # Activate all agents in random order
         self.agents.do("assign_state")

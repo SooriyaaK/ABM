@@ -83,20 +83,39 @@ class SchellingAgent(CellAgent):
                 if agent.type == self.type:
                     same_type_count += 1
             
-            # Calculate the fraction of similar neighbors
-            homophily_score = same_type_count / len(local_agents)
+            macro_score = same_type_count / len(local_agents)
         
         else:
-            homophily_score = 1.0
+            macro_score = 1.0
 
-        total_utility = self.baseline_benefit + self.quality_weight * neighbourhood.quality + self.homophily_weight * homophily_score
+        
+        if is_current:
+            micro_cell = self.cell.get_neighborhood(radius=self.radius)
+            micro_agents = []
+
+            for cell in micro_cell:
+                if not cell.is_empty:
+                    for neighbor_agent in cell.agents:
+                        micro_agents.append(neighbor_agent)
+
+            if micro_agents:
+                micro_same_type_count = 0
+                for agent in micro_agents:
+                    if agent.type == self.type:
+                        micro_same_type_count += 1
+                
+                homophily_score = micro_same_type_count / len(micro_agents)
+            else:   
+                homophily_score = 1.0
+        else:
+            homophily_score = macro_score
+
+        total_utility = self.baseline_benefit + self.quality_weight * neighbourhood.quality + self.homophily_weight * homophily_score +  (0.5 * self.homophily_weight) * macro_score
         total_utility -= self.beta * self.logit_scale * penalty
 
         if not is_current:
             total_utility -= self.move_cost
 
-        # if not is_current:
-        #     pass
 
         return total_utility
 
@@ -159,8 +178,10 @@ class SchellingAgent(CellAgent):
 
     def assign_state(self) -> None:
         """
-        Count this agent as happy if its logit draw left it in place this step.
-        Model.step resets the counter to 0 before re-tallying each step.
+        Update the model's global happiness counter based on the agent's final state.
+        
+        This method is called at the end of the simulation step after all agents 
+        have made their choices.
         """
         if self.happy:
             self.model.happy += 1
