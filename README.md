@@ -39,6 +39,17 @@ $U_i = \text{Neighborhood Quality} + \text{Amenities} - \text{Housing Cost} - \t
 
 * The agent evaluates alternative neighborhoods and moves to the one with the highest utility.
 
+### Mixed logit
+
+The model uses a mixed logit: every agent draws its own price-sensitivity once from a lognormal distribution, so two agents with the same income can still react differently to the same prices. This price-sensitivity controls how strongly an agent reacts when a neighbourhood costs more than it can comfortably afford: a high value means the agent strongly avoids overpriced areas, while a low value means it tolerates them. Drawing it from a lognormal distribution keeps the value positive and gives a realistic spread, with most agents near a typical sensitivity and a few much more reactive. The spread of this distribution is a single dial: set it to zero and everyone behaves identically, turn it up and the population becomes more varied.
+
+### Utility
+
+* Before deciding where to live, an agent gives every neighbourhood it could move to a utility score, and the score captures the trade-off between what a place offers and what it costs.
+* The score goes up with the neighbourhood's quality — how nice or desirable the area is — and goes down by a moving cost whenever the agent would have to relocate.
+* It also goes down when the neighbourhood is unaffordable: as long as housing stays within what the agent can comfortably spend there is no penalty, but once it costs more the penalty kicks in and grows the further over budget it gets.
+* The agent then leans toward the neighbourhood with the highest score, which is how richer agents end up in the desirable, expensive areas and poorer agents are pushed toward the cheaper ones.
+
 ### Nash Equilibrium
 
 * A Nash equilibrium occurs when no agent can improve their utility by unilaterally changing neighborhoods, given the choices of all other agents.
