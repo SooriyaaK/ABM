@@ -40,6 +40,7 @@ def run_multiple_time(N=10):
                 break
             model.step()
         else:
+            steps_taken = step
             print(f"  Reached max steps ({MAX_STEPS}).")
 
         convergence_steps.append(steps_taken)
