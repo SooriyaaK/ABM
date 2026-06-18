@@ -9,7 +9,7 @@ class SchellingAgent(CellAgent):
     The agent then makes a choice of neighbourhood to live in, based on the cost and their income.
     """
 
-    def __init__(self, model, cell, agent_type: int, income: int, beta_mean: float = 1.0, beta_sigma: float = 1.0, utility_form: str = "continuous", radius: int = 1, baseline_benefit: float = 1.0, move_cost: float = 0.5, logit_scale: float = 1.0, budget_fraction: float = 0.5, quality_weight: float = 2.0) -> None:
+    def __init__(self, model, cell, agent_type: int, income: int, beta_mean: float = 1.0, beta_sigma: float = 1.0, utility_form: str = "continuous", radius: int = 1, baseline_benefit: float = 1.0, move_cost: float = 0.5, logit_scale: float = 1.0, budget_fraction: float = 0.5, quality_weight: float = 2.0, homophily_weight: float = 2.0) -> None:
         """
         Create a new Schelling agent.
 
@@ -25,6 +25,9 @@ class SchellingAgent(CellAgent):
         baseline_benefit: Utility of being housed.
         move_cost: Penalty for relocating.
         logit_scale: Converts money units into utility units.
+        budget_fraction: Fraction of income the agent is comfortable spending on housing.
+        quality_weight: Weight of neighbourhood quality in utility calculation.
+        homophily_weight: Weight of homophily in utility calculation.
         """
         super().__init__(model)
         self.cell = cell
@@ -38,6 +41,7 @@ class SchellingAgent(CellAgent):
         self.logit_scale = logit_scale
         self.budget_fraction = budget_fraction
         self.quality_weight = quality_weight
+        self.homophily_weight = homophily_weight
 
         if beta_sigma > 0:
             z = self.model.random.gauss(0, 1)
@@ -71,11 +75,29 @@ class SchellingAgent(CellAgent):
         else:
             penalty = 0.0
 
-        total_utility = self.baseline_benefit + self.quality_weight * neighbourhood.quality
+        local_agents = neighbourhood.agents 
+        if local_agents:
+            same_type_count = 0
+
+            for agent in local_agents:
+                if agent.type == self.type:
+                    same_type_count += 1
+            
+            # Calculate the fraction of similar neighbors
+            homophily_score = same_type_count / len(local_agents)
+        
+        else:
+            homophily_score = 1.0
+
+        total_utility = self.baseline_benefit + self.quality_weight * neighbourhood.quality + self.homophily_weight * homophily_score
         total_utility -= self.beta * self.logit_scale * penalty
 
         if not is_current:
             total_utility -= self.move_cost
+
+        # if not is_current:
+        #     pass
+
         return total_utility
 
     def step(self) -> None:
@@ -111,9 +133,15 @@ class SchellingAgent(CellAgent):
         # Randomly pick one neighbourhood, weighted by the scores.
         chosen_neighbourhood = self.model.random.choices(choice_set, weights=choice_weights)[0]
 
-        # If the chosen neighbourhood is the current neighbourhood, the agent is happy.
+        # If the agent chose to stay in its current neighbourhood, determine if it's happy or not.
         if chosen_neighbourhood.id == current_neighbourhood.id:
-            self.happy = True
+            price = current_neighbourhood.cost
+            burden = price / self.income
+            
+            if burden <= self.budget_fraction:
+                self.happy = True
+            else:
+                self.happy = False
             return
 
         # Otherwise move into one of the empty cells of the chosen neighbourhood.
