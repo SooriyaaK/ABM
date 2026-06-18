@@ -1,0 +1,29 @@
+
+--- Run 1/10 ---
+  Reached max steps (200).
+-> Final H: 0.6748
+-> Happy agents: 1950 / 2032
+
+--- Run 2/10 ---
+Traceback (most recent call last):
+  File "/gpfs/home4/scur0391/projects/ABM/Run_no_solara.py", line 132, in <module>
+    run_multiple_time(N=10)
+    ~~~~~~~~~~~~~~~~~^^^^^^
+  File "/gpfs/home4/scur0391/projects/ABM/Run_no_solara.py", line 33, in run_multiple_time
+    model = Schelling(scenario=scenario)
+  File "/gpfs/home4/scur0391/projects/ABM/Model.py", line 109, in __init__
+    super().__init__(scenario=scenario)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home4/scur0391/projects/ABM/.venv/lib/python3.14/site-packages/mesa/mesa_logging.py", line 112, in wrapper
+    res = func(*args, **kwargs)
+  File "/gpfs/home4/scur0391/projects/ABM/.venv/lib/python3.14/site-packages/mesa/model.py", line 179, in __init__
+    self.scenario = scenario
+    ^^^^^^^^^^^^^
+  File "/gpfs/home4/scur0391/projects/ABM/.venv/lib/python3.14/site-packages/mesa/model.py", line 90, in scenario
+    scenario.model = self
+    ^^^^^^^^^^^^^^
+  File "/gpfs/home4/scur0391/projects/ABM/.venv/lib/python3.14/site-packages/mesa/experimental/scenarios/scenario.py", line 100, in __setattr__
+    raise ValueError(
+        f"Cannot change scenario parameter '{name}' during model run."
+    )
+ValueError: Cannot change scenario parameter 'model' during model run.
