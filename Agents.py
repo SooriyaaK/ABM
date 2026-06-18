@@ -73,7 +73,6 @@ class SchellingAgent(CellAgent):
         self.contribution = 0.0
         self.contribution_percentage = 0.05
         self.current_utility = 0.0
-
         self.happy = False
 
     @property
@@ -175,7 +174,6 @@ class SchellingAgent(CellAgent):
         if not is_current:
             total_utility -= self.move_cost
 
-
         return total_utility
 
     def step(self) -> None:
@@ -216,6 +214,8 @@ class SchellingAgent(CellAgent):
             price = current_neighbourhood.cost
             burden = price / self.income
             
+            #print(f"Cost={price}, Income={self.income}, Threshold={self.income * self.budget_fraction}")
+            
             if burden <= self.budget_fraction:
                 self.happy = True
             else:
@@ -233,13 +233,12 @@ class SchellingAgent(CellAgent):
 
         if empty_cells:
             self.cell = self.model.random.choice(empty_cells)
-            self.happy = False
-            self.current_utility = self.utility(chosen_neighbourhood, is_current=False)
-        
+            self.happy = True
         else:
             # The chosen neighbourhood is full, the agent is unhappy.
             self.happy = False
-            self.current_utility = self.utility(current_neighbourhood, is_current=True)
+        
+        self.current_utility = self.utility(current_neighbourhood, is_current=False)
             
 
     def assign_state(self) -> None:
