@@ -1,6 +1,8 @@
 import os
 
+import numpy as np
 import solara
+import matplotlib.pyplot as plt
 from mesa.visualization.components import AgentPortrayalStyle, PropertyLayerStyle
 from matplotlib.collections import LineCollection
 
@@ -75,6 +77,38 @@ def get_segregation_status(model):
         f"{convergence_str}"
     )
 
+def UtilityPlot(model):
+    """Custom Solara component: median utility with Q25/Q75 IQR band over time."""
+    df = model.datacollector.get_agent_vars_dataframe()
+
+    if df.empty or "agent_type" not in df.columns:
+        return solara.Markdown("*No utility data yet.*")
+
+    # get per-step utility from agent datacollector
+    # agent_vars_dataframe has MultiIndex (Step, AgentID)
+    utility_df = model.datacollector.get_agent_vars_dataframe()
+
+    # Mesa stores agent vars; we need current_utility — add it to datacollector (see note below)
+    # For now, use the model-level utility_history if available
+    if not hasattr(model, "utility_history") or len(model.utility_history) == 0:
+        return solara.Markdown("*No utility history yet.*")
+
+    steps = np.arange(len(model.utility_history))
+    medians = np.array([u["median"] for u in model.utility_history])
+    q25s    = np.array([u["q25"]    for u in model.utility_history])
+    q75s    = np.array([u["q75"]    for u in model.utility_history])
+
+    fig, ax = plt.subplots(figsize=(6, 3))
+    ax.plot(steps, medians, color="tab:blue", label="Median utility")
+    ax.fill_between(steps, q25s, q75s, color="tab:blue", alpha=0.2, label="IQR (Q25–Q75)")
+    ax.set_title("Agent utility over time")
+    ax.set_xlabel("Step")
+    ax.set_ylabel("Utility")
+    ax.legend(fontsize=8)
+    plt.tight_layout()
+
+    solara.FigureMatplotlib(fig)
+    plt.close(fig)
 
 
 path = os.path.dirname(os.path.abspath(__file__))
@@ -104,18 +138,19 @@ def agent_portrayal(agent):
         size=75,
     )
     #colours of agents when they are happy
-    colors_happy = {1: "tab:blue", 2: "tab:orange", 3: "tab:green"}
-    style.update(("color", colors_happy[agent.type]))
-    if not agent.happy:
-        colors_unhappy = {1: "lightblue", 2: "moccasin", 3: "lightgreen"}
-        style.update(("color", colors_unhappy[agent.type]), ("size", 50), ("zorder", 2),)
+    if agent.action == "D":
+        colors_defect = {1: "tab:blue", 2: "tab:orange", 3: "tab:green"}
+        style.update(("color", colors_defect[agent.type]))
+    else:
+        colors_coop = {1: "lightblue", 2: "moccasin", 3: "lightgreen"}
+        style.update(("color", colors_coop[agent.type]), ("size", 50), ("zorder", 2),)
     return style
 
 
 model_params = {
     "rng": {
         "type": "InputText",
-        "value": 42,
+        "value": 69,
         "label": "Random Seed",
     },
     "density": Slider("Agent density", 0.8, 0.1, 1.0, 0.1),
@@ -124,6 +159,8 @@ model_params = {
     "homophily": Slider("Homophily", 0.4, 0.0, 1.0, 0.125),
     "width": 50,
     "height": 50,
+    "defector_frac": Slider("Defector fraction", 0.1, 0.0, 1.0, 0.05),
+
 }
 
 # Note: Models with images as markers are very performance intensive.
@@ -146,18 +183,20 @@ renderer.__class__ = _RerunRenderer
 # property layers on top of it if specified.
 renderer.render()
 
-HappyPlot = make_plot_component({"happy": "tab:green"})
+# HappyPlot = make_plot_component({"happy": "tab:green"})
+
 HPlot = make_plot_component({"H": "tab:red"}) # plots segregation metric
 
 page = SolaraViz(
     model1,
     renderer,
     components=[
-        HappyPlot,
+        UtilityPlot,
         HPlot,
         get_happy_agents,
         get_segregation_status,
     ],
     model_params=model_params,
 )
+
 page  # noqa

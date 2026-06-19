@@ -1,0 +1,12 @@
+
+--- Run 1/2 ---
+  Reached max steps (200).
+-> Final H: 0.0694
+-> Happy agents: 156 / 2004
+
+--- Run 2/2 ---
+  Reached max steps (200).
+-> Final H: 0.1373
+-> Happy agents: 44 / 1983
+
+Plot saved to results_job24023137_N2_nb10.png
