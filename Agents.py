@@ -408,7 +408,9 @@ class SchellingAgent(CellAgent):
                 # Agent remains in current neighbourhood
                 self.current_utility = self.utility(current_neighbourhood, is_current=True)
 
-
+    @property
+    def calculate_utility(self) -> None:
+        self.current_utility = self.utility(self.neighbourhood, True)
 
     def assign_state(self) -> None:
         """

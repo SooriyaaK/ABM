@@ -283,7 +283,8 @@ class Schelling(Model):
         for a in agents:
             if self.random.random() < self.activation_rate:
                 a.step()
-        
+            else:
+                a.calculate_utility 
         self.agents.shuffle_do("choose_strategy")
         self.agents.do("assign_state")
 
