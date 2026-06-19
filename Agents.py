@@ -11,7 +11,7 @@ class SchellingAgent(CellAgent):
     adapting their cooperation - defect strategy through localized social learning.
     """
 
-    def __init__(self, model, cell, agent_type: int, income: int, radius: int = 1,
+    def __init__(self, model, cell, agent_type: int, income: int, agent_strategy: float, radius: int = 1,
         beta_mean: float = 1.0, beta_sigma: float = 1.0, utility_form: str = "continuous", 
         baseline_benefit: float = 1.0, move_cost: float = 0.5, logit_scale: float = 1.0, 
         budget_fraction: float = 0.5, quality_weight: float = 1.0, homophily_weight: float = 5.0, cost_weight: float = 1.0) -> None:
@@ -23,6 +23,7 @@ class SchellingAgent(CellAgent):
         cell : Cell. The specific grid cell coordinate where this agent currently resides.
         agent_type : int. Income indicator upper class, medium class and lower class (e.g., 1, 2, or 3).
         income : int.The total income available to the agent.
+        agent_strategy : float. Initial cooperation strategy, where 0.0 = full cooperator and 1.0 = full defector.
         radius : int, default 1. The micro-level search radius for checking immediate neighbor similarity.
         beta_mean : float, default 1.0. The baseline population median sensitivity to cost-benefit and budget penalties.
         beta_sigma : float, default 1.0. The standard deviation of cost sensitivity across the population.
@@ -36,7 +37,8 @@ class SchellingAgent(CellAgent):
 
         Attributes:
         beta : float. The agent's individual price sensitivity coefficient, drawn from a log-normal distribution.
-        strategy : str. Active cooperative strategy, either C (Cooperator) or D (Defector).
+        strategy : float. The agent's strategy for cooperation. A value between 0.0 (full cooperator) and 1.0 (full defector).
+        action : str. The agent's current action, either "C" (Cooperator) or "D" (Defector).
         contribution : float. The actual currency amount currently contributed to the local public goods pool.
         contribution_percentage : float. The fixed tax fraction of total income contributed if the agent is a cooperator (5%).
         current_utility : float. The agents current utility score, inspected by local peers for social learning.
@@ -46,6 +48,7 @@ class SchellingAgent(CellAgent):
         self.cell = cell
         self.type = agent_type
         self.income = income
+        self.strategy = agent_strategy
         self.radius = radius
         self.move_count = 0
 
@@ -71,15 +74,11 @@ class SchellingAgent(CellAgent):
             self.beta = beta_mean
 
         # Choose initial cooperation strategy
-        if self.model.random.random() < self.model.defector_frac:
-            self.strategy = 1.0 # Chance of defecting 100%
-        else:
-            self.strategy = 0.0 # Chance of defecting 0%
-
         if self.strategy == 1.0:
             self.action = "D"
         else: 
             self.action = "C"
+
         self.contribution = 0.0
         self.contribution_percentage = 0.05 # Cooperators contribute 5% of their income to the neighborhood
         self.learning_rate = self.model.random.uniform(0, 1) # Heterogeneous learning rates for strategy updating

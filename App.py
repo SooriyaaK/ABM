@@ -159,7 +159,7 @@ model_params = {
     "homophily": Slider("Homophily", 0.4, 0.0, 1.0, 0.125),
     "width": 50,
     "height": 50,
-    "defector_frac": Slider("Defector fraction", 0.1, 0.0, 1.0, 0.05),
+    "defector_frac": Slider("Defector fraction", 0.5, 0.0, 1.0, 0.05),
 
 }
 
@@ -187,13 +187,16 @@ renderer.render()
 
 HPlot = make_plot_component({"H": "tab:red"}) # plots segregation metric
 
+#plots proportion of defectors in the population over time
+DefectorPlot = make_plot_component({"defector_proportion": "tab:blue"}) # plots defector proportion
+
 page = SolaraViz(
     model1,
     renderer,
     components=[
         UtilityPlot,
         HPlot,
-        get_happy_agents,
+        DefectorPlot,
         get_segregation_status,
     ],
     model_params=model_params,
