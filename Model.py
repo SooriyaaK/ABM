@@ -23,12 +23,20 @@ class Neighbourhood:
         return agents_list
     
     def update_cost(self, adjust = 0.3):
-        agents = self.agents
-        if agents:
-            target = sum((a.income) for a in agents) / len(agents)
-            self.cost += adjust * (target - self.cost) #costs dont rise instantly but slowly
-        else:
-            self.cost = 0.0    
+
+        current_residents = self.agents
+
+        if len(current_residents) > 0:
+            total_income = 0
+
+            for agent in current_residents:
+                total_income += agent.income
+
+            avg_income = total_income / len(current_residents)
+            occupancy = self.num_agents / len(self.cells)
+            rent_fraction = self.model.base_rent + self.model.quality_premium * self.quality
+            target = avg_income * rent_fraction * (1 + occupancy)
+            self.cost += adjust * (target - self.cost) #prices adjust slowly, not instantly
 
 class SchellingScenario(Scenario):
     """Scenario for the Schelling model.
@@ -51,8 +59,24 @@ class SchellingScenario(Scenario):
     frac3: float = 0.33
     homophily: float = 0.4
     radius: int = 1
-    neighbourhood_count = 25
-
+    neighbourhood_count: int = 25
+    defector_frac: float = 0.5
+    
+    # Mixed-logit parameters
+    beta_mean: float = 1.0  # population mean      
+    beta_sigma: float = 1.0 # heterogeneity
+    utility_form: str = "continuous" # threshold 
+    
+    # Cost-benefit utility parameters
+    baseline_benefit: float = 1.0 # utility of being housed
+    move_cost: float = 0.5 # penalty for relocating
+    logit_scale: float = 1.0 # converts the burden penalty into utility units
+    budget_fraction: float = 0.3 # fraction of income an agent will spend on housing
+    base_rent: float = 0.05 # baseline rent as a fraction of local income
+    quality_premium: float = 0.2 # extra rent fraction a top-quality neighbourhood charges
+    quality_weight: float = 2.0 # how much agents value a neighbourhood's quality
+    cost_weight: float = 3.0 # how painful is the cost of cooperating to an agent
+    activation_rate: float = 0.3 # how often the agent is activated per poisson process rules
 
 class Schelling(Model):
     """Model class for the Schelling segregation model."""
