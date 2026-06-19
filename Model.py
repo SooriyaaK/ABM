@@ -107,7 +107,7 @@ class SchellingScenario(Scenario):
     homophily: float = 0.4
     radius: int = 1
     neighbourhood_count: int = 25
-    defector_frac: float = 0.1
+    defector_frac: float = 0.5
     
     # Mixed-logit parameters
     beta_mean: float = 1.0  # population mean      
@@ -123,6 +123,7 @@ class SchellingScenario(Scenario):
     quality_premium: float = 0.4 # extra rent fraction a top-quality neighbourhood charges
     quality_weight: float = 2.0 # how much agents value a neighbourhood's quality
     cost_weight: float = 3.0 # how painful is the cost of cooperating to an agent
+    activation_rate: float = 0.3 # how often the agent is activated per poisson process rules
 
 class Schelling(Model):
     """Model class for the Schelling segregation model."""
@@ -144,6 +145,7 @@ class Schelling(Model):
         self.base_rent = scenario.base_rent
         self.quality_premium = scenario.quality_premium
         self.defector_frac = scenario.defector_frac
+        self.activation_rate = scenario.activation_rate
 
         # Segregation tracking
         self.H_history = [] # tracking H values
@@ -275,7 +277,13 @@ class Schelling(Model):
         self.agents.do("contribute")
         for i in self.neighbourhoods.values():
             i.update_cost()
-        self.agents.shuffle_do("step")  # Activate all agents in random order
+        #discrete poisson process with bernoulli per step
+        agents = list(self.agents)
+        self.random.shuffle(agents)
+        for a in agents:
+            if self.random.random() < self.activation_rate:
+                a.step()
+        
         self.agents.shuffle_do("choose_strategy")
         self.agents.do("assign_state")
 
