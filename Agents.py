@@ -116,97 +116,6 @@ class SchellingAgent(CellAgent):
         else:
             return
 
-    # def utility(self, neighbourhood, is_current: bool) -> float:
-    #     """
-    #     Cost-benefit utility of one neighbourhood for this agent.
-    #     The utility is a function of the neighbourhood's cost, quality, and demographic composition,
-    #     as well as the agent's income, preferences, and the potential move cost if it's not the current neighbourhood.
-    #     """
-    #     price = neighbourhood.cost
-    #     burden = price / self.income
-    #     excess = burden - self.budget_fraction
-
-    #     if excess > 0:
-    #         penalty = excess
-    #     else:
-    #         penalty = 0.0
-
-    #     num_local_agents = neighbourhood.num_agents
-
-    #     if num_local_agents > 0:
-    #         macro_score = neighbourhood.type_counts.get(self.type) / num_local_agents
-    #     else:
-    #         macro_score = 1.0
-
-        
-    #     if is_current:
-    #         micro_cell = self.cell.get_neighborhood(radius=self.radius)
-    #         micro_agents = []
-
-    #         for cell in micro_cell:
-    #             if not cell.is_empty:
-    #                 for neighbor_agent in cell.agents:
-    #                     micro_agents.append(neighbor_agent)
-        
-    #         # Calculate micro-level similarity
-    #         if micro_agents:
-    #             # Count how many neighbors are the same type as me
-    #             micro_same_type_count = sum(1 for agent in micro_agents if agent.type == self.type)
-    #             homophily_score = micro_same_type_count / len(micro_agents)
-    #         else:   
-    #             # No neighbors: treat as neutral
-    #             homophily_score = 1.0
-    #     else:
-    #         # different neighbourhood: macro level - agents don't know their immediate neighbour before moving in
-    #         homophily_score = macro_score
-    
-    
-    #     # Heterogeneous sensitivity to homophily
-    #     # Agents with high beta care more about demographic similarity
-    #     # Some agents are more socially-driven, others less so
-    #     homophily_utility = self.beta * self.homophily_weight * homophily_score
-        
-    #     # calc the broader demographic composition 
-    #     macro_utility = 0.5 * self.homophily_weight * macro_score
-        
-    #     # Cooperators contribute 5% of income to neighbourhood quality
-    #     # Defectors don't contribute, so they don't pay this cost
-        
-    #     cooperation_cost = 0.0
-    #     if self.strategy == "C":
-    #         cooperation_cost = self.cost_weight * (self.contribution / self.income)
-     
-
-    #     # Moving to a new neighbourhood costs
-    #     # Agents prefer to stay 
-
-    #     move_friction = 0.0
-    #     if not is_current:
-    #         # Only penalize non-current neighbourhoods (candidate moves)
-    #         # Current neighbourhood has zero friction (already here)
-    #         move_friction = self.move_cost
-        
-        
-    #     # total utility
-    #     # Higher utility = agent prefers this neighbourhood
-        
-    #     total_utility = (
-    #         # Base utility of being housed 
-    #         self.baseline_benefit
-            
-    #         # Subtract all costs
-    #         - total_cost_disutility       # pain? Costs money? Utility goes down
-    #         - cooperation_cost            # Cooperator? Pays tax, utility goes down
-    #         - move_friction               # Moving to new place? utility goes down
-            
-    #         # Add all benefits
-    #         + quality_utility             # Nice neighbourhood? Utility goes up
-    #         + homophily_utility           # Similar neighbors? Utility goes up
-    #         + macro_utility               # Broader demographic fit? Utility goes up
-    #     )
-        
-    #     return total_utility
-
     def utility(self, neighbourhood, is_current: bool) -> float:
         '''
         Random Utility Theory: U_ij = V_ij + epsilon
@@ -236,6 +145,7 @@ class SchellingAgent(CellAgent):
 
         # moving 
         if not is_current:
+            # counter 
             move_penalty = self.move_cost
         else:
             move_penalty = 0.0
@@ -249,12 +159,64 @@ class SchellingAgent(CellAgent):
                 )
 
         return V_ij
-
-
+    
     # def step(self) -> None:
     #     """
-    #     Agent's decision step: choose neighbourhood using multinomial logit.
+    #     Agent's decision step: choose neighbourhood, evaluate happiness, update utility.
+        
+    #     1. Build choice set (current + neighbourhoods with vacancies)
+    #     2. Calculate utilities for each option using mixed logit
+    #     3. Make probabilistic choice (multinomial logit)
+    #     4. Determine happiness (affordability + homophily)
+    #     5. Move if chose different neighbourhood
+    #     6. Update current utility based on actual location
     #     """
+    
+    #     current_neighbourhood = self.neighbourhood
+    
+    #     # set of empty houses in the current neighbourhood and other neighbourhood
+    #     utilities = []
+    #     choice_set = [current_neighbourhood]
+    
+    #     for neighbourhood in self.model.neighbourhoods.values():
+    #         if neighbourhood.id == current_neighbourhood.id:
+    #             is_current = True
+    #             utilities.append(self.utility(neighbourhood, is_current))
+    #             continue
+    #         for cell in neighbourhood.cells:
+    #             if cell.is_empty:
+    #                 choice_set.append(neighbourhood)
+    #                 is_current = False
+    #                 utilities.append(self.utility(neighbourhood, is_current))
+    #                 break
+
+    #     # multimodal logit choice
+    #     max_utility = max(utilities)
+    #     choice_weights = []
+    #     for utility in utilities:
+    #         choice_weights.append(math.exp(utility - max_utility))
+
+    #     # Randomly pick one neighbourhood, weighted by the scores.
+    #     chosen_neighbourhood = self.model.random.choices(choice_set, weights=choice_weights)[0]
+
+    #     # 
+    #     if chosen_neighbourhood.id == current_neighbourhood.id:
+    #         #if the agent decides to stay in the current neighbourhood
+    #         price = current_neighbourhood.cost
+    #         burden = price / self.income
+    #         affordable = burden <= self.budget_fraction
+
+    #         # Homophily micro-level
+    #         micro_cell = self.cell.get_neighborhood(radius=self.radius)
+    #         micro_agents = []
+
+    #         # Collect neighbors
+    #         for cell in micro_cell:
+    #             if not cell.is_empty:
+    #                 for agent in cell.agents:
+    #                     micro_agents.append(agent)
+            
+    #         # Count similar types
     #         if micro_agents:
     #             micro_same_type_count = 0
     #             for agent in micro_agents:
@@ -262,240 +224,39 @@ class SchellingAgent(CellAgent):
     #                     micro_same_type_count += 1
                 
     #             homophily_score = micro_same_type_count / len(micro_agents)
-    #         else:   
-    #             homophily_score = 1.0
-    #     else:
-    #         homophily_score = macro_score
-
-    #     # neighborhood's attractiveness
-    #     dynamic_quality = neighbourhood.quality
-
-    #     total_utility = (self.baseline_benefit + 
-    #                      (self.quality_weight * dynamic_quality) +
-    #                      (self.homophily_weight * homophily_score) +  
-    #                      (0.5 * self.homophily_weight) * macro_score
-    #                     )
-        
-    #     total_utility -= self.beta * self.logit_scale * penalty
-
-    #     if not is_current:
-    #         total_utility -= self.move_cost
-    #     total_utility -= self.cost_weight * (self.contribution / self.income)
-    #     return total_utility 
-
-    # def utility(self, neighbourhood, is_current: bool) -> float:
-        
-
-    #     # How much of the agent's income does housing cost?
-    #     price = neighbourhood.cost
-    #     burden = price / self.income  # Normalized price (fraction of income)
-    
-    #     # Linear cost penalty: heterogeneous sensitivity beta_i varies by agent
-    #     # Agents with high beta are very price-sensitive, a low beta means less sensitive
-    #     cost_penalty = self.beta * self.logit_scale * burden
-    
-    #     # Affordability penalty for exceeding budget
-    #     excess = burden - self.budget_fraction
-    #     if excess > 0:
-    #         # Above budget: increases quadratically, making it very painful
-    #         affordability_cliff = 2.0 * (excess ** 2)
-    #     else:
-    #         # Under budget: no additional penalty
-    #         affordability_cliff = 0.0
-    
-    #     # calc the total pain of the housing cost
-    #     total_cost_disutility = cost_penalty + affordability_cliff
-    
-    #     # How good is the neighbourhood? 
-    #     # Measured by average contribution of residents.
-    #     # neighbourhood.quality ranges from [0, 1] - a normalized contribution
-    #     # Higher quality means agents value living here more
-
-    #     dynamic_quality = neighbourhood.quality
-        
-    #     # Quality utility: all agents value quality equally: no heterogeneity here
-    #     quality_utility = self.quality_weight * dynamic_quality
-    
-    #     # Agents want to live near similar types (homophily = preference for similar)
-    
-    #     # similarity on a neighbourhood-level: macro demographic
-    #     num_local_agents = neighbourhood.num_agents
-    
-    #     if num_local_agents > 0:
-    #         # What fraction of the neighbourhood is the same type as me?
-    #         macro_score = neighbourhood.type_counts.get(self.type) / num_local_agents
-    #     else:
-    #         # Empty neighbourhood: treat as neutral
-    #         macro_score = 1.0
-    
-
-    #     if is_current:
-    #         # current neighboorhood: check on a micro level the 8 immediate neighbors in radius
-    #         micro_cell = self.cell.get_neighborhood(radius=self.radius)
-    #         micro_agents = []
+    #             homophilic = homophily_score >= 0.4  # Adjust threshold
+    #         else:
+    #             homophilic = True
             
-    #         # Collect all agents in the micro search radius
-    #         for cell in micro_cell:
-    #             if not cell.is_empty:
-    #                 for neighbor_agent in cell.agents:
-    #                     micro_agents.append(neighbor_agent)
-        
-    #         # Calculate micro-level similarity
-    #         if micro_agents:
-    #             # Count how many neighbors are the same type as me
-    #             micro_same_type_count = sum(1 for agent in micro_agents if agent.type == self.type)
-    #             homophily_score = micro_same_type_count / len(micro_agents)
-    #         else:   
-    #             # No neighbors: treat as neutral
-    #             homophily_score = 1.0
+    #         # Happy if both affordability and same type of agent
+    #         self.happy = affordable and homophilic
+            
+    #         # Update utility for current location 
+    #         self.current_utility = self.utility(current_neighbourhood, is_current=True)
+
     #     else:
-    #         # different neighbourhood: macro level - agents don't know their immediate neighbour before moving in
-    #         homophily_score = macro_score
-    
-    
-    #     # Heterogeneous sensitivity to homophily
-    #     # Agents with high beta care more about demographic similarity
-    #     # Some agents are more socially-driven, others less so
-    #     homophily_utility = self.beta * self.homophily_weight * homophily_score
-        
-    #     # calc the broader demographic composition 
-    #     macro_utility = 0.5 * self.homophily_weight * macro_score
-        
-    #     # Cooperators contribute 5% of income to neighbourhood quality
-    #     # Defectors don't contribute, so they don't pay this cost
-        
-    #     cooperation_cost = 0.0
-    #     if self.action == 0.0: # judge it on the action not the strategy
-    #         cooperation_cost = self.cost_weight * (self.contribution / self.income)
-     
+    #         # if the agent choose to move to a different neighboorhood
+    #         # Otherwise move into one of the empty cells of the chosen neighbourhood.
+    #         empty_cells = []
 
-    #     # Moving to a new neighbourhood costs
-    #     # Agents prefer to stay 
+    #         for cell in chosen_neighbourhood.cells:
+    #             if cell.is_empty:
+    #                 empty_cells.append(cell)
 
-    #     move_friction = 0.0
-    #     if not is_current:
-    #         # Only penalize non-current neighbourhoods (candidate moves)
-    #         # Current neighbourhood has zero friction (already here)
-    #         move_friction = self.move_cost
-        
-        
-    #     # total utility
-    #     # Higher utility = agent prefers this neighbourhood
-        
-    #     total_utility = (
-    #         # Base utility of being housed 
-    #         self.baseline_benefit
-            
-    #         # Subtract all costs
-    #         - total_cost_disutility       # pain? Costs money? Utility goes down
-    #         - cooperation_cost            # Cooperator? Pays tax, utility goes down
-    #         - move_friction               # Moving to new place? utility goes down
-            
-    #         # Add all benefits
-    #         + quality_utility             # Nice neighbourhood? Utility goes up
-    #         + homophily_utility           # Similar neighbors? Utility goes up
-    #         + macro_utility               # Broader demographic fit? Utility goes up
-    #     )
-        
-    #     return total_utility
-    
-    def step(self) -> None:
-        """
-        Agent's decision step: choose neighbourhood, evaluate happiness, update utility.
-        
-        1. Build choice set (current + neighbourhoods with vacancies)
-        2. Calculate utilities for each option using mixed logit
-        3. Make probabilistic choice (multinomial logit)
-        4. Determine happiness (affordability + homophily)
-        5. Move if chose different neighbourhood
-        6. Update current utility based on actual location
-        """
-    
-        current_neighbourhood = self.neighbourhood
-    
-        # set of empty houses in the current neighbourhood and other neighbourhood
-        utilities = []
-        choice_set = [current_neighbourhood]
-    
-        for neighbourhood in self.model.neighbourhoods.values():
-            if neighbourhood.id == current_neighbourhood.id:
-                is_current = True
-                utilities.append(self.utility(neighbourhood, is_current))
-                continue
-            for cell in neighbourhood.cells:
-                if cell.is_empty:
-                    choice_set.append(neighbourhood)
-                    is_current = False
-                    utilities.append(self.utility(neighbourhood, is_current))
-                    break
-
-        # multimodal logit choice
-        max_utility = max(utilities)
-        choice_weights = []
-        for utility in utilities:
-            choice_weights.append(math.exp(utility - max_utility))
-
-        # Randomly pick one neighbourhood, weighted by the scores.
-        chosen_neighbourhood = self.model.random.choices(choice_set, weights=choice_weights)[0]
-
-        # 
-        if chosen_neighbourhood.id == current_neighbourhood.id:
-            #if the agent decides to stay in the current neighbourhood
-            price = current_neighbourhood.cost
-            burden = price / self.income
-            affordable = burden <= self.budget_fraction
-
-            # Homophily micro-level
-            micro_cell = self.cell.get_neighborhood(radius=self.radius)
-            micro_agents = []
-
-            # Collect neighbors
-            for cell in micro_cell:
-                if not cell.is_empty:
-                    for agent in cell.agents:
-                        micro_agents.append(agent)
-            
-            # Count similar types
-            if micro_agents:
-                micro_same_type_count = 0
-                for agent in micro_agents:
-                    if agent.type == self.type:
-                        micro_same_type_count += 1
+    #         if empty_cells:
+    #             # Move agent to new neighbourhood
+    #             new_cell = self.model.random.choice(empty_cells)
+    #             self.move_to(new_cell)
+    #             self.happy = False  # Agent isn't settled and is not yet happy
                 
-                homophily_score = micro_same_type_count / len(micro_agents)
-                homophilic = homophily_score >= 0.4  # Adjust threshold
-            else:
-                homophilic = True
-            
-            # Happy if both affordability and same type of agent
-            self.happy = affordable and homophilic
-            
-            # Update utility for current location 
-            self.current_utility = self.utility(current_neighbourhood, is_current=True)
-
-        else:
-            # if the agent choose to move to a different neighboorhood
-            # Otherwise move into one of the empty cells of the chosen neighbourhood.
-            empty_cells = []
-
-            for cell in chosen_neighbourhood.cells:
-                if cell.is_empty:
-                    empty_cells.append(cell)
-
-            if empty_cells:
-                # Move agent to new neighbourhood
-                new_cell = self.model.random.choice(empty_cells)
-                self.move_to(new_cell)
-                self.happy = False  # Agent isn't settled and is not yet happy
+    #             # Update utility for new neighbourhood where agent now is
+    #             self.current_utility = self.utility(self.neighbourhood, is_current=True)
+    #         else:
+    #             # The chosen neighbourhood is full, the agent is unhappy and stays
+    #             self.happy = False
                 
-                # Update utility for new neighbourhood where agent now is
-                self.current_utility = self.utility(self.neighbourhood, is_current=True)
-            else:
-                # The chosen neighbourhood is full, the agent is unhappy and stays
-                self.happy = False
-                
-                # Agent remains in current neighbourhood
-                self.current_utility = self.utility(current_neighbourhood, is_current=True)
+    #             # Agent remains in current neighbourhood
+    #             self.current_utility = self.utility(current_neighbourhood, is_current=True)
 
 
 
@@ -516,58 +277,3 @@ class SchellingAgent(CellAgent):
         if old_nb != new_nb:
             old_nb.remove_agent(self)
             new_nb.add_agent(self)
-
-
-    # def assign_state(self) -> None:
-    #     """Determine if agent is happy and move if necessary."""
-    #     neighbors = list(self.cell.get_neighborhood(radius=self.radius).agents)
-
-    #     # Count similar neighbors
-    #     similar_neighbors = len([n for n in neighbors if n.type == self.type])
-    #     costs = {nb.id: nb.cost for nb in self.model.neighbourhoods.values()}
-
-    #     # Calculate the fraction of similar neighbors
-    #     if (valid_neighbors := len(neighbors)) > 0:
-    #         similarity_fraction = similar_neighbors / valid_neighbors
-    #     else:
-    #         # If there are no neighbors, the similarity fraction is 0
-    #         similarity_fraction = 0.0
-    #     if self.type == 3:
-    #         highest_cost = max(n.cost for n in self.model.neighbourhoods.values())
-    #         higher_exists = highest_cost > self.neighbourhood.cost
-    #         if higher_exists and self.model.random.random() < 0.3:
-    #             self.happy = False
-    #         else:
-    #             self.happy = True
-    #             self.model.happy += 1
-    #         #self.happy = self.neighbourhood.cost >= highest_cost
-    #     else:
-    #         if self.neighbourhood.cost <= self.income:
-    #             self.happy = True
-    #             self.model.happy += 1
-    #         else:
-    #             self.happy = False
-    #     #if similarity_fraction < self.homophily:
-    #         #self.happy = False
-    #     #else:
-    #         #self.happy = True
-    #         #self.model.happy += 1
-
-    # def step(self) -> None:
-    #     # Move if unhappy
-    #     if self.happy: 
-    #         return
-    #     if self.type == 3:
-    #         higher_nb = [nb for nb in self.model.neighbourhoods.values() if nb.cost > self.neighbourhood.cost]
-    #         candidate_nbs = [c for n in higher_nb for c in n.cells if c.is_empty]
-    #         if candidate_nbs:
-    #             self.cell = self.model.random.choice(candidate_nbs)
-    #     else:
-    #         lower_nb = [nb for nb in self.model.neighbourhoods.values() if nb.cost < self.neighbourhood.cost]
-    #         candidate_nbs = [c for n in lower_nb for c in n.cells if c.is_empty]
-    #         if candidate_nbs:
-    #             self.cell = self.model.random.choice(candidate_nbs)
-    #         #affordable = [nb for nb in self.model.neighbourhoods.values() if nb.cost <= self.income]
-    #         #empty = [c for n in affordable for c in n.cells if c.is_empty]
-    #         #if empty:
-    #         #    self.cell = self.model.random.choice(empty)
