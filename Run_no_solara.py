@@ -10,15 +10,6 @@ def run_multiple_time(N=10):
 
     # config
     MAX_STEPS = 200
-    scenario = SchellingScenario(
-        width=50,
-        height=50,
-        density=0.8,
-        frac1=0.33,
-        frac2=0.33,
-        homophily=0.4,
-        neighbourhood_count=10,
-    )
 
     # history
     all_H = []
@@ -28,6 +19,17 @@ def run_multiple_time(N=10):
     # run simulation N times
     for i in range(N):
         print(f"\n--- Run {i + 1}/{N} ---")
+
+        scenario = SchellingScenario(
+            width=50,
+            height=50,
+            density=0.8,
+            frac1=0.33,
+            frac2=0.33,
+            homophily=0.4,
+            neighbourhood_count=10,
+        )
+
 
         # set up model
         model = Schelling(scenario=scenario)
