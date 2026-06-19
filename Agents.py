@@ -47,6 +47,7 @@ class SchellingAgent(CellAgent):
         self.type = agent_type
         self.income = income
         self.radius = radius
+        self.move_count = 0
 
         # Utility function parameters
         self.utility_form = utility_form
@@ -59,12 +60,15 @@ class SchellingAgent(CellAgent):
         self.cost_weight = cost_weight
 
         # Draw individual beta from a log-normal distribution to introduce heterogeneity in cost sensitivity
-        # if beta_sigma > 0:
-        #     z = self.model.random.gauss(0, 1)
-        #     log_beta = math.log(beta_mean) + beta_sigma * z
-        #     self.beta = math.exp(log_beta)
-        # else:
-        #     self.beta = beta_mean
+        # agent’s price sensitivity (how strongly they dislike high rent).
+        # most agents are near beta_mean,
+        # some are much more cost‑sensitive if beta_sigma is large.
+        if beta_sigma > 0:
+            z = self.model.random.gauss(0, 1)
+            log_beta = math.log(beta_mean) + beta_sigma * z
+            self.beta = math.exp(log_beta)
+        else:
+            self.beta = beta_mean
 
         # Choose initial cooperation strategy
         if self.model.random.random() < self.model.defector_frac:
@@ -143,22 +147,34 @@ class SchellingAgent(CellAgent):
 
         rent = actual_cost / self.income
 
+        if rent <= self.budget_fraction:
+            affordability = 1.0
+        elif rent >= 2 * self.budget_fraction:
+            affordability = 0.0
+        else:
+            affordability = 1.0 - (rent - self.budget_fraction) / self.budget_fraction
+
         # moving 
+        move_penalty = 0.0
+
         if not is_current:
             # counter 
-            move_penalty = self.move_cost
-        else:
-            move_penalty = 0.0
+            move_penalty = self.move_cost * (1.0 + 0.5 * self.move_count)
 
         # total utility = linear addition 
         V_ij = (self.baseline_benefit + 
                 quality_benefit +
+                affordability +
                 (self.homophily_weight * similarity) - 
-                (self.cost_weight * rent) - 
+                (self.beta * self.cost_weight * rent) - 
                 move_penalty
                 )
+        
+        scale = 1.0
 
-        return V_ij
+        U = 1.0 / (1.0 + math.exp(- scale * V_ij))
+
+        return U
     
     # def step(self) -> None:
     #     """
@@ -259,6 +275,7 @@ class SchellingAgent(CellAgent):
     #             self.current_utility = self.utility(current_neighbourhood, is_current=True)
 
 
+    
 
     def assign_state(self) -> None:
         """
@@ -277,3 +294,4 @@ class SchellingAgent(CellAgent):
         if old_nb != new_nb:
             old_nb.remove_agent(self)
             new_nb.add_agent(self)
+            self.move_count +=1
