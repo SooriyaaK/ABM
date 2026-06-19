@@ -100,7 +100,7 @@ class SchellingAgent(CellAgent):
         Copy the strategy of the most successful neighbor by a 50% chance.
         """
         neighbors = list(self.cell.get_neighborhood(radius=1).agents) # moore neighborhood
-        if self.random.random() < 0.5 and len(neighbors) != 0:
+        if self.model.random.random() < 0.5 and len(neighbors) != 0:
             best_neighbor = max(neighbors, key=lambda a: a.current_utility)
         
             if best_neighbor.current_utility > self.current_utility:

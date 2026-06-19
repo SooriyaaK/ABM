@@ -119,7 +119,7 @@ def agent_portrayal(agent):
 model_params = {
     "rng": {
         "type": "InputText",
-        "value": 42,
+        "value": 69,
         "label": "Random Seed",
     },
     "density": Slider("Agent density", 0.8, 0.1, 1.0, 0.1),

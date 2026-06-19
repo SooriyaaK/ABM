@@ -7,7 +7,6 @@ from mesa.experimental.scenarios import Scenario
 from mesa.discrete_space import PropertyLayer
 from Convergence_discrete import compute_H
 
-
 class Neighbourhood:
     def __init__(self, id, model, seed_coord):
         self.id = id
@@ -97,7 +96,7 @@ class SchellingScenario(Scenario):
         radius: Search radius for checking neighbor similarity
         rng: Seed for reproducibility
     """
-
+    seed: int = 69
     height: int = 50
     width: int = 50
     density: float = 0.8
@@ -134,6 +133,7 @@ class Schelling(Model):
             scenario: SchellingScenario containing model parameters.
         """
         super().__init__(scenario=scenario)
+        self.random.seed(int(scenario.seed))
 
         # Model parameters
         self.density = scenario.density
@@ -269,11 +269,11 @@ class Schelling(Model):
         """
         self.happy = 0  # Reset counter of happy agents
         self.agents.do("contribute")
+        for i in self.neighbourhoods.values():
+            i.update_cost()
         self.agents.shuffle_do("step")  # Activate all agents in random order
         self.agents.shuffle_do("choose_strategy")
         self.agents.do("assign_state")
-        for i in self.neighbourhoods.values():
-            i.update_cost()
 
         # Segregation metric H
         H = compute_H(
