@@ -71,7 +71,10 @@ class SchellingAgent(CellAgent):
         else:
             self.strategy = 0.0 # Chance of defecting 0%
 
-        self.action = self.strategy
+        if self.strategy == 1.0:
+            self.action = "D"
+        else: 
+            self.action = "C"
         self.contribution = 0.0
         self.contribution_percentage = 0.05 # Cooperators contribute 5% of their income to the neighborhood
         self.learning_rate = self.model.random.uniform(0, 1) # Heterogeneous learning rates for strategy updating
@@ -91,10 +94,10 @@ class SchellingAgent(CellAgent):
         
         if self.model.random.random() < self.strategy:
             new_contribution = 0.0
-            self.action = 1.0  # Defector this round
+            self.action = "D"  # Defector this round
         else:
             new_contribution = self.income * self.contribution_percentage
-            self.action = 0.0  # Cooperator this round
+            self.action = "C"  # Cooperator this round
         self.neighbourhood.total_contribution += new_contribution - self.contribution
         self.contribution = new_contribution
 
