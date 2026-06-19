@@ -391,14 +391,18 @@ class SchellingAgent(CellAgent):
                 # Move agent to new neighbourhood
                 new_cell = self.model.random.choice(empty_cells)
                 self.move_to(new_cell)
-                self.happy = False #the agent isnt settled and is not yet happy
-                self.current_utility = self.utility(self.neighbourhood, is_current=False)
+                self.happy = False  # Agent isn't settled and is not yet happy
+                
                 # Update utility for new neighbourhood where agent now is
+                self.current_utility = self.utility(self.neighbourhood, is_current=True)
             else:
                 # The chosen neighbourhood is full, the agent is unhappy and stays
                 self.happy = False
-                self.current_utility = self.utility(self.neighbourhood, is_current=True)
-            
+                
+                # Agent remains in current neighbourhood
+                self.current_utility = self.utility(current_neighbourhood, is_current=True)
+
+
 
     def assign_state(self) -> None:
         """

@@ -1,0 +1,15 @@
+
+--- Run 1/2 ---
+  Reached max steps (step=199).
+-> Final H: 0.0516
+-> Happy agents: 99 / 2020
+
+--- Run 2/2 ---
+  Reached max steps (step=199).
+-> Final H: 0.0668
+-> Happy agents: 89 / 2001
+steps: (200,)
+mean_H: (200,)
+mean_happy: (200,)
+
+Plot saved to results.png

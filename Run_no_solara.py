@@ -135,4 +135,4 @@ def run_multiple_time(N=10):
 
 
 if __name__ == "__main__":
-    run_multiple_time(N=10)
+    run_multiple_time(N=2)
