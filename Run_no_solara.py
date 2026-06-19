@@ -1,161 +1,117 @@
+import os
+import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 from Model import Schelling, SchellingScenario
-import os
 
 
-def run_multiple_time(N=10):
-    """
-    Runs simulation N times, generates plots with std/IQR as error bands for H and utility.
-    """
+def run_single(seed: int, max_steps: int = 200):
+    """Run one simulation with a fixed seed, return collected data."""
+    scenario = SchellingScenario(
+        width=50,
+        height=50,
+        density=0.8,
+        frac1=0.33,
+        frac2=0.33,
+        homophily=0.4,
+        neighbourhood_count=10,
+    )
+    model = Schelling(scenario=scenario, rng=seed)
 
-    # config
-    MAX_STEPS = 200
+    median_utility, q25_utility, q75_utility = [], [], []
 
-    # history
-    all_H = []
-    all_median_utility = []
-    all_q25_utility = []
-    all_q75_utility = []
-    convergence_steps = []
+    # step 0
+    utils = [a.current_utility for a in model.agents]
+    median_utility.append(np.median(utils))
+    q25_utility.append(np.percentile(utils, 25))
+    q75_utility.append(np.percentile(utils, 75))
 
-    # run simulation N times
-    for i in range(N):
-        print(f"\n--- Run {i + 1}/{N} ---")
+    steps_taken = max_steps
+    for step in range(max_steps):
+        if not model.running:
+            steps_taken = step
+            break
+        model.step()
+        utils = [a.current_utility for a in model.agents]
+        median_utility.append(np.median(utils))
+        q25_utility.append(np.percentile(utils, 25))
+        q75_utility.append(np.percentile(utils, 75))
 
-        scenario = SchellingScenario(
-            width=50,
-            height=50,
-            density=0.8,
-            frac1=0.33,
-            frac2=0.33,
-            homophily=0.4,
-            neighbourhood_count=10,
-        )
+    H_series = model.H_history[1:]
 
-        # set up model
-        model = Schelling(scenario=scenario)
+    # Pad to max_steps
+    H_series      += [H_series[-1]]      * (max_steps - len(H_series))
+    pad = max_steps + 1
+    median_utility += [median_utility[-1]] * (pad - len(median_utility))
+    q25_utility    += [q25_utility[-1]]    * (pad - len(q25_utility))
+    q75_utility    += [q75_utility[-1]]    * (pad - len(q75_utility))
 
-        # per-step utility tracking for this run
-        run_median_utility = []
-        run_q25_utility = []
-        run_q75_utility = []
+    final_H = model.H_history[-1] if model.H_history else None
+    print(f"[seed={seed}] steps={steps_taken}, final H={final_H:.4f}, "
+          f"happy={model.happy}/{len(model.agents)}")
 
-        # collect initial utility (step 0)
-        utilities_t0 = [a.current_utility for a in model.agents]
-        run_median_utility.append(np.median(utilities_t0))
-        run_q25_utility.append(np.percentile(utilities_t0, 25))
-        run_q75_utility.append(np.percentile(utilities_t0, 75))
+    return {
+        "seed": seed,
+        "steps_taken": steps_taken,
+        "H_series": np.array(H_series),
+        "median_utility": np.array(median_utility),
+        "q25_utility": np.array(q25_utility),
+        "q75_utility": np.array(q75_utility),
+    }
 
-        # step through simulation
-        steps_taken = MAX_STEPS
-        for step in range(MAX_STEPS):
-            if not model.running:
-                steps_taken = step
-                print(f"  Stopped at step {step}.")
-                break
-            model.step()
 
-            # collect utility after each step
-            utilities = [a.current_utility for a in model.agents]
-            run_median_utility.append(np.median(utilities))
-            run_q25_utility.append(np.percentile(utilities, 25))
-            run_q75_utility.append(np.percentile(utilities, 75))
-        else:
-            print(f"  Reached max steps ({MAX_STEPS}).")
+def save_results(result: dict, job_id: str, neighbourhood_count: int):
+    """Save per-seed plot and numpy data to output/."""
+    os.makedirs("output", exist_ok=True)
+    seed = result["seed"]
 
-        convergence_steps.append(steps_taken)
+    # Save raw arrays for later aggregation
+    np.savez(
+        f"output/run_job{job_id}_seed{seed}_nb{neighbourhood_count}.npz",
+        **{k: v for k, v in result.items() if isinstance(v, np.ndarray)},
+        seed=seed,
+        steps_taken=result["steps_taken"],
+    )
 
-        final_H = model.H_history[-1] if model.H_history else None
-        print(f"-> Final H: {final_H:.4f}" if final_H is not None else "  No H recorded.")
-        print(f"-> Happy agents: {model.happy} / {len(model.agents)}")
+    # Save per-seed plot
+    max_steps = len(result["H_series"])
+    steps_H = np.arange(max_steps)
+    steps_u = np.arange(max_steps + 1)
 
-        # Pad shorter runs with their last value
-        H_series = model.H_history[1:]
-        H_series += [H_series[-1]] * (MAX_STEPS - len(H_series))
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4))
 
-        pad_len = MAX_STEPS + 1  # +1 for step 0
-        run_median_utility += [run_median_utility[-1]] * (pad_len - len(run_median_utility))
-        run_q25_utility    += [run_q25_utility[-1]]    * (pad_len - len(run_q25_utility))
-        run_q75_utility    += [run_q75_utility[-1]]    * (pad_len - len(run_q75_utility))
-
-        all_H.append(H_series)
-        all_median_utility.append(run_median_utility)
-        all_q25_utility.append(run_q25_utility)
-        all_q75_utility.append(run_q75_utility)
-
-    # Convert to arrays
-    all_H             = np.array(all_H)              # (N, MAX_STEPS)
-    all_median_utility = np.array(all_median_utility) # (N, MAX_STEPS+1)
-    all_q25_utility    = np.array(all_q25_utility)
-    all_q75_utility    = np.array(all_q75_utility)
-
-    # Stats across runs
-    mean_H   = all_H.mean(axis=0)
-    std_H    = all_H.std(axis=0)
-
-    # Median of medians across runs, and mean of IQR bounds
-    grand_median_utility = np.median(all_median_utility, axis=0)
-    grand_q25            = all_q25_utility.mean(axis=0)
-    grand_q75            = all_q75_utility.mean(axis=0)
-
-    steps_H = np.arange(MAX_STEPS)
-    steps_u = np.arange(MAX_STEPS + 1)
-    convergence_steps = np.array(convergence_steps)
-    n_maxed = (convergence_steps == MAX_STEPS).sum()
-
-    # Plots
-    fig, axes = plt.subplots(1, 3, figsize=(18, 4))
-
-    # H over time
-    axes[0].plot(steps_H, mean_H, color="tab:red", label="Mean H")
-    axes[0].fill_between(steps_H, mean_H - std_H, mean_H + std_H,
-                         color="tab:red", alpha=0.2, label="±1 std")
+    axes[0].plot(steps_H, result["H_series"], color="tab:red")
     axes[0].axhline(0.8, color="red",    linestyle="--", linewidth=0.8, label="High (0.8)")
     axes[0].axhline(0.4, color="orange", linestyle="--", linewidth=0.8, label="Moderate (0.4)")
-    axes[0].set_title(f"Segregation index H over time (N={N})")
+    axes[0].set_title(f"Segregation H — seed {seed}")
     axes[0].set_xlabel("Step")
     axes[0].set_ylabel("H")
     axes[0].set_ylim(0, 1)
     axes[0].legend()
 
-    # Median utility over time 
-    axes[1].plot(steps_u, grand_median_utility, color="tab:blue", label="Median utility")
-    axes[1].fill_between(steps_u, grand_q25, grand_q75,
+    axes[1].plot(steps_u, result["median_utility"], color="tab:blue", label="Median utility")
+    axes[1].fill_between(steps_u, result["q25_utility"], result["q75_utility"],
                          color="tab:blue", alpha=0.2, label="IQR (Q25–Q75)")
-    axes[1].set_title(f"Agent utility over time (N={N})")
+    axes[1].set_title(f"Agent utility — seed {seed}")
     axes[1].set_xlabel("Step")
     axes[1].set_ylabel("Utility")
     axes[1].legend()
 
-    # Convergence histogram
-    bins = np.arange(convergence_steps.min(), convergence_steps.max() + 2) - 0.5
-    axes[2].hist(convergence_steps, bins=bins, color="tab:pink", edgecolor="white")
-    if n_maxed > 0:
-        axes[2].axvline(MAX_STEPS, color="red", linestyle="--", linewidth=1,
-                        label=f"Max steps hit ({n_maxed}x)")
-        axes[2].legend()
-    axes[2].set_title(f"Steps until convergence (N={N})")
-    axes[2].set_xlabel("Steps")
-    axes[2].set_ylabel("Count")
-    axes[2].text(0.05, 0.95,
-                 f"Mean: {convergence_steps.mean():.1f}\n"
-                 f"Std:  {convergence_steps.std():.1f}\n"
-                 f"Min:  {convergence_steps.min()}\n"
-                 f"Max:  {convergence_steps.max()}",
-                 transform=axes[2].transAxes,
-                 verticalalignment="top",
-                 fontsize=9,
-                 bbox=dict(boxstyle="round", facecolor="white", alpha=0.7))
-
-    # Build filename from SLURM job ID + key params
-    job_id = os.environ.get("SLURM_JOB_ID", "local")
-    fname = f"results/results_job{job_id}_N{N}_nb{scenario.neighbourhood_count}.png"
-
+    plt.tight_layout()
+    fname = f"output/plot_job{job_id}_seed{seed}_nb{neighbourhood_count}.png"
     plt.savefig(fname, dpi=150)
-    plt.show()
-    print(f"\nPlot saved to {fname}")
+    plt.close()
+    print(f"Saved: {fname}")
 
 
 if __name__ == "__main__":
-    run_multiple_time(N=2)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--seed", type=int, default=0, help="Random seed / SLURM array task ID")
+    parser.add_argument("--max-steps", type=int, default=200)
+    args = parser.parse_args()
+
+    job_id  = os.environ.get("SLURM_ARRAY_JOB_ID", os.environ.get("SLURM_JOB_ID", "local"))
+    nb_count = 10  # neighbourhood_count — keep in sync with scenario above
+
+    result = run_single(seed=args.seed, max_steps=args.max_steps)
+    save_results(result, job_id=job_id, neighbourhood_count=nb_count)
