@@ -1,0 +1,5002 @@
+[
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 1.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.1111,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.2222,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.3333,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.4444,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.5556,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.6667,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.7778,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 0.8889,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 1.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 1.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 1.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 1.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 1.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 1.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 1.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 1.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 1.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.1111,
+    "defector_frac": 1.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.1111,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.2222,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.3333,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.4444,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.5556,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.6667,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.7778,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 0.8889,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 1.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 1.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 1.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 1.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 1.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 1.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 1.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 1.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 1.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.2222,
+    "defector_frac": 1.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.1111,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.2222,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.3333,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.4444,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.5556,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.6667,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.7778,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 0.8889,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 1.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 1.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 1.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 1.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 1.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 1.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 1.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 1.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 1.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.3333,
+    "defector_frac": 1.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.1111,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.2222,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.3333,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.4444,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.5556,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.6667,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.7778,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 0.8889,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 1.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 1.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 1.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 1.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 1.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 1.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 1.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 1.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 1.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.4444,
+    "defector_frac": 1.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.1111,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.2222,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.3333,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.4444,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.5556,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.6667,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.7778,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 0.8889,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 1.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 1.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 1.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 1.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 1.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 1.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 1.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 1.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 1.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.5556,
+    "defector_frac": 1.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.1111,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.2222,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.3333,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.4444,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.5556,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.6667,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.7778,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 0.8889,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 1.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 1.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 1.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 1.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 1.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 1.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 1.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 1.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 1.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.6667,
+    "defector_frac": 1.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.1111,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.2222,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.3333,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.4444,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.5556,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.6667,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.7778,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 0.8889,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 1.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 1.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 1.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 1.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 1.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 1.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 1.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 1.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 1.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.7778,
+    "defector_frac": 1.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.1111,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.2222,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.3333,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.4444,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.5556,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.6667,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.7778,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 0.8889,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 1.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 1.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 1.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 1.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 1.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 1.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 1.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 1.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 1.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 0.8889,
+    "defector_frac": 1.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.1111,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.2222,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.3333,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.4444,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.5556,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.6667,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.7778,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.8889,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.1111
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.2222
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.3333
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.4444
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.5556
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.6667
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.7778
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.8889
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 1.0,
+    "learning_rate": 1.0
+  }
+]
