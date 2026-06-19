@@ -107,7 +107,7 @@ class SchellingScenario(Scenario):
     homophily: float = 0.4
     radius: int = 1
     neighbourhood_count: int = 25
-    defector_frac: float = 0.5
+    defector_frac: float = 0.3
     
     # Mixed-logit parameters
     beta_mean: float = 1.0  # population mean      
@@ -118,12 +118,12 @@ class SchellingScenario(Scenario):
     baseline_benefit: float = 1.0 # utility of being housed
     move_cost: float = 0.5 # penalty for relocating
     logit_scale: float = 1.0 # converts the burden penalty into utility units
-    budget_fraction: float = 0.5 # fraction of income an agent will spend on housing
-    base_rent: float = 0.3 # baseline rent as a fraction of local income
-    quality_premium: float = 0.4 # extra rent fraction a top-quality neighbourhood charges
+    budget_fraction: float = 0.3 # fraction of income an agent will spend on housing
+    base_rent: float = 0.05 # baseline rent as a fraction of local income
+    quality_premium: float = 0.2 # extra rent fraction a top-quality neighbourhood charges
     quality_weight: float = 2.0 # how much agents value a neighbourhood's quality
     cost_weight: float = 3.0 # how painful is the cost of cooperating to an agent
-    activation_rate: float = 0.3 # how often the agent is activated per poisson process rules
+    activation_rate: float = 0.5 # how often the agent is activated per poisson process rules
 
 class Schelling(Model):
     """Model class for the Schelling segregation model."""
