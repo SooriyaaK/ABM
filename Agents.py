@@ -67,12 +67,14 @@ class SchellingAgent(CellAgent):
 
         # Choose initial cooperation strategy
         if self.model.random.random() < self.model.defector_frac:
-            self.strategy = "D"
+            self.strategy = 1.0 # Chance of defecting 100%
         else:
-            self.strategy = "C"
+            self.strategy = 0.0 # Chance of defecting 0%
 
+        self.action = self.strategy
         self.contribution = 0.0
-        self.contribution_percentage = 0.05
+        self.contribution_percentage = 0.05 # Cooperators contribute 5% of their income to the neighborhood
+        self.learning_rate = self.model.random.uniform(0, 1) # Heterogeneous learning rates for strategy updating
         self.current_utility = 0.0
         self.happy = False
 
@@ -86,25 +88,28 @@ class SchellingAgent(CellAgent):
         If the agent is a cooperator, they contribute a fixed percentage of their income to the community.
         If the agent is a defector, their contribution is zero.
         """
-        if self.strategy == "D":
+        
+        if self.model.random.random() < self.strategy:
             new_contribution = 0.0
-            #self.contribution = 0.0
+            self.action = 1.0  # Defector this round
         else:
             new_contribution = self.income * self.contribution_percentage
-            #self.contribution = self.income * self.contribution_percentage
+            self.action = 0.0  # Cooperator this round
         self.neighbourhood.total_contribution += new_contribution - self.contribution
         self.contribution = new_contribution
 
     def choose_strategy(self):
         """
-        Copy the strategy of the most successful neighbor by a 50% chance.
+        Adapt to the strategy of the most successful neighbor if they are doing better than you.
         """
         neighbors = list(self.cell.get_neighborhood(radius=1).agents) # moore neighborhood
-        if self.random.random() < 0.5 and len(neighbors) != 0:
+        
+        if len(neighbors) != 0:
             best_neighbor = max(neighbors, key=lambda a: a.current_utility)
         
+            # Adapt your strategy towards the best neighbor's one weighted by your learning rate
             if best_neighbor.current_utility > self.current_utility:
-                self.strategy = best_neighbor.strategy
+                self.strategy = self.learning_rate*best_neighbor.strategy + (1-self.learning_rate)*self.strategy
         else:
             return
 
@@ -269,7 +274,7 @@ class SchellingAgent(CellAgent):
         # Defectors don't contribute, so they don't pay this cost
         
         cooperation_cost = 0.0
-        if self.strategy == "C":
+        if self.action == 0.0: # judge it on the action not the strategy
             cooperation_cost = self.cost_weight * (self.contribution / self.income)
      
 
