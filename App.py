@@ -1,6 +1,8 @@
 import os
 
+import numpy as np
 import solara
+import matplotlib.pyplot as plt
 from mesa.visualization.components import AgentPortrayalStyle, PropertyLayerStyle
 from matplotlib.collections import LineCollection
 
@@ -75,6 +77,38 @@ def get_segregation_status(model):
         f"{convergence_str}"
     )
 
+def UtilityPlot(model):
+    """Custom Solara component: median utility with Q25/Q75 IQR band over time."""
+    df = model.datacollector.get_agent_vars_dataframe()
+
+    if df.empty or "agent_type" not in df.columns:
+        return solara.Markdown("*No utility data yet.*")
+
+    # get per-step utility from agent datacollector
+    # agent_vars_dataframe has MultiIndex (Step, AgentID)
+    utility_df = model.datacollector.get_agent_vars_dataframe()
+
+    # Mesa stores agent vars; we need current_utility — add it to datacollector (see note below)
+    # For now, use the model-level utility_history if available
+    if not hasattr(model, "utility_history") or len(model.utility_history) == 0:
+        return solara.Markdown("*No utility history yet.*")
+
+    steps = np.arange(len(model.utility_history))
+    medians = np.array([u["median"] for u in model.utility_history])
+    q25s    = np.array([u["q25"]    for u in model.utility_history])
+    q75s    = np.array([u["q75"]    for u in model.utility_history])
+
+    fig, ax = plt.subplots(figsize=(6, 3))
+    ax.plot(steps, medians, color="tab:blue", label="Median utility")
+    ax.fill_between(steps, q25s, q75s, color="tab:blue", alpha=0.2, label="IQR (Q25–Q75)")
+    ax.set_title("Agent utility over time")
+    ax.set_xlabel("Step")
+    ax.set_ylabel("Utility")
+    ax.legend(fontsize=8)
+    plt.tight_layout()
+
+    solara.FigureMatplotlib(fig)
+    plt.close(fig)
 
 
 path = os.path.dirname(os.path.abspath(__file__))
@@ -152,18 +186,20 @@ renderer.__class__ = _RerunRenderer
 # property layers on top of it if specified.
 renderer.render()
 
-HappyPlot = make_plot_component({"happy": "tab:green"})
+# HappyPlot = make_plot_component({"happy": "tab:green"})
+
 HPlot = make_plot_component({"H": "tab:red"}) # plots segregation metric
 
 page = SolaraViz(
     model1,
     renderer,
     components=[
-        HappyPlot,
+        UtilityPlot,
         HPlot,
         get_happy_agents,
         get_segregation_status,
     ],
     model_params=model_params,
 )
+
 page  # noqa

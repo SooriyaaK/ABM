@@ -6,6 +6,7 @@ from Agents import SchellingAgent
 from mesa.experimental.scenarios import Scenario
 from mesa.discrete_space import PropertyLayer
 from Convergence_discrete import compute_H
+import numpy as np
 
 class Neighbourhood:
     def __init__(self, id, model, seed_coord):
@@ -149,6 +150,9 @@ class Schelling(Model):
         self.epsilon = 1e-3 # convergence threshold
         self.convergence_window = 20 # number of steps that H must be stable for to call it 'convergence'
 
+        # util history
+        self.utility_history = []  # list of {"median": ..., "q25": ..., "q75": ...}
+
         # Segregation tracking
         self.H_history = [] # tracking H values
         self.epsilon = 1e-3 # convergence threshold
@@ -281,6 +285,13 @@ class Schelling(Model):
             list(self.agents)
         )
         self.H_history.append(H)
+
+        utilities = [a.current_utility for a in self.agents]
+        self.utility_history.append({
+            "median": float(np.median(utilities)),
+            "q25":    float(np.percentile(utilities, 25)),
+            "q75":    float(np.percentile(utilities, 75)),
+        })
 
         self.datacollector.collect(self) # Collect data
 
