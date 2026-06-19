@@ -292,4 +292,4 @@ class Schelling(Model):
                 - min(self.H_history[-self.convergence_window:])) < self.epsilon
         )
         
-        self.running = (self.happy < len(self.agents)) and not segregation_converged  # Continue until everyone is happy or H stable
+        self.running = not segregation_converged  # Continue until everyone is happy or H stable

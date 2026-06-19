@@ -234,11 +234,11 @@ class SchellingAgent(CellAgent):
                 new_cell = self.model.random.choice(empty_cells)
                 self.move_to(new_cell)
                 self.happy = False #the agent isnt settled and is not yet happy
+                self.current_utility = self.utility(self.neighbourhood, is_current=False)
             else:
                 # The chosen neighbourhood is full, the agent is unhappy.
                 self.happy = False
-        
-        self.current_utility = self.utility(current_neighbourhood, is_current=False)
+                self.current_utility = self.utility(current_neighbourhood, is_current=True)
             
 
     def assign_state(self) -> None:
