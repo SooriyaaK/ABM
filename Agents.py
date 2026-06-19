@@ -91,7 +91,7 @@ class SchellingAgent(CellAgent):
     
     @property
     def calculate_utility(self):
-        return self.utility(self.neighbourhood, True)
+        self.current_utility = self.utility(self.neighbourhood, True)
 
     def contribute(self) -> None:
         """
@@ -139,14 +139,15 @@ class SchellingAgent(CellAgent):
         quality_benefit = self.quality_weight * neighbourhood.quality
 
         if self.action == 'C':
-            actual_cost = neighbourhood.cost
+            actual_cost = neighbourhood.cost + self.contribution
         else:
-            if neighbourhood.num_agents > 0:
-                avg_income = sum(a.income for a in neighbourhood.agents) / neighbourhood.num_agents
-            else:
-                avg_income = self.income
+            actual_cost = neighbourhood.cost
+            #if neighbourhood.num_agents > 0:
+            #    avg_income = sum(a.income for a in neighbourhood.agents) / neighbourhood.num_agents
+            #else:
+            #    avg_income = self.income
             
-            actual_cost = avg_income * self.model.base_rent
+            #actual_cost = avg_income * self.model.base_rent
 
         rent = actual_cost / self.income
 
@@ -167,9 +168,7 @@ class SchellingAgent(CellAgent):
         # total utility = linear addition 
         V_ij = (self.baseline_benefit + 
                 quality_benefit +
-                affordability +
-                (self.homophily_weight * similarity) - 
-                (self.beta * self.cost_weight * rent) - 
+                affordability -
                 move_penalty
                 )
         
@@ -205,22 +204,10 @@ class SchellingAgent(CellAgent):
 
         # Other neighbourhoods with at least one vacancy
         for nb in self.model.neighbourhoods.values():
-            if nb is current_nb:
-                continue
-
-            # Check for vacancy
-            has_vacancy = False
-            for cell in nb.cells:
-                if cell.is_empty:
-                    has_vacancy = True
-                    break
-
-            if not has_vacancy:
-                continue
-
-            choice_set.append(nb)
-            u_nb = self.utility(nb, is_current=False)
-            utilities.append(u_nb)
+            if nb.id != current_nb.id and nb.has_vacancy and nb.cost <= self.income * self.budget_fraction:
+                choice_set.append(nb)
+                u_nb = self.utility(nb, is_current=False)
+                utilities.append(u_nb)
 
     # If no alternatives, only current nb is available, just stay and update realised utility
         if len(choice_set) == 1:
@@ -242,14 +229,15 @@ class SchellingAgent(CellAgent):
                                                 choice_set, weights=weights, k=1)[0]
 
         # Move if a different neighbourhood was chosen
+        new_possible_cell = []
         if chosen_nb is not current_nb:
             new_cell = None
             for cell in chosen_nb.cells:
                 if cell.is_empty:
-                    new_cell = cell
-                    break
+                    new_possible_cell.append(cell)
 
-            if new_cell is not None:
+            if len(new_possible_cell) != 0:
+                new_cell = self.model.random.choice(new_possible_cell)
                 self.move_to(new_cell)
 
         # utility
