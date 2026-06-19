@@ -176,158 +176,81 @@ class SchellingAgent(CellAgent):
 
         return V_ij
 
-    def step(self):
+    def step(self) -> None:
         """
+        Relocation decision using multinomial logit over neighbourhoods.
+
+        Choice set:
+        - current neighbourhood is always available,
+        - all other neighbourhoods that have at least one vacancy.
+
+        Utilities:
+        - computed by self.utility(neighbourhood, is_current),
+        - is_current = True only for the current neighbourhood.
         """
 
         current_nb = self.neighbourhood
 
-        # Current neighbourhood is always available
-        choice_set = [current_nb]
-
-        # Add neighbourhoods that have at least one vacancy
-        for nb in self.model.neighbourhoods.values():
-            if nb.id != current_nb.id and nb.has_vacancy:
-                choice_set.append(nb)
-
-        # Calculate utility of every alternative
+        # 1. Build choice set and utilities
+        choice_set = []
         utilities = []
-        for nb in choice_set:
-            u = self.utility(nb, nb is current_nb)
-            utilities.append(u)
+
+        # Current neighbourhood
+        choice_set.append(current_nb)
+        u_current = self.utility(current_nb, is_current=True)
+        utilities.append(u_current)
+
+        # Other neighbourhoods with at least one vacancy
+        for nb in self.model.neighbourhoods.values():
+            if nb is current_nb:
+                continue
+
+            # Check for vacancy
+            has_vacancy = False
+            for cell in nb.cells:
+                if cell.is_empty:
+                    has_vacancy = True
+                    break
+
+            if not has_vacancy:
+                continue
+
+            choice_set.append(nb)
+            u_nb = self.utility(nb, is_current=False)
+            utilities.append(u_nb)
+
+    # If no alternatives, only current nb is available, just stay and update realised utility
+        if len(choice_set) == 1:
+            self.current_utility = u_current
+            return
 
         # Multinomial logit probabilities
-        max_u = max(utilities)
+        max_u = utilities[0]
+        for u in utilities:
+            if u > max_u:
+                max_u = u
 
         weights = []
         for u in utilities:
-            w = math.exp(u - max_u)
+            w = math.exp(self.logit_scale * (u - max_u))
             weights.append(w)
 
         chosen_nb = self.model.random.choices(
-            choice_set,
-            weights=weights,
-            k=1)[0]
+                                                choice_set, weights=weights, k=1)[0]
 
         # Move if a different neighbourhood was chosen
         if chosen_nb is not current_nb:
-
-            vacant_cells = []
+            new_cell = None
             for cell in chosen_nb.cells:
                 if cell.is_empty:
-                    vacant_cells.append(cell)
+                    new_cell = cell
+                    break
 
-            if vacant_cells:
-                new_cell = self.model.random.choice(vacant_cells)
+            if new_cell is not None:
                 self.move_to(new_cell)
 
-        # realised utility after move/stay
-        self.current_utility = self.utility(
-            self.neighbourhood,
-            True
-        )
-
-    
-    # def step(self) -> None:
-    #     """
-    #     Agent's decision step: choose neighbourhood, evaluate happiness, update utility.
-        
-    #     1. Build choice set (current + neighbourhoods with vacancies)
-    #     2. Calculate utilities for each option using mixed logit
-    #     3. Make probabilistic choice (multinomial logit)
-    #     4. Determine happiness (affordability + homophily)
-    #     5. Move if chose different neighbourhood
-    #     6. Update current utility based on actual location
-    #     """
-    
-    #     current_neighbourhood = self.neighbourhood
-    
-    #     # set of empty houses in the current neighbourhood and other neighbourhood
-    #     utilities = []
-    #     choice_set = [current_neighbourhood]
-    
-    #     for neighbourhood in self.model.neighbourhoods.values():
-    #         if neighbourhood.id == current_neighbourhood.id:
-    #             is_current = True
-    #             utilities.append(self.utility(neighbourhood, is_current))
-    #             continue
-    #         for cell in neighbourhood.cells:
-    #             if cell.is_empty:
-    #                 choice_set.append(neighbourhood)
-    #                 is_current = False
-    #                 utilities.append(self.utility(neighbourhood, is_current))
-    #                 break
-
-    #     # multimodal logit choice
-    #     max_utility = max(utilities)
-    #     choice_weights = []
-    #     for utility in utilities:
-    #         choice_weights.append(math.exp(utility - max_utility))
-
-    #     # Randomly pick one neighbourhood, weighted by the scores.
-    #     chosen_neighbourhood = self.model.random.choices(choice_set, weights=choice_weights)[0]
-
-    #     # 
-    #     if chosen_neighbourhood.id == current_neighbourhood.id:
-    #         #if the agent decides to stay in the current neighbourhood
-    #         price = current_neighbourhood.cost
-    #         burden = price / self.income
-    #         affordable = burden <= self.budget_fraction
-
-    #         # Homophily micro-level
-    #         micro_cell = self.cell.get_neighborhood(radius=self.radius)
-    #         micro_agents = []
-
-    #         # Collect neighbors
-    #         for cell in micro_cell:
-    #             if not cell.is_empty:
-    #                 for agent in cell.agents:
-    #                     micro_agents.append(agent)
-            
-    #         # Count similar types
-    #         if micro_agents:
-    #             micro_same_type_count = 0
-    #             for agent in micro_agents:
-    #                 if agent.type == self.type:
-    #                     micro_same_type_count += 1
-                
-    #             homophily_score = micro_same_type_count / len(micro_agents)
-    #             homophilic = homophily_score >= 0.4  # Adjust threshold
-    #         else:
-    #             homophilic = True
-            
-    #         # Happy if both affordability and same type of agent
-    #         self.happy = affordable and homophilic
-            
-    #         # Update utility for current location 
-    #         self.current_utility = self.utility(current_neighbourhood, is_current=True)
-
-    #     else:
-    #         # if the agent choose to move to a different neighboorhood
-    #         # Otherwise move into one of the empty cells of the chosen neighbourhood.
-    #         empty_cells = []
-
-    #         for cell in chosen_neighbourhood.cells:
-    #             if cell.is_empty:
-    #                 empty_cells.append(cell)
-
-    #         if empty_cells:
-    #             # Move agent to new neighbourhood
-    #             new_cell = self.model.random.choice(empty_cells)
-    #             self.move_to(new_cell)
-    #             self.happy = False  # Agent isn't settled and is not yet happy
-                
-    #             # Update utility for new neighbourhood where agent now is
-    #             self.current_utility = self.utility(self.neighbourhood, is_current=True)
-    #         else:
-    #             # The chosen neighbourhood is full, the agent is unhappy and stays
-    #             self.happy = False
-                
-    #             # Agent remains in current neighbourhood
-    #             self.current_utility = self.utility(current_neighbourhood, is_current=True)
-
-
-    
+        # utility
+        self.current_utility = self.utility(self.neighbourhood, is_current=True)
 
     def assign_state(self) -> None:
         """
