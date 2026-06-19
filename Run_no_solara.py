@@ -43,7 +43,7 @@ def run_multiple_time(N=10):
             model.step()
         else:
             steps_taken = step
-            print(f"  Reached max steps ({MAX_STEPS}).")
+            print(f"  Reached max steps (step={step}).")
 
         convergence_steps.append(steps_taken)
 
@@ -55,8 +55,8 @@ def run_multiple_time(N=10):
 
         # Pad shorter runs with their last value so all runs are the same length
         # this is important for plotting.
-        H_series = model.H_history[:]
-        happy_series = list(df["happy"])
+        H_series = model.H_history[1:]
+        happy_series = list(df["happy"])[1:]
         H_series += [H_series[-1]] * (MAX_STEPS - len(H_series))
         happy_series += [happy_series[-1]] * (MAX_STEPS - len(happy_series))
 
@@ -122,6 +122,10 @@ def run_multiple_time(N=10):
                  verticalalignment="top",
                  fontsize=9,
                  bbox=dict(boxstyle="round", facecolor="white", alpha=0.7))
+
+    print("steps:", steps.shape)
+    print("mean_H:", mean_H.shape)
+    print("mean_happy:", mean_happy.shape)
 
     # Render plots
     plt.tight_layout()
