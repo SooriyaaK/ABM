@@ -101,10 +101,14 @@ def agent_portrayal(agent):
         y=agent.cell.coordinate[1],
         marker="o",
         color="tab:gray",
+        edgecolors = "black",
+        linewidths = 0,
         size=75,
     )
     #colours of agents when they are happy
     colors_happy = {1: "tab:blue", 2: "tab:orange", 3: "tab:green"}
+    if agent.strategy == "D":
+        style.update(("linewidths", 1))
     style.update(("color", colors_happy[agent.type]))
     if not agent.happy:
         colors_unhappy = {1: "lightblue", 2: "moccasin", 3: "lightgreen"}
