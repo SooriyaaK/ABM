@@ -171,7 +171,8 @@ class SchellingAgent(CellAgent):
 
     def utility(self, neighbourhood, is_current: bool) -> float:
         """
-        Mixed logit cost-benefit utility of a neighbourhood for this agent.
+        Random utility model with heterogeneous cost sensitivity beta,
+        cost-benefit utility of a neighbourhood for this agent.
         
         This function evaluates how attractive a neighbourhood is based on:
         - Affordability: housing cost relative to income.
