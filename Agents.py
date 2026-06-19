@@ -170,11 +170,63 @@ class SchellingAgent(CellAgent):
                 move_penalty
                 )
         
-        scale = 1.0
+        # scale = 1.0
 
-        U = 1.0 / (1.0 + math.exp(- scale * V_ij))
+        # U = 1.0 / (1.0 + math.exp(- scale * V_ij))
 
-        return U
+        return V_ij
+
+    def step(self):
+        """
+        """
+
+        current_nb = self.neighbourhood
+
+        # Current neighbourhood is always available
+        choice_set = [current_nb]
+
+        # Add neighbourhoods that have at least one vacancy
+        for nb in self.model.neighbourhoods.values():
+            if nb.id != current_nb.id and nb.has_vacancy:
+                choice_set.append(nb)
+
+        # Calculate utility of every alternative
+        utilities = []
+        for nb in choice_set:
+            u = self.utility(nb, nb is current_nb)
+            utilities.append(u)
+
+        # Multinomial logit probabilities
+        max_u = max(utilities)
+
+        weights = []
+        for u in utilities:
+            w = math.exp(u - max_u)
+            weights.append(w)
+
+        chosen_nb = self.model.random.choices(
+            choice_set,
+            weights=weights,
+            k=1)[0]
+
+        # Move if a different neighbourhood was chosen
+        if chosen_nb is not current_nb:
+
+            vacant_cells = []
+            for cell in chosen_nb.cells:
+                if cell.is_empty:
+                    vacant_cells.append(cell)
+
+            if vacant_cells:
+                new_cell = self.model.random.choice(vacant_cells)
+                self.move_to(new_cell)
+
+        # realised utility after move/stay
+        self.current_utility = self.utility(
+            self.neighbourhood,
+            True
+        )
+
     
     # def step(self) -> None:
     #     """
