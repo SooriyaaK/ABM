@@ -259,8 +259,11 @@ class SchellingAgent(CellAgent):
         This method is called at the end of the simulation step after all agents 
         have made their choices.
         """
-        if self.happy:
-            self.model.happy += 1
+        # if self.happy:
+        #     self.model.happy += 1
+
+        if self.current_utility > 0.8:
+            self.happy + 1
 
     def move_to(self, new_cell):
         old_nb = self.neighbourhood
