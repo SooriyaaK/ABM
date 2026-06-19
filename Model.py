@@ -181,6 +181,8 @@ class Schelling(Model):
                 "frac1": "frac1",
                 "frac2": "frac2",
                 "frac3": "frac3",
+                "defector_proportion": lambda m: (sum(agent.action == "D" for agent in m.agents) / len(m.agents) if len(m.agents) > 0 else 0),
+                "mean_defection_probability": lambda m: (sum(agent.strategy for agent in m.agents) / len(m.agents) if len(m.agents) > 0 else 0),
                 "H": lambda m: m.H_history[-1] if m.H_history else None, # convergence metric
                 #"minority_pct": lambda m: (
                 #    sum(1 for agent in m.agents if agent.type == 1)
@@ -207,11 +209,15 @@ class Schelling(Model):
                     income = 2000
                 else:
                     income = 4000
+
+                # agents initialised with a strategy based on the defector fraction set
+                agent_strategy = self.random.choices([0.0, 1.0], weights = (1 - scenario.defector_frac, scenario.defector_frac))[0]
                 SchellingAgent(
                     self,
                     cell,
                     agent_type,
                     income,
+                    agent_strategy,
                     beta_mean = scenario.beta_mean,
                     beta_sigma = scenario.beta_sigma,
                     utility_form = scenario.utility_form,
