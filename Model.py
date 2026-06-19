@@ -9,13 +9,15 @@ from Convergence_discrete import compute_H
 
 
 class Neighbourhood:
-    def __init__(self, id, model, seed_coord, quality):
+    def __init__(self, id, model, seed_coord):
         self.id = id
         self.model = model
         self.cells = []
         self.seed = seed_coord
-        self.quality = quality
         self.cost = 0.0
+        self.num_agents = 0
+        self.type_counts = {1: 0, 2: 0, 3: 0}
+        self.total_contribution = 0.0
 
     @property
     def agents(self):
@@ -25,24 +27,48 @@ class Neighbourhood:
                 agents_list.append(agent)
         return agents_list
     
-    def update_quality(self):
-        """
-        Contribution of agents to the neighboorhood quality.
-        """
-        current_residents = self.agents
-        total_contributions = 0.0
+    def remove_agent(self, agent):
+        self.num_agents -= 1
+        self.type_counts[agent.type] -= 1
+        self.total_contribution -= agent.contribution
 
-        for agent in current_residents:
-            total_contributions += agent.contribution
+    def add_agent(self, agent):
+        self.num_agents += 1
+        self.type_counts[agent.type] += 1
+        self.total_contribution += agent.contribution
+
+    @property
+    def avg_contribution(self):
+        return self.total_contribution / self.num_agents if self.num_agents != 0 else 0.0
+    
+    @property 
+    def quality(self):
+        if self.num_agents == 0:
+            return 0.0
+        return self.avg_contribution / self.model.max_contribution #normalize to [0,1]
+    
+    @property 
+    def has_vacancy(self):
+        return self.num_agents < len(self.cells)
+
+    #def update_quality(self):
+        #"""
+        #Contribution of agents to the neighboorhood quality.
+        #"""
+       #current_residents = self.agents
+        #total_contributions = 0.0
+
+        #for agent in current_residents:
+            #total_contributions += agent.contribution
                 
         # Neighborhood quality becomes the average contribution per resident
-        residents_count = len(current_residents)
+        #residents_count = len(current_residents)
 
-        if residents_count > 0:
-            self.quality = total_contributions / residents_count
+        #if residents_count > 0:
+            #self.quality = total_contributions / residents_count
         
-        else:
-            self.quality = 0.0
+        #else:
+            #self.quality = 0.0
 
     def update_cost(self, adjust = 0.3):
 
@@ -96,6 +122,7 @@ class SchellingScenario(Scenario):
     base_rent: float = 0.3 # baseline rent as a fraction of local income
     quality_premium: float = 0.4 # extra rent fraction a top-quality neighbourhood charges
     quality_weight: float = 2.0 # how much agents value a neighbourhood's quality
+    cost_weight: float = 3.0 # how painful is the cost of cooperating to an agent
 
 class Schelling(Model):
     """Model class for the Schelling segregation model."""
@@ -120,7 +147,12 @@ class Schelling(Model):
         # Segregation tracking
         self.H_history = [] # tracking H values
         self.epsilon = 1e-3 # convergence threshold
-        self.convergence_window = 50 # number of steps that H must be stable for to call it 'convergence'
+        self.convergence_window = 20 # number of steps that H must be stable for to call it 'convergence'
+
+        # Segregation tracking
+        self.H_history = [] # tracking H values
+        self.epsilon = 1e-3 # convergence threshold
+        self.convergence_window = 20 # number of steps that H must be stable for to call it 'convergence'
 
         # Initialize grid
         self.grid = OrthogonalMooreGrid(
@@ -183,13 +215,24 @@ class Schelling(Model):
                     logit_scale = scenario.logit_scale,
                     budget_fraction = scenario.budget_fraction,
                     quality_weight = scenario.quality_weight,
+                    cost_weight= scenario.cost_weight,
                 )
+        self.max_contribution = max(agent.income for agent in self.agents) * 0.05
+        self.add_neighbourhood_values()
         for i in self.neighbourhoods.values():
             i.update_cost()
 
         # Collect initial state
         self.agents.do("assign_state")
         self.datacollector.collect(self)
+
+    def add_neighbourhood_values(self):
+        for nb in self.neighbourhoods.values():
+            nb.num_agents = 0
+            nb.type_counts = {1: 0, 2: 0, 3: 0}
+            nb.total_contribution = 0.0
+        for agent in self.agents:
+            agent.neighbourhood.add_agent(agent)
 
     def build_neighbourhoods(self, neighbourhood_count):
         all_cells = list(self.grid.all_cells)
@@ -202,7 +245,7 @@ class Schelling(Model):
         self.neighbourhoods = {}
         for index in range(neighbourhood_count):
             quality = self.random.random()
-            self.neighbourhoods[index] = Neighbourhood(index, self, seed_coords[index], quality)
+            self.neighbourhoods[index] = Neighbourhood(index, self, seed_coords[index])
         self.cell_to_neighbourhood = {}
 
         for cell in all_cells:
@@ -225,7 +268,9 @@ class Schelling(Model):
         Run one step of the model.
         """
         self.happy = 0  # Reset counter of happy agents
+        self.agents.do("contribute")
         self.agents.shuffle_do("step")  # Activate all agents in random order
+        self.agents.shuffle_do("choose_strategy")
         self.agents.do("assign_state")
         for i in self.neighbourhoods.values():
             i.update_cost()
@@ -247,4 +292,4 @@ class Schelling(Model):
                 - min(self.H_history[-self.convergence_window:])) < self.epsilon
         )
         
-        self.running = (self.happy < len(self.agents)) and not segregation_converged  # Continue until everyone is happy or H stable
+        self.running = not segregation_converged  # Continue until everyone is happy or H stable
