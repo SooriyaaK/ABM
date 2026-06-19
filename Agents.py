@@ -89,6 +89,10 @@ class SchellingAgent(CellAgent):
     def neighbourhood(self):
         return self.model.cell_to_neighbourhood[self.cell.coordinate]
     
+    @property
+    def calculate_utility(self):
+        return self.utility(self.neighbourhood, True)
+
     def contribute(self) -> None:
         """
         Calculate financial contribution based on strategy.
