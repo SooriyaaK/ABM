@@ -124,6 +124,7 @@ class SchellingScenario(Scenario):
     quality_weight: float = 2.0 # how much agents value a neighbourhood's quality
     cost_weight: float = 3.0 # how painful is the cost of cooperating to an agent
     activation_rate: float = 0.3 # how often the agent is activated per poisson process rules
+    step_count: int = 0
 
 class Schelling(Model):
     """Model class for the Schelling segregation model."""
@@ -146,19 +147,20 @@ class Schelling(Model):
         self.quality_premium = scenario.quality_premium
         self.defector_frac = scenario.defector_frac
         self.activation_rate = scenario.activation_rate
+        self.step_count = scenario.step_count
 
         # Segregation tracking
         self.H_history = [] # tracking H values
-        self.epsilon = 1e-3 # convergence threshold
-        self.convergence_window = 20 # number of steps that H must be stable for to call it 'convergence'
+        self.epsilon = 1e-2 # convergence threshold
+        self.convergence_window = 50 # number of steps that H must be stable for to call it 'convergence'
 
         # util history
         self.utility_history = []  # list of {"median": ..., "q25": ..., "q75": ...}
 
         # Segregation tracking
         self.H_history = [] # tracking H values
-        self.epsilon = 1e-3 # convergence threshold
-        self.convergence_window = 20 # number of steps that H must be stable for to call it 'convergence'
+        self.epsilon = 1e-2 # convergence threshold
+        self.convergence_window = 50 # number of steps that H must be stable for to call it 'convergence'
 
         # Initialize grid
         self.grid = OrthogonalMooreGrid(
@@ -309,13 +311,12 @@ class Schelling(Model):
         })
 
         self.datacollector.collect(self) # Collect data
-
+        self.step_count += 1
         # Convergence check
         # Stop if everyone is happy OR if H has been stable for some number 'convergence_window' of steps
         segregation_converged = (
             len(self.H_history) >= self.convergence_window
             and (max(self.H_history[-self.convergence_window:])
                 - min(self.H_history[-self.convergence_window:])) < self.epsilon
-        )
-        
-        self.running = not segregation_converged  # Continue until everyone is happy or H stable
+        ) and self.step_count >= 150
+        self.running = not segregation_converged and self.step_count < 1000  # Continue until everyone is happy or H stable

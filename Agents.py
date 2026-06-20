@@ -91,7 +91,7 @@ class SchellingAgent(CellAgent):
     
     @property
     def calculate_utility(self):
-        return self.utility(self.neighbourhood, True)
+        self.current_utility = self.utility(self.neighbourhood, True)
 
     def contribute(self) -> None:
         """
@@ -208,14 +208,7 @@ class SchellingAgent(CellAgent):
             if nb is current_nb:
                 continue
 
-            # Check for vacancy
-            has_vacancy = False
-            for cell in nb.cells:
-                if cell.is_empty:
-                    has_vacancy = True
-                    break
-
-            if not has_vacancy:
+            if not nb.has_vacancy:
                 continue
 
             choice_set.append(nb)
@@ -242,15 +235,15 @@ class SchellingAgent(CellAgent):
                                                 choice_set, weights=weights, k=1)[0]
 
         # Move if a different neighbourhood was chosen
+        new_possible_cell = []
         if chosen_nb is not current_nb:
-            new_cell = None
             for cell in chosen_nb.cells:
                 if cell.is_empty:
-                    new_cell = cell
-                    break
+                    new_possible_cell.append(cell)
 
-            if new_cell is not None:
-                self.move_to(new_cell)
+        if len(new_possible_cell) != 0:
+            new_cell = self.model.random.choice(new_possible_cell)
+            self.move_to(new_cell)
 
         # utility
         self.current_utility = self.utility(self.neighbourhood, is_current=True)
