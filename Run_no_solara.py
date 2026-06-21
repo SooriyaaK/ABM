@@ -226,7 +226,7 @@ if __name__ == "__main__":
     parser.add_argument("--combo-idx", type=int, default=0,
                         help="Index into params.json (= SLURM_ARRAY_TASK_ID)")
     parser.add_argument("--n-seeds",   type=int, default=10)
-    parser.add_argument("--max-steps", type=int, default=200)
+    parser.add_argument("--max-steps", type=int, default=500)
     parser.add_argument("--params-file", type=str, default="params.json")
     args = parser.parse_args()
 

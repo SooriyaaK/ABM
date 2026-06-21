@@ -14,5 +14,5 @@ source /gpfs/home4/scur0391/projects/ABM/.venv/bin/activate
 uv run python /gpfs/home4/scur0391/projects/ABM/Run_no_solara.py \
 --combo-idx $SLURM_ARRAY_TASK_ID \
 --n-seeds 10 \
---max-steps 50 \
+--max-steps 500 \
 --params-file /gpfs/home4/scur0391/projects/ABM/params_test.json
