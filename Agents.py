@@ -171,7 +171,7 @@ class SchellingAgent(CellAgent):
         V_ij = (self.baseline_benefit + 
                 quality_benefit +
                 affordability +
-                (self.model.homophily * similarity) - #NOTE was: (self.homophily_weight * similarity)
+                (self.homophily_weight * similarity) - #NOTE I tried (did not work):  (self.model.homophily * similarity)
                 (self.beta * self.cost_weight * rent) - 
                 move_penalty
                 )
