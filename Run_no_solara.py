@@ -22,7 +22,7 @@ def run_single(seed: int, max_steps: int, density: float,
         neighbourhood_count=neighbourhood_count,
         defector_frac=defector_frac,
         activation_rate = activation_rate,
-        max_steps=args.max_steps,
+        max_steps=max_steps,
         seed=seed, 
     )
     model = Schelling(scenario=scenario)
@@ -169,8 +169,8 @@ def save_combo_results(results: list[dict], combo_idx: int, params: dict,
 
     fig2, axes2 = plt.subplots(1, 2, figsize=(12, 4))
     fig2.suptitle(
-        f"Clustering metrics — homophily={params['homophily']}  "
-        f"defector_frac={params['defector_frac']}  learning_rate={params['learning_rate']}  "
+        f"Clustering metrics — density={params['density']}  defector_frac={params['defector_frac']}  "
+        f"neighbourhood_count={params['neighbourhood_count']}  activation_rate={params['activation_rate']}  "
         f"(N={N} seeds)",
         fontsize=10,
     )

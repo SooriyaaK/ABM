@@ -1,27 +1,32 @@
 [
   {
-    "homophily": 0.0,
+    "density": 0.3,
     "defector_frac": 0.0,
-    "learning_rate": 0.0
+    "neighbourhood_count": 5,
+    "activation_rate": 0.5
   },
   {
-    "homophily": 0.5,
+    "density": 0.5,
     "defector_frac": 0.5,
-    "learning_rate": 0.5
+    "neighbourhood_count": 25,
+    "activation_rate": 0.5
   },
   {
-    "homophily": 1.0,
+    "density": 0.8,
     "defector_frac": 1.0,
-    "learning_rate": 1.0
+    "neighbourhood_count": 50,
+    "activation_rate": 1.0
   },
   {
-    "homophily": 0.0,
-    "defector_frac": 1.0,
-    "learning_rate": 0.5
-  },
-  {
-    "homophily": 1.0,
+    "density": 0.8,
     "defector_frac": 0.0,
-    "learning_rate": 0.5
+    "neighbourhood_count": 250,
+    "activation_rate": 1.0
+  },
+  {
+    "density": 0.3,
+    "defector_frac": 1.0,
+    "neighbourhood_count": 5,
+    "activation_rate": 0.5
   }
 ]
