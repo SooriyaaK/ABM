@@ -4,6 +4,8 @@ import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 from Model import Schelling, SchellingScenario
+from Clustering import compute_morans_I, compute_neighbourhood_income_variance
+from scipy.stats import gaussian_kde
 
 
 def run_single(seed: int, max_steps: int, homophily: float,
@@ -19,6 +21,7 @@ def run_single(seed: int, max_steps: int, homophily: float,
         neighbourhood_count=10,
         defector_frac=defector_frac,
         learning_rate=learning_rate, 
+        seed=seed, 
     )
     model = Schelling(scenario=scenario)
 
@@ -58,6 +61,8 @@ def run_single(seed: int, max_steps: int, homophily: float,
         "median_utility":  np.array(median_utility),
         "q25_utility":     np.array(q25_utility),
         "q75_utility":     np.array(q75_utility),
+        "final_morans_I":  compute_morans_I(model),           # single final value
+        "final_nb_variance": compute_neighbourhood_income_variance(model),
     }
 
 
@@ -77,6 +82,8 @@ def save_combo_results(results: list[dict], combo_idx: int, params: dict,
     all_q25     = np.array([r["q25_utility"]     for r in results])
     all_q75     = np.array([r["q75_utility"]     for r in results])
     all_steps   = np.array([r["steps_taken"]     for r in results])
+    all_morans   = np.array([r["final_morans_I"]    for r in results])
+    all_nb_var   = np.array([r["final_nb_variance"] for r in results])
 
     # Save raw data for aggregation later
     np.savez(
@@ -86,9 +93,11 @@ def save_combo_results(results: list[dict], combo_idx: int, params: dict,
         all_q25_utility=all_q25,
         all_q75_utility=all_q75,
         convergence_steps=all_steps,
+        final_morans_I=all_morans,        
+        final_nb_variance=all_nb_var,
         params=np.array([params["homophily"],
-                         params["defector_frac"],
-                         params["learning_rate"]]),
+                        params["defector_frac"],
+                        params["learning_rate"]]),
     )
 
     # Summary plot for this combo
@@ -152,6 +161,64 @@ def save_combo_results(results: list[dict], combo_idx: int, params: dict,
     plt.savefig(fname, dpi=150)
     plt.close()
     print(f"Saved: {fname}")
+
+
+    fig2, axes2 = plt.subplots(1, 2, figsize=(12, 4))
+    fig2.suptitle(
+        f"Clustering metrics — homophily={params['homophily']}  "
+        f"defector_frac={params['defector_frac']}  learning_rate={params['learning_rate']}  "
+        f"(N={N} seeds)",
+        fontsize=10,
+    )
+
+    # Moran's I distribution across seeds
+    ax = axes2[0]
+    if len(all_morans) > 1 and all_morans.std() > 0:
+        kde = gaussian_kde(all_morans)
+        x = np.linspace(-1, 1, 200)
+        ax.plot(x, kde(x), color="tab:green", linewidth=2)
+        ax.fill_between(x, kde(x), alpha=0.3, color="tab:green")
+    ax.scatter(all_morans, np.zeros_like(all_morans) - 0.02,
+            color="tab:green", s=40, zorder=5, label="Seeds")
+    ax.axvline(all_morans.mean(), color="black", linestyle="--",
+            linewidth=1, label=f"Mean: {all_morans.mean():.3f}")
+    ax.axvline(0, color="gray", linewidth=0.8, linestyle=":")
+    ax.set_title("Moran's I (income clustering)")
+    ax.set_xlabel("Moran's I")
+    ax.set_xlim(-1, 1)
+    ax.legend()
+    ax.text(0.05, 0.95,
+            f"Mean: {all_morans.mean():.3f}\nStd: {all_morans.std():.3f}\n"
+            f"Min: {all_morans.min():.3f}\nMax: {all_morans.max():.3f}",
+            transform=ax.transAxes, verticalalignment="top",
+            fontsize=9, bbox=dict(boxstyle="round", facecolor="white", alpha=0.7))
+
+    # Neighbourhood income variance
+    ax = axes2[1]
+    if len(all_nb_var) > 1 and all_nb_var.std() > 0:
+        kde = gaussian_kde(all_nb_var)
+        x = np.linspace(0, 1, 200)
+        ax.plot(x, kde(x), color="tab:purple", linewidth=2)
+        ax.fill_between(x, kde(x), alpha=0.3, color="tab:purple")
+    ax.scatter(all_nb_var, np.zeros_like(all_nb_var) - 0.02,
+            color="tab:purple", s=40, zorder=5, label="Seeds")
+    ax.axvline(all_nb_var.mean(), color="black", linestyle="--",
+            linewidth=1, label=f"Mean: {all_nb_var.mean():.3f}")
+    ax.set_title("Between-neighbourhood income variance (normalized)")
+    ax.set_xlabel("Variance (0=mixed, 1=segregated)")
+    ax.set_xlim(0, 1)
+    ax.legend()
+    ax.text(0.05, 0.95,
+            f"Mean: {all_nb_var.mean():.3f}\nStd: {all_nb_var.std():.3f}\n"
+            f"Min: {all_nb_var.min():.3f}\nMax: {all_nb_var.max():.3f}",
+            transform=ax.transAxes, verticalalignment="top",
+            fontsize=9, bbox=dict(boxstyle="round", facecolor="white", alpha=0.7))
+
+    plt.tight_layout()
+    fname2 = f"output/clustering_{tag}.png"
+    plt.savefig(fname2, dpi=150)
+    plt.close()
+    print(f"Saved: {fname2}")
 
 
 if __name__ == "__main__":

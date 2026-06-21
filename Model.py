@@ -7,6 +7,7 @@ from mesa.experimental.scenarios import Scenario
 from mesa.discrete_space import PropertyLayer
 from Convergence_discrete import compute_H
 import numpy as np
+from Clustering import compute_morans_I, compute_neighbourhood_income_variance
 
 class Neighbourhood:
     def __init__(self, id, model, seed_coord):
@@ -193,6 +194,8 @@ class Schelling(Model):
                 "defector_proportion": lambda m: (sum(agent.action == "D" for agent in m.agents) / len(m.agents) if len(m.agents) > 0 else 0),
                 "mean_defection_probability": lambda m: (sum(agent.strategy for agent in m.agents) / len(m.agents) if len(m.agents) > 0 else 0),
                 "H": lambda m: m.H_history[-1] if m.H_history else None, # convergence metric
+                "morans_I": lambda m: compute_morans_I(m), # clustering metric
+                "nb_income_variance": lambda m: compute_neighbourhood_income_variance(m), # income variance
                 #"minority_pct": lambda m: (
                 #    sum(1 for agent in m.agents if agent.type == 1)
                 #    / len(m.agents)
