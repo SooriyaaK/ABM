@@ -22,6 +22,7 @@ def run_single(seed: int, max_steps: int, density: float,
         neighbourhood_count=neighbourhood_count,
         defector_frac=defector_frac,
         activation_rate = activation_rate,
+        max_steps=args.max_steps,
         seed=seed, 
     )
     model = Schelling(scenario=scenario)
