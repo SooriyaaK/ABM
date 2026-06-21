@@ -1,0 +1,27 @@
+[
+  {
+    "homophily": 0.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.0
+  },
+  {
+    "homophily": 0.5,
+    "defector_frac": 0.5,
+    "learning_rate": 0.5
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 1.0,
+    "learning_rate": 1.0
+  },
+  {
+    "homophily": 0.0,
+    "defector_frac": 1.0,
+    "learning_rate": 0.5
+  },
+  {
+    "homophily": 1.0,
+    "defector_frac": 0.0,
+    "learning_rate": 0.5
+  }
+]
