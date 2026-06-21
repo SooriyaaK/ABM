@@ -126,6 +126,7 @@ class SchellingScenario(Scenario):
     cost_weight: float = 3.0 # how painful is the cost of cooperating to an agent
     activation_rate: float = 0.3 # how often the agent is activated per poisson process rules
     step_count: int = 0
+    min_step_count: int = 150
 
 class Schelling(Model):
     """Model class for the Schelling segregation model."""
@@ -149,6 +150,7 @@ class Schelling(Model):
         self.defector_frac = scenario.defector_frac
         self.activation_rate = scenario.activation_rate
         self.step_count = scenario.step_count
+        self.min_step_count = scenario.min_step_count
 
         # Segregation tracking
         self.H_history = [] # tracking H values
@@ -315,8 +317,9 @@ class Schelling(Model):
         self.step_count += 1
         # Convergence check
         # Stop if everyone is happy OR if H has been stable for some number 'convergence_window' of steps
-        segregation_converged = (
-            len(self.H_history) >= self.convergence_window
+        segregation_converged = ( 
+            self.step_count >= self.min_step_count 
+            and len(self.H_history) >= self.convergence_window
             and (max(self.H_history[-self.convergence_window:])
                 - min(self.H_history[-self.convergence_window:])) < self.epsilon
         ) and self.step_count >= 150
