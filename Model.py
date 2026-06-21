@@ -127,6 +127,7 @@ class SchellingScenario(Scenario):
     activation_rate: float = 0.3 # how often the agent is activated per poisson process rules
     step_count: int = 0
     min_step_count: int = 150
+    max_steps: int = 500
 
 class Schelling(Model):
     """Model class for the Schelling segregation model."""
@@ -151,6 +152,7 @@ class Schelling(Model):
         self.activation_rate = scenario.activation_rate
         self.step_count = scenario.step_count
         self.min_step_count = scenario.min_step_count
+        self.max_steps = scenario.max_steps
 
         # Segregation tracking
         self.H_history = [] # tracking H values
@@ -323,4 +325,4 @@ class Schelling(Model):
             and (max(self.H_history[-self.convergence_window:])
                 - min(self.H_history[-self.convergence_window:])) < self.epsilon
         ) and self.step_count >= 150
-        self.running = not segregation_converged and self.step_count < 1000  # Continue until everyone is happy or H stable
+        self.running = not segregation_converged and self.step_count < self.max_steps  # Continue until everyone is happy or H stable
