@@ -81,7 +81,10 @@ class SchellingAgent(CellAgent):
 
         self.contribution = 0.0
         self.contribution_percentage = 0.05 # Cooperators contribute 5% of their income to the neighborhood
-        self.learning_rate = self.model.random.uniform(0, 1) # Heterogeneous learning rates for strategy updating
+
+        # was: self.learning_rate = self.model.random.uniform(0, 1)
+        self.learning_rate = model.learning_rate
+
         self.current_utility = 0.0
         self.happy = False
 
