@@ -109,7 +109,6 @@ class SchellingScenario(Scenario):
     radius: int = 1
     neighbourhood_count: int = 25
     defector_frac: float = 0.5
-    learning_rate: float = 0.5
     
     # Mixed-logit parameters
     beta_mean: float = 1.0  # population mean      
@@ -151,12 +150,6 @@ class Schelling(Model):
         self.activation_rate = scenario.activation_rate
         self.step_count = scenario.step_count
 
-        # added a learning rate here
-        self.learning_rate = scenario.learning_rate
-
-        # added homophily score
-        self.homophily = scenario.homophily
-
         # Segregation tracking
         self.H_history = [] # tracking H values
         self.epsilon = 1e-2 # convergence threshold
@@ -194,8 +187,6 @@ class Schelling(Model):
                 "defector_proportion": lambda m: (sum(agent.action == "D" for agent in m.agents) / len(m.agents) if len(m.agents) > 0 else 0),
                 "mean_defection_probability": lambda m: (sum(agent.strategy for agent in m.agents) / len(m.agents) if len(m.agents) > 0 else 0),
                 "H": lambda m: m.H_history[-1] if m.H_history else None, # convergence metric
-                "morans_I": lambda m: compute_morans_I(m), # clustering metric
-                "nb_income_variance": lambda m: compute_neighbourhood_income_variance(m), # income variance
                 #"minority_pct": lambda m: (
                 #    sum(1 for agent in m.agents if agent.type == 1)
                 #    / len(m.agents)
