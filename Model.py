@@ -108,6 +108,7 @@ class SchellingScenario(Scenario):
     radius: int = 1
     neighbourhood_count: int = 25
     defector_frac: float = 0.5
+    learning_rate: float = 0.5
     
     # Mixed-logit parameters
     beta_mean: float = 1.0  # population mean      
@@ -146,6 +147,9 @@ class Schelling(Model):
         self.quality_premium = scenario.quality_premium
         self.defector_frac = scenario.defector_frac
         self.activation_rate = scenario.activation_rate
+
+        # added a learning rate here
+        self.learning_rate = scenario.learning_rate
 
         # Segregation tracking
         self.H_history = [] # tracking H values

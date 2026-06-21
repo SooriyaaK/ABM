@@ -18,9 +18,9 @@ def run_single(seed: int, max_steps: int, homophily: float,
         homophily=homophily,
         neighbourhood_count=10,
         defector_frac=defector_frac,
-        learning_rate=learning_rate,   # ← add this field to SchellingScenario
+        learning_rate=learning_rate, 
     )
-    model = Schelling(scenario=scenario, rng=seed)
+    model = Schelling(scenario=scenario)
 
     median_utility, q25_utility, q75_utility = [], [], []
 
