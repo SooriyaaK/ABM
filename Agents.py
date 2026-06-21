@@ -227,7 +227,7 @@ class SchellingAgent(CellAgent):
                         micro_same_type_count += 1
                 
                 homophily_score = micro_same_type_count / len(micro_agents)
-                homophilic = homophily_score >= 0.4  # Adjust threshold
+                homophilic = homophily_score >= self.model.homophily
             else:
                 homophilic = True
             

@@ -151,6 +151,9 @@ class Schelling(Model):
         # added a learning rate here
         self.learning_rate = scenario.learning_rate
 
+        # added homophily score
+        self.homophily = scenario.homophily
+
         # Segregation tracking
         self.H_history = [] # tracking H values
         self.epsilon = 1e-3 # convergence threshold
