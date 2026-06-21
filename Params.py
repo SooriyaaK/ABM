@@ -12,7 +12,7 @@ neighbourhood_count_values = np.linspace(5, 200, 10).tolist()
 activation_rate_values = np.linspace(0, 1, 10).tolist()
 
 combos = [
-    {"density": round(h, 4), "defector_frac": round(d, 4), "neighbourhood_count": int(l, 4), "activation_rate": round(s, 4)}
+    {"density": round(h, 4), "defector_frac": round(d, 4), "neighbourhood_count": int(l), "activation_rate": round(s, 4)}
     for h in density_values
     for d in defector_frac_values
     for l in neighbourhood_count_values
