@@ -8,19 +8,20 @@ from Clustering import compute_morans_I, compute_neighbourhood_income_variance
 from scipy.stats import gaussian_kde
 
 
-def run_single(seed: int, max_steps: int, homophily: float,
-               defector_frac: float, learning_rate: float) -> dict:
+def run_single(seed: int, max_steps: int, density: float,
+               defector_frac: float, neighbourhood_count: int,
+               activation_rate: float) -> dict:
     """Run one simulation with given params and seed."""
     scenario = SchellingScenario(
         width=50,
         height=50,
-        density=0.8,
+        density=density,
         frac1=0.33,
         frac2=0.33,
-        homophily=homophily,
-        neighbourhood_count=10,
+        homophily=0.4,
+        neighbourhood_count=neighbourhood_count,
         defector_frac=defector_frac,
-        learning_rate=learning_rate, 
+        activation_rate = activation_rate,
         seed=seed, 
     )
     model = Schelling(scenario=scenario)
@@ -72,9 +73,10 @@ def save_combo_results(results: list[dict], combo_idx: int, params: dict,
     os.makedirs("output", exist_ok=True)
 
     tag = (f"job{job_id}_combo{combo_idx}"
-           f"_h{params['homophily']}"
-           f"_d{params['defector_frac']}"
-           f"_lr{params['learning_rate']}")
+       f"_den{params['density']}"
+       f"_df{params['defector_frac']}"
+       f"_nc{params['neighbourhood_count']}"
+       f"_ar{params['activation_rate']}")
 
     # Stack arrays: shape (N, max_steps) or (N, max_steps+1)
     all_H       = np.array([r["H_series"]       for r in results])
@@ -95,10 +97,11 @@ def save_combo_results(results: list[dict], combo_idx: int, params: dict,
         convergence_steps=all_steps,
         final_morans_I=all_morans,        
         final_nb_variance=all_nb_var,
-        params=np.array([params["homophily"],
-                        params["defector_frac"],
-                        params["learning_rate"]]),
-    )
+        params=np.array([params["density"],
+                params["defector_frac"],
+                params["neighbourhood_count"],
+                params["activation_rate"]]),
+            )
 
     # Summary plot for this combo
     mean_H  = all_H.mean(axis=0)
@@ -114,9 +117,9 @@ def save_combo_results(results: list[dict], combo_idx: int, params: dict,
 
     fig, axes = plt.subplots(1, 3, figsize=(18, 4))
     fig.suptitle(
-        f"homophily={params['homophily']}  defector_frac={params['defector_frac']}  "
-        f"learning_rate={params['learning_rate']}  (N={N} seeds)",
-        fontsize=10,
+        f"density={params['density']}  defector_frac={params['defector_frac']}  "
+        f"neighbourhood_count={params['neighbourhood_count']}  activation_rate={params['activation_rate']} "
+        f"(N={N} seeds)", fontsize=10,
     )
 
     # H over time
@@ -243,11 +246,12 @@ if __name__ == "__main__":
     results = []
     for seed in range(args.n_seeds):
         result = run_single(
-            seed=seed,
-            max_steps=args.max_steps,
-            homophily=params["homophily"],
-            defector_frac=params["defector_frac"],
-            learning_rate=params["learning_rate"],
+        seed=seed,
+        max_steps=args.max_steps,
+        density=params["density"],
+        defector_frac=params["defector_frac"],
+        neighbourhood_count=params["neighbourhood_count"],
+        activation_rate=params["activation_rate"],
         )
         results.append(result)
 
