@@ -1,0 +1,13 @@
+
+=== Combo 105/999: {'homophily': 0.1111, 'defector_frac': 0.0, 'learning_rate': 0.5556} ===
+  [seed=0] steps=200, H=0.5530, happy=78/2022
+  [seed=1] steps=200, H=0.5530, happy=78/2022
+  [seed=2] steps=200, H=0.5530, happy=78/2022
+  [seed=3] steps=200, H=0.5530, happy=78/2022
+  [seed=4] steps=200, H=0.5530, happy=78/2022
+  [seed=5] steps=200, H=0.5530, happy=78/2022
+  [seed=6] steps=200, H=0.5530, happy=78/2022
+  [seed=7] steps=200, H=0.5530, happy=78/2022
+  [seed=8] steps=200, H=0.5530, happy=78/2022
+  [seed=9] steps=200, H=0.5530, happy=78/2022
+Saved: output/plot_job24061342_combo105_h0.1111_d0.0_lr0.5556.png
