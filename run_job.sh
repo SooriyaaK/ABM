@@ -4,7 +4,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=4G
-#SBATCH --array=0-999                             # 1000 combos (10x10x10)
+#SBATCH --array=0-999                          # 1000 combos (10x10x10)
 #SBATCH --output=output/schelling_%A_%a.out       # %A = array job ID, %a = task index
 
 mkdir -p output

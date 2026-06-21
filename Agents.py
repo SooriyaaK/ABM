@@ -262,7 +262,7 @@ class SchellingAgent(CellAgent):
         #     self.model.happy += 1
 
         if self.current_utility > 0.8:
-            self.happy + 1
+            self.happy += 1
 
     def move_to(self, new_cell):
         old_nb = self.neighbourhood
