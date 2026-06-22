@@ -1,0 +1,5 @@
+
+=== Combo 3/4: {'density': 0.8, 'defector_frac': 0.0, 'neighbourhood_count': 250, 'activation_rate': 1.0} ===
+  [seed=0] steps=289, H=0.9444, happy=0/1982
+  [seed=2] steps=250, H=0.9335, happy=0/1986
+  [seed=1] steps=273, H=0.9346, happy=0/1985
