@@ -5,9 +5,9 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=4G
 #SBATCH --array=0-4                               # 5 test combos (params_test.json)
-#SBATCH --output=output/schelling_test_%A_%a.out  # %A = array job ID, %a = task index
+#SBATCH --output=output_test/schelling_test_%A_%a.out  # %A = array job ID, %a = task index
 
-mkdir -p output
+mkdir -p output_test
 
 module load 2023
 module load Python/3.11.3-GCCcore-12.3.0
