@@ -69,9 +69,10 @@ def run_single(seed: int, max_steps: int, density: float,
 
 
 def save_combo_results(results: list[dict], combo_idx: int, params: dict,
-                       job_id: str, max_steps: int):
-    """Aggregate N seed results for one combo and save plot + npz."""
-    os.makedirs("output", exist_ok=True)
+                       job_id: str, max_steps: int, save_plots: bool = False,
+                       output_dir: str = "output"):
+    """Aggregate N seed results for one combo and save npz (+ plots if requested)."""
+    os.makedirs(output_dir, exist_ok=True)
 
     tag = (f"job{job_id}_combo{combo_idx}"
        f"_den{params['density']}"
@@ -90,7 +91,7 @@ def save_combo_results(results: list[dict], combo_idx: int, params: dict,
 
     # Save raw data for aggregation later
     np.savez(
-        f"output/run_{tag}.npz",
+        f"{output_dir}/run_{tag}.npz",
         all_H=all_H,
         all_median_utility=all_med,
         all_q25_utility=all_q25,
@@ -103,6 +104,11 @@ def save_combo_results(results: list[dict], combo_idx: int, params: dict,
                 params["neighbourhood_count"],
                 params["activation_rate"]]),
             )
+
+    # Batch runs save data only — skip the (slow, numerous) per-combo plots.
+    if not save_plots:
+        print(f"Saved: {output_dir}/run_{tag}.npz")
+        return
 
     # Summary plot for this combo
     mean_H  = all_H.mean(axis=0)
@@ -161,7 +167,7 @@ def save_combo_results(results: list[dict], combo_idx: int, params: dict,
                  fontsize=9, bbox=dict(boxstyle="round", facecolor="white", alpha=0.7))
 
     plt.tight_layout()
-    fname = f"output/plot_{tag}.png"
+    fname = f"{output_dir}/plot_{tag}.png"
     plt.savefig(fname, dpi=150)
     plt.close()
     print(f"Saved: {fname}")
@@ -219,7 +225,7 @@ def save_combo_results(results: list[dict], combo_idx: int, params: dict,
             fontsize=9, bbox=dict(boxstyle="round", facecolor="white", alpha=0.7))
 
     plt.tight_layout()
-    fname2 = f"output/clustering_{tag}.png"
+    fname2 = f"{output_dir}/clustering_{tag}.png"
     plt.savefig(fname2, dpi=150)
     plt.close()
     print(f"Saved: {fname2}")
@@ -232,6 +238,10 @@ if __name__ == "__main__":
     parser.add_argument("--n-seeds",   type=int, default=10)
     parser.add_argument("--max-steps", type=int, default=500)
     parser.add_argument("--params-file", type=str, default="params.json")
+    parser.add_argument("--plots", action="store_true",
+                        help="Also save per-combo PNG plots (off by default; use for test runs)")
+    parser.add_argument("--output-dir", type=str, default="output",
+                        help="Directory for npz + plot outputs (e.g. output_test for test runs)")
     args = parser.parse_args()
 
     # Load parameter combo for this task
@@ -256,4 +266,5 @@ if __name__ == "__main__":
         )
         results.append(result)
 
-    save_combo_results(results, args.combo_idx, params, job_id, args.max_steps)
+    save_combo_results(results, args.combo_idx, params, job_id, args.max_steps,
+                       save_plots=args.plots, output_dir=args.output_dir)
