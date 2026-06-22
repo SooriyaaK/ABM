@@ -2,3 +2,8 @@ __pycache__/
 *.pyc
 output/
 results.csv
+results_saltelli/run_*.npz
+results_saltelli/Y_*.npy
+results_saltelli/saltelli_problem_X.npy
+results_saltelli/*.png
+results_saltelli/*.out

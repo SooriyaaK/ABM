@@ -4,7 +4,7 @@
 
 # generate_saltelli_params.py
 import json
-from SALib.sample import saltelli
+from SALib.sample import sobol as saltelli  # same API, new name
 import numpy as np
 import os
 os.makedirs("results_saltelli", exist_ok=True)
@@ -23,7 +23,7 @@ problem = {
 
 # N = base sample size. Total runs = N * (2*num_vars + 2) = N * 10
 # For N=1000 → 10,000 combos (same as before)
-N = 1000
+N = 1024 # closest power of 2
 param_values = saltelli.sample(problem, N, calc_second_order=False) # creates those A, B, A_B^i matrices
 
 # convert to json format
