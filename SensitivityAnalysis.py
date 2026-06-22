@@ -15,8 +15,10 @@ Usage:
     python SensitivityAnalysis.py                       # uses results_summary.csv + output/
     python SensitivityAnalysis.py --csv results_test.csv --npz-glob "output_test/run_*.npz"
 """
+import os
 import glob
 import argparse
+from itertools import combinations
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -62,6 +64,61 @@ def total_order_indices(df: pd.DataFrame, output: str) -> dict:
     return out
 
 
+def sobol_all_orders(df: pd.DataFrame, output: str) -> dict:
+    """
+    Full Sobol / functional-ANOVA decomposition on a complete grid.
+    For every non-empty subset S of the parameters, the PURE effect variance is
+        V_S = Var(E[Y | X_S]) - sum over proper subsets T of V_T     (Mobius inversion)
+    and the Sobol index is S_S = V_S / Var(Y).
+      |S|=1 -> first-order, |S|=2 -> second-order (pairwise interaction),
+      |S|=3 -> third-order, |S|=4 -> fourth-order.
+    Indices sum to ~1 for a deterministic model (remainder = seed noise).
+    Returns {subset_tuple: index}.
+    """
+    total_var = df[output].var(ddof=0)
+    if total_var <= 0:
+        return {}
+    V = {}  # subset (tuple) -> pure effect variance V_S
+    for r in range(1, len(PARAMS) + 1):
+        for subset in combinations(PARAMS, r):
+            D = df.groupby(list(subset))[output].mean().var(ddof=0)   # Var(E[Y|X_S])
+            v = D
+            for k in range(1, r):
+                for sub in combinations(subset, k):
+                    v -= V[sub]
+            V[subset] = v
+    return {subset: float(V[subset] / total_var) for subset in V}
+
+
+_ORD = {1: "1st", 2: "2nd", 3: "3rd", 4: "4th"}
+
+
+def plot_sobol_indices(indices: dict, output: str, fname: str):
+    """Horizontal bar chart of all Sobol indices, coloured by interaction order."""
+    items = sorted(indices.items(), key=lambda kv: (len(kv[0]), -kv[1]))
+    labels = [" × ".join(s) for s, _ in items]
+    vals   = [v for _, v in items]
+    orders = [len(s) for s, _ in items]
+    colour = {1: "tab:blue", 2: "tab:orange", 3: "tab:green", 4: "tab:red"}
+
+    fig, ax = plt.subplots(figsize=(9, max(4, 0.32 * len(items))))
+    ax.barh(range(len(vals)), vals, color=[colour[o] for o in orders])
+    ax.set_yticks(range(len(vals)))
+    ax.set_yticklabels(labels, fontsize=8)
+    ax.invert_yaxis()
+    ax.axvline(0, color="gray", linewidth=0.6)
+    ax.set_xlabel("Sobol index (fraction of output variance)")
+    ax.set_title(f"Sobol indices (all orders) — {output}")
+    from matplotlib.patches import Patch
+    handles = [Patch(color=colour[o], label=f"{_ORD[o]} order")
+               for o in sorted(set(orders))]
+    ax.legend(handles=handles, fontsize=8, loc="lower right")
+    plt.tight_layout()
+    plt.savefig(fname, dpi=150)
+    plt.close()
+    print(f"  saved {fname}")
+
+
 def regression_sensitivity(df: pd.DataFrame, output: str) -> dict:
     """
     Cross-check: standardized linear-regression coefficients (|beta| on z-scored
@@ -96,9 +153,11 @@ def plot_main_effects(df: pd.DataFrame, output: str, fname: str):
     print(f"  saved {fname}")
 
 
-def analyse_csv(csv_path: str):
+def analyse_csv(csv_path: str, results_dir: str):
+    os.makedirs(results_dir, exist_ok=True)
     df = pd.read_csv(csv_path)
     print(f"\n=== CSV analysis: {csv_path}  ({len(df)} combos) ===")
+    index_rows = []   # every numerical index, saved to one CSV at the end
     for output in OUTPUTS:
         if output not in df.columns:
             continue
@@ -110,15 +169,38 @@ def analyse_csv(csv_path: str):
               f"{'interaction (ST-S)':<20}{'reg.beta':<10}")
         for p in PARAMS:
             print(f"  {p:<22}{S[p]:<17.3f}{ST[p]:<18.3f}{ST[p]-S[p]:<20.3f}{reg[p]:<10.3f}")
+            index_rows.append({"output": output, "order": "total", "terms": p,
+                               "sobol_index": ST[p]})
         print(f"  {'sum of first-order':<22}{sum(S.values()):<17.3f}"
               f"(remainder {1 - sum(S.values()):.3f} = interactions + noise)")
-        plot_main_effects(df, output, f"sa_main_effects_{output}.png")
+
+        # full decomposition: 1st / 2nd / 3rd / 4th order
+        idx = sobol_all_orders(df, output)
+        by_order = {}
+        for subset, val in idx.items():
+            by_order.setdefault(len(subset), []).append((subset, val))
+            index_rows.append({"output": output, "order": len(subset),
+                               "terms": " × ".join(subset), "sobol_index": val})
+        for order in sorted(by_order):
+            print(f"\n  {_ORD[order]}-order indices:")
+            for subset, val in sorted(by_order[order], key=lambda kv: -kv[1]):
+                print(f"    {' × '.join(subset):<58}{val:.3f}")
+        print(f"\n  sum of all indices = {sum(idx.values()):.3f}  "
+              f"(≈1; remainder = seed noise)")
+
+        plot_main_effects(df, output, f"{results_dir}/sa_main_effects_{output}.png")
+        plot_sobol_indices(idx, output, f"{results_dir}/sa_sobol_indices_{output}.png")
+
+    # one tidy CSV with all indices (first/2nd/3rd/4th + total) for every output
+    pd.DataFrame(index_rows).to_csv(f"{results_dir}/sobol_indices.csv", index=False)
+    print(f"\n  saved {results_dir}/sobol_indices.csv")
 
 
 # ----------------------------------------------------------------------------
 # B) INSPECTION ON THE RAW NPZ FILES
 # ----------------------------------------------------------------------------
-def analyse_npz(npz_glob: str, tail: int = 50):
+def analyse_npz(npz_glob: str, results_dir: str, tail: int = 50):
+    os.makedirs(results_dir, exist_ok=True)
     files = sorted(glob.glob(npz_glob))
     if not files:
         print(f"\n(no npz files matched {npz_glob!r} — skipping raw analysis)")
@@ -148,16 +230,18 @@ def analyse_npz(npz_glob: str, tail: int = 50):
         ax.plot(mean_H, alpha=0.8, linewidth=1)
     ax.set_xlabel("Step"); ax.set_ylabel("H (mean over seeds)")
     ax.set_title("Segregation trajectories (sample of combos)")
-    plt.tight_layout(); plt.savefig("sa_H_trajectories.png", dpi=150); plt.close()
-    print("  saved sa_H_trajectories.png")
+    plt.tight_layout(); plt.savefig(f"{results_dir}/sa_H_trajectories.png", dpi=150); plt.close()
+    print(f"  saved {results_dir}/sa_H_trajectories.png")
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--csv", default="results_summary.csv")
+    ap.add_argument("--csv", default="results.csv")
     ap.add_argument("--npz-glob", default="output/run_*.npz")
     ap.add_argument("--tail", type=int, default=50)
+    ap.add_argument("--results-dir", default="sa_results",
+                    help="Folder to save all plots + the indices CSV into")
     args = ap.parse_args()
 
-    analyse_csv(args.csv)
-    analyse_npz(args.npz_glob, args.tail)
+    analyse_csv(args.csv, args.results_dir)
+    analyse_npz(args.npz_glob, args.results_dir, args.tail)
