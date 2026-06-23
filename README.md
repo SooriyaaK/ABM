@@ -171,6 +171,38 @@ No additional methods are required from these classes for the convergence code t
 
 ---
 
+# Setup Instructions
+
+To be able to run anything that is given in this project a uv environment needs to be created.
+
+### 1. Install `uv`
+
+To make the management of dependencies easier it is recommended that you use `uv`. If you already have `uv` installed this step can be skipped. 
+
+##### For Mac / Linux users open a terminal and run
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+##### For Windows users open PowerShell and run
+```bash
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+After the installation is finished, quit and reopen your terminal/powershell.
+
+### 2. Install the necessary dependencies and Python
+Run the below command on the same directory as this repository
+```bash
+uv sync
+```
+This will install all necessary packages and create the `uv` environment.
+
+After all these steps your environment will be ready with all the packages. After these steps if you want to run a visualized version of the model you can run the command:
+```bash
+uv run solara run App.py
+```
+
 # Sobol Sensitivity Analysis
  
 We perform variance-based global sensitivity analysis using first-order (S1) and total-order (ST) Sobol indices , implemented via the SALib Python library. This quantifies how much of the variance in each output metric (segregation index H, Moran's I, between-neighbourhood income variance) is attributable to each of the four model parameters: `density`, `defector_frac`, `neighbourhood_count`, and `activation_rate`.
@@ -281,6 +313,11 @@ uv run python Analyse_sobol.py
 ```
 Prints S1 and ST indices to console, saves `sobol_indices.png` and `sobol_indices.csv`.
 
+### 9. Run SensitivityAnalysis.py 
+```bash
+uv run python SensitivityAnalysis.py
+```
+creates a folder with the `sa_results` and saved convergence plots
 
 ## Files
  
@@ -291,6 +328,7 @@ Prints S1 and ST indices to console, saves `sobol_indices.png` and `sobol_indice
 | `Run_no_solara.py` | Runs one parameter combo for N seeds and saves results to `results_saltelli/run_*.npz`. Each `.npz` contains the full H timeseries, utility series, Moran's I, neighbourhood income variance, and convergence steps across all seeds. |
 | `Collect_outputs.py` | After all SLURM jobs finish, loads all `.npz` files and collapses each to a single scalar per output (mean over seeds, final timestep). Saves `Y_H.npy`, `Y_morans.npy`, `Y_nb_var.npy`, `Y_steps.npy`. Missing combos (failed jobs) are filled with the mean. |
 | `Analyse_sobol.py` | Runs SALib's Sobol estimator on the Y vectors. Saves `sobol_indices.png` (bar chart of S1 and ST per output) and `sobol_indices.csv` (full results table with confidence intervals). |
+| `SensitivityAnalysis.py`| Runs on the npz files generated through sampling to create H convergence plots. The files are saved in a results folder called `sa_results` and the files created are called `sa_H_trajectories.png`, and `sa_H_trajectories_all.png`|
  
 ## Output files (not tracked by git)
  
