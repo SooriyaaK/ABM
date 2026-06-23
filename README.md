@@ -183,7 +183,106 @@ Rather than a factorial grid, we use the **Saltelli sampling scheme**, which con
 - **ST (total-order)**: fraction explained by parameter i including all interactions with other parameters
 - **ST − S1**: interaction effect of parameter i with other parameters
 N=1024 was chosen as a power of 2 (2^10), which is required for the convergence properties of the Sobol' quasi-random sequence.
+
  
+## Pipeline
+ 
+Follow these steps in order to reproduce the full sensitivity analysis.
+ 
+### 0. Install dependencies
+```bash
+uv add SALib numpy matplotlib scipy pandas
+```
+ 
+### 1. Generate the Saltelli sample
+```bash
+uv run python Saltelli.py
+```
+Creates `results_saltelli/saltelli_params.json` (6144 combos), `saltelli_problem.json`, and `saltelli_problem_X.npy`. Only run this once — regenerating creates a new random matrix that no longer matches any existing simulation results.
+ 
+### 2. (Optional) Run a quick test before the full job
+```bash
+# generate 5 test combos
+uv run python Params_test.py
+ 
+# submit test array (5 jobs, 3 seeds, 15 min)
+mkdir -p results_saltelli
+sbatch run_job_saltelli_test.sh
+ 
+# check logs
+cat results_saltelli/schelling_test_*.out
+ 
+# check output files
+ls results_saltelli/run_*.npz | wc -l  # should be 5
+```
+ 
+### 3. Submit the full SLURM array
+```bash
+mkdir -p results_saltelli
+sbatch run_job_saltelli.sh
+```
+Submits 6144 jobs throttled to 200 at a time. Expected wall time ~1.5 hours.
+ 
+### 4. Monitor progress
+```bash
+# how many jobs still running
+squeue -u $USER
+ 
+# how many output files created so far
+ls results_saltelli/run_*.npz | wc -l  # done when this hits 6144
+ 
+# check for failed jobs
+sacct -j <JOBID> --format=JobID,State | grep FAILED | grep -v "+"
+```
+ 
+### 5. Resubmit any failed jobs
+```bash
+# resubmit specific failed indices
+sbatch --array=66,68,70 run_job_saltelli.sh
+```
+ 
+### 6. Check signal-to-noise ratio
+```bash
+uv run python -c "
+import numpy as np, glob
+files = glob.glob('results_saltelli/run_*.npz')
+within, across = [], []
+for f in files:
+    d = np.load(f, allow_pickle=True)
+    tail = d['all_H'][:, -50:].mean(axis=1)
+    within.append(tail.std())
+    across.append(tail.mean())
+print(f'Mean within-combo std: {np.mean(within):.4f}')
+print(f'Std across combos:     {np.std(across):.4f}')
+print(f'Signal/noise ratio:    {np.std(across)/np.mean(within):.1f}x')
+"
+```
+A ratio > 2 means parameter effects dominate seed noise and the Sobol indices are trustworthy.
+ 
+### 7. Collect outputs
+```bash
+uv run python Collect_outputs.py
+```
+Collapses all `.npz` files to scalar Y vectors. Missing combos are filled with the mean. Should print `Collected 6144 combos`.
+ 
+Verify:
+```bash
+ls results_saltelli/Y_*.npy
+uv run python -c "
+import numpy as np
+Y = np.load('results_saltelli/Y_H.npy')
+print(f'Length: {len(Y)}')       # should be 6144
+print(f'Any NaN: {np.isnan(Y).sum()}')  # should be 0
+"
+```
+ 
+### 8. Run the Sobol analysis
+```bash
+uv run python Analyse_sobol.py
+```
+Prints S1 and ST indices to console, saves `sobol_indices.png` and `sobol_indices.csv`.
+
+
 ## Files
  
 | File | Description |
