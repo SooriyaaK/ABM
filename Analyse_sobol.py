@@ -43,7 +43,7 @@ for ax, (name, Si) in zip(axes, results.items()):
     ax.axhline(0, color="black", linewidth=0.5)
 
 plt.tight_layout()
-plt.savefig(f"{OUTPUT_FOLDER}/sobol_indices.png", dpi=150)
+plt.savefig(f"sobol_output/sobol_indices.png", dpi=150)
 plt.show()
 
 # save CSV
@@ -59,23 +59,26 @@ for name, Si in results.items():
             "ST_conf":   Si["ST_conf"][i],
        })
 
-pd.DataFrame(rows).to_csv(f"{OUTPUT_FOLDER}/sobol_indices.csv", index=False)
-print(f"Saved: {OUTPUT_FOLDER}/sobol_indices.csv")
+pd.DataFrame(rows).to_csv(f"sobol_output/sobol_indices.csv", index=False)
+print(f"Saved: sobol_output/sobol_indices.csv")
 
 # scatter plots: each parameter vs each output
 # useful for showing nonlinear relationships
-fig, axes = plt.subplots(len(outputs), len(problem["names"]), 
-                          figsize=(16, 12))
-param_values = np.load(f"{OUTPUT_FOLDER}/saltelli_problem_X.npy")
+# sadly lost input file so can't do it
 
-for i, (name, Y) in enumerate(outputs.items()):
-    for j, param in enumerate(problem["names"]):
-        axes[i,j].scatter(param_values[:, j], Y, alpha=0.1, s=1)
-        axes[i,j].set_xlabel(param)
-        axes[i,j].set_ylabel(name)
 
-plt.tight_layout()
-plt.savefig(f"{OUTPUT_FOLDER}/scatter_plots.png", dpi=150)
+# fig, axes = plt.subplots(len(outputs), len(problem["names"]), 
+#                           figsize=(16, 12))
+# param_values = np.load(f"{OUTPUT_FOLDER}/saltelli_problem_X.npy")
+
+# for i, (name, Y) in enumerate(outputs.items()):
+#     for j, param in enumerate(problem["names"]):
+#         axes[i,j].scatter(param_values[:, j], Y, alpha=0.1, s=1)
+#         axes[i,j].set_xlabel(param)
+#         axes[i,j].set_ylabel(name)
+
+# plt.tight_layout()
+# plt.savefig(f"{OUTPUT_FOLDER}/scatter_plots.png", dpi=150)
 
 # for ax, (name, Y) in zip(axes, outputs.items()):
 #     Si = sobol.analyze(problem, Y, calc_second_order=False, print_to_console=True)
