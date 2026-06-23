@@ -168,3 +168,43 @@ The functions in `convergence.py` assume:
   - `agents: list[SchellingAgent]` — all agents currently living in that neighborhood.
 
 No additional methods are required from these classes for the convergence code to work.
+
+---
+
+# Sobol Sensitivity Analysis
+ 
+We perform variance-based global sensitivity analysis using first-order (S1) and total-order (ST) Sobol indices , implemented via the SALib Python library. This quantifies how much of the variance in each output metric (segregation index H, Moran's I, between-neighbourhood income variance) is attributable to each of the four model parameters: `density`, `defector_frac`, `neighbourhood_count`, and `activation_rate`.
+ 
+## Method
+ 
+Rather than a factorial grid, we use the **Saltelli sampling scheme**, which constructs two independent quasi-random matrices A and B of shape N × k, then builds k additional matrices A_B^i by swapping column i of A with column i of B. This yields N × (k + 2) total parameter combinations — in our case 1024 × 6 = **6144 model runs**. Each run uses 10 random seeds to average out stochastic noise, giving a signal-to-noise ratio of ~4.5.
+ 
+- **S1 (first-order)**: fraction of output variance explained by parameter i alone
+- **ST (total-order)**: fraction explained by parameter i including all interactions with other parameters
+- **ST − S1**: interaction effect of parameter i with other parameters
+N=1024 was chosen as a power of 2 (2^10), which is required for the convergence properties of the Sobol' quasi-random sequence.
+ 
+## Files
+ 
+| File | Description |
+|---|---|
+| `Saltelli.py` | Generates the Saltelli sample. Saves `saltelli_params.json` (parameter combos for SLURM), `saltelli_problem.json` (bounds and names for SALib), and `saltelli_problem_X.npy` (raw sample matrix needed for scatter plots). Run once before submitting jobs. |
+| `run_job_saltelli.sh` | SLURM array job script. Submits 6144 jobs (`--array=0-6143%200`), each running `Run_no_solara.py` with 10 seeds in parallel via `ProcessPoolExecutor`. |
+| `Run_no_solara.py` | Runs one parameter combo for N seeds and saves results to `results_saltelli/run_*.npz`. Each `.npz` contains the full H timeseries, utility series, Moran's I, neighbourhood income variance, and convergence steps across all seeds. |
+| `Collect_outputs.py` | After all SLURM jobs finish, loads all `.npz` files and collapses each to a single scalar per output (mean over seeds, final timestep). Saves `Y_H.npy`, `Y_morans.npy`, `Y_nb_var.npy`, `Y_steps.npy`. Missing combos (failed jobs) are filled with the mean. |
+| `Analyse_sobol.py` | Runs SALib's Sobol estimator on the Y vectors. Saves `sobol_indices.png` (bar chart of S1 and ST per output) and `sobol_indices.csv` (full results table with confidence intervals). |
+ 
+## Output files (not tracked by git)
+ 
+All large output files are saved to `results_saltelli/` and ignored by git:
+ 
+- `run_*.npz` — raw simulation results, one file per parameter combo (6144 files)
+- `Y_*.npy` — collapsed scalar outputs for SALib
+- `sobol_indices.png` — visualisation of S1 and ST indices
+- `*.out` — SLURM log files
+
+The following are tracked by git as they are needed to reproduce the analysis:
+ 
+- `saltelli_params.json` — the exact parameter combinations used
+- `saltelli_problem.json` — parameter bounds and names
+- `sobol_indices.csv` — final Sobol indices with confidence intervals
