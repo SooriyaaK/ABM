@@ -218,7 +218,6 @@ ls results_saltelli/run_*.npz | wc -l  # should be 5
  
 ### 3. Submit the full SLURM array
 ```bash
-mkdir -p results_saltelli
 sbatch run_job_saltelli.sh
 ```
 Submits 6144 jobs throttled to 200 at a time. Expected wall time ~1.5 hours.
@@ -237,7 +236,7 @@ sacct -j <JOBID> --format=JobID,State | grep FAILED | grep -v "+"
  
 ### 5. Resubmit any failed jobs
 ```bash
-# resubmit specific failed indices
+# resubmit specific failed indices (e.g 66,68, and 70)
 sbatch --array=66,68,70 run_job_saltelli.sh
 ```
  
@@ -257,7 +256,7 @@ print(f'Std across combos:     {np.std(across):.4f}')
 print(f'Signal/noise ratio:    {np.std(across)/np.mean(within):.1f}x')
 "
 ```
-A ratio > 2 means parameter effects dominate seed noise and the Sobol indices are trustworthy.
+We aim for a ratio around 3-5, which indicates that the parameter effects dominate seed noise and the Sobol indices are trustworthy.
  
 ### 7. Collect outputs
 ```bash
