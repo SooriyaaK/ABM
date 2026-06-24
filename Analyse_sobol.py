@@ -3,8 +3,10 @@ import numpy as np, json
 from SALib.analyze import sobol
 import matplotlib.pyplot as plt
 import pandas as pd
+import os
 
 OUTPUT_FOLDER = "results_saltelli"
+os.makedirs("sobol_output", exist_ok=True)
 
 problem  = json.load(open(f"{OUTPUT_FOLDER}/saltelli_problem.json"))
 Y_H      = np.load(f"{OUTPUT_FOLDER}/Y_H.npy")

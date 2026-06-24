@@ -306,18 +306,23 @@ print(f'Length: {len(Y)}')       # should be 6144
 print(f'Any NaN: {np.isnan(Y).sum()}')  # should be 0
 "
 ```
+Optional: you can run the below command to create a csv file called `results_summary.csv` to get a summarized version of the npz files for easier plotting
+
+```bash
+uv run python Collect_outputs.py
+```
  
 ### 8. Run the Sobol analysis
 ```bash
 uv run python Analyse_sobol.py
 ```
-Prints S1 and ST indices to console, saves `sobol_indices.png` and `sobol_indices.csv`.
+Prints S1 and ST indices to console, saves `sobol_indices.png` and `sobol_indices.csv` into a directory it creates called `sobol_output`.
 
 ### 9. Run SensitivityAnalysis.py 
 ```bash
 uv run python SensitivityAnalysis.py
 ```
-creates a folder with the `sa_results` and saved convergence plots
+Saves the H-convergence plots into the `sobol_output` directory.
 
 ## Files
  
@@ -328,7 +333,7 @@ creates a folder with the `sa_results` and saved convergence plots
 | `Run_no_solara.py` | Runs one parameter combo for N seeds and saves results to `results_saltelli/run_*.npz`. Each `.npz` contains the full H timeseries, utility series, Moran's I, neighbourhood income variance, and convergence steps across all seeds. |
 | `Collect_outputs.py` | After all SLURM jobs finish, loads all `.npz` files and collapses each to a single scalar per output (mean over seeds, final timestep). Saves `Y_H.npy`, `Y_morans.npy`, `Y_nb_var.npy`, `Y_steps.npy`. Missing combos (failed jobs) are filled with the mean. |
 | `Analyse_sobol.py` | Runs SALib's Sobol estimator on the Y vectors. Saves `sobol_indices.png` (bar chart of S1 and ST per output) and `sobol_indices.csv` (full results table with confidence intervals). |
-| `SensitivityAnalysis.py`| Runs on the npz files generated through sampling to create H convergence plots. The files are saved in a results folder called `sa_results` and the files created are called `sa_H_trajectories.png`, and `sa_H_trajectories_all.png`|
+| `SensitivityAnalysis.py`| Runs on the npz files generated through sampling to create H convergence plots. The files are saved in a results folder called `sobol_output` and the files created are called `sa_H_trajectories.png`, and `sa_H_trajectories_all.png`|
  
 ## Output files (not tracked by git)
  

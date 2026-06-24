@@ -54,7 +54,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--npz-glob", default=f"{OUTPUT_FOLDER}/run_*.npz")
     ap.add_argument("--tail", type=int, default=50)
-    ap.add_argument("--results-dir", default="sobol_putput",
+    ap.add_argument("--results-dir", default="sobol_output",
                     help="Folder to save the H trajectory plot into")
     args = ap.parse_args()
 

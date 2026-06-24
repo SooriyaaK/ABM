@@ -48,7 +48,7 @@ def summarise(npz_path: str, tail: int) -> dict:
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--glob", default="output/run_*.npz", help="glob for the npz files")
+    p.add_argument("--glob", default="results_saltelli/run_*.npz", help="glob for the npz files")
     p.add_argument("--tail", type=int, default=100, help="steps to average H over (tail window)")
     p.add_argument("--out", default="results_summary.csv")
     args = p.parse_args()
