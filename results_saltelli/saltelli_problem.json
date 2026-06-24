@@ -1,0 +1,1 @@
+{"num_vars": 4, "names": ["density", "defector_frac", "neighbourhood_count", "activation_rate"], "bounds": [[0.0, 1.0], [0.0, 1.0], [5, 200], [0.0, 1.0]], "sample_scaled": true}

@@ -229,6 +229,7 @@ def save_combo_results(results: list[dict], combo_idx: int, params: dict,
         plt.savefig(fname2, dpi=150)
         plt.close()
         print(f"Saved: {fname2}")
+   
 
 
 if __name__ == "__main__":
@@ -271,6 +272,9 @@ if __name__ == "__main__":
         neighbourhood_count=params["neighbourhood_count"],
         activation_rate=params["activation_rate"],
     )
+
+    with ProcessPoolExecutor(max_workers=args.n_seeds) as executor:
+        results = list(executor.map(fn, range(args.n_seeds)))
 
     with ProcessPoolExecutor(max_workers=args.n_seeds) as executor:
         results = list(executor.map(fn, range(args.n_seeds)))
