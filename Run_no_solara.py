@@ -7,6 +7,11 @@ from Model import Schelling, SchellingScenario
 from Clustering import compute_morans_I, compute_neighbourhood_income_variance
 from scipy.stats import gaussian_kde
 
+from concurrent.futures import ProcessPoolExecutor
+import functools
+
+OUTPUT_FOLDER = "results_saltelli"
+
 
 def run_single(seed: int, max_steps: int, density: float,
                defector_frac: float, neighbourhood_count: int,
@@ -69,10 +74,9 @@ def run_single(seed: int, max_steps: int, density: float,
 
 
 def save_combo_results(results: list[dict], combo_idx: int, params: dict,
-                       job_id: str, max_steps: int, save_plots: bool = False,
-                       output_dir: str = "output"):
-    """Aggregate N seed results for one combo and save npz (+ plots if requested)."""
-    os.makedirs(output_dir, exist_ok=True)
+                       job_id: str, max_steps: int, save_plots = False):
+    """Aggregate N seed results for one combo and save plot + npz."""
+    os.makedirs(f"{OUTPUT_FOLDER}", exist_ok=True)
 
     tag = (f"job{job_id}_combo{combo_idx}"
        f"_den{params['density']}"
@@ -91,7 +95,7 @@ def save_combo_results(results: list[dict], combo_idx: int, params: dict,
 
     # Save raw data for aggregation later
     np.savez(
-        f"{output_dir}/run_{tag}.npz",
+        f"{OUTPUT_FOLDER}/run_{tag}.npz",
         all_H=all_H,
         all_median_utility=all_med,
         all_q25_utility=all_q25,
@@ -105,130 +109,126 @@ def save_combo_results(results: list[dict], combo_idx: int, params: dict,
                 params["activation_rate"]]),
             )
 
-    # Batch runs save data only — skip the (slow, numerous) per-combo plots.
-    if not save_plots:
-        print(f"Saved: {output_dir}/run_{tag}.npz")
-        return
+    if save_plots:
+        # Summary plot for this combo
+        mean_H  = all_H.mean(axis=0)
+        std_H   = all_H.std(axis=0)
+        grand_median = np.median(all_med, axis=0)
+        grand_q25    = all_q25.mean(axis=0)
+        grand_q75    = all_q75.mean(axis=0)
 
-    # Summary plot for this combo
-    mean_H  = all_H.mean(axis=0)
-    std_H   = all_H.std(axis=0)
-    grand_median = np.median(all_med, axis=0)
-    grand_q25    = all_q25.mean(axis=0)
-    grand_q75    = all_q75.mean(axis=0)
+        steps_H = np.arange(max_steps)
+        steps_u = np.arange(max_steps + 1)
+        n_maxed = (all_steps == max_steps).sum()
+        N = len(results)
 
-    steps_H = np.arange(max_steps)
-    steps_u = np.arange(max_steps + 1)
-    n_maxed = (all_steps == max_steps).sum()
-    N = len(results)
+        fig, axes = plt.subplots(1, 3, figsize=(18, 4))
+        fig.suptitle(
+            f"density={params['density']}  defector_frac={params['defector_frac']}  "
+            f"neighbourhood_count={params['neighbourhood_count']}  activation_rate={params['activation_rate']} "
+            f"(N={N} seeds)", fontsize=10,
+        )
 
-    fig, axes = plt.subplots(1, 3, figsize=(18, 4))
-    fig.suptitle(
-        f"density={params['density']}  defector_frac={params['defector_frac']}  "
-        f"neighbourhood_count={params['neighbourhood_count']}  activation_rate={params['activation_rate']} "
-        f"(N={N} seeds)", fontsize=10,
-    )
+        # H over time
+        axes[0].plot(steps_H, mean_H, color="tab:red", label="Mean H")
+        axes[0].fill_between(steps_H, mean_H - std_H, mean_H + std_H,
+                            color="tab:red", alpha=0.2, label="±1 std")
+        axes[0].axhline(0.8, color="red",    linestyle="--", linewidth=0.8, label="High (0.8)")
+        axes[0].axhline(0.4, color="orange", linestyle="--", linewidth=0.8, label="Moderate (0.4)")
+        axes[0].set_title("Segregation index H")
+        axes[0].set_xlabel("Step")
+        axes[0].set_ylabel("H")
+        axes[0].set_ylim(0, 1)
+        axes[0].legend()
 
-    # H over time
-    axes[0].plot(steps_H, mean_H, color="tab:red", label="Mean H")
-    axes[0].fill_between(steps_H, mean_H - std_H, mean_H + std_H,
-                         color="tab:red", alpha=0.2, label="±1 std")
-    axes[0].axhline(0.8, color="red",    linestyle="--", linewidth=0.8, label="High (0.8)")
-    axes[0].axhline(0.4, color="orange", linestyle="--", linewidth=0.8, label="Moderate (0.4)")
-    axes[0].set_title("Segregation index H")
-    axes[0].set_xlabel("Step")
-    axes[0].set_ylabel("H")
-    axes[0].set_ylim(0, 1)
-    axes[0].legend()
+        # Utility over time
+        axes[1].plot(steps_u, grand_median, color="tab:blue", label="Median utility")
+        axes[1].fill_between(steps_u, grand_q25, grand_q75,
+                            color="tab:blue", alpha=0.2, label="IQR (Q25–Q75)")
+        axes[1].set_title("Agent utility")
+        axes[1].set_xlabel("Step")
+        axes[1].set_ylabel("Utility")
+        axes[1].legend()
 
-    # Utility over time
-    axes[1].plot(steps_u, grand_median, color="tab:blue", label="Median utility")
-    axes[1].fill_between(steps_u, grand_q25, grand_q75,
-                         color="tab:blue", alpha=0.2, label="IQR (Q25–Q75)")
-    axes[1].set_title("Agent utility")
-    axes[1].set_xlabel("Step")
-    axes[1].set_ylabel("Utility")
-    axes[1].legend()
+        # Convergence histogram
+        bins = np.arange(all_steps.min(), all_steps.max() + 2) - 0.5
+        axes[2].hist(all_steps, bins=bins, color="tab:pink", edgecolor="white")
+        if n_maxed > 0:
+            axes[2].axvline(max_steps, color="red", linestyle="--", linewidth=1,
+                            label=f"Max steps hit ({n_maxed}x)")
+            axes[2].legend()
+        axes[2].set_title("Steps until convergence")
+        axes[2].set_xlabel("Steps")
+        axes[2].set_ylabel("Count")
+        axes[2].text(0.05, 0.95,
+                    f"Mean: {all_steps.mean():.1f}\nStd: {all_steps.std():.1f}\n"
+                    f"Min: {all_steps.min()}\nMax: {all_steps.max()}",
+                    transform=axes[2].transAxes, verticalalignment="top",
+                    fontsize=9, bbox=dict(boxstyle="round", facecolor="white", alpha=0.7))
 
-    # Convergence histogram
-    bins = np.arange(all_steps.min(), all_steps.max() + 2) - 0.5
-    axes[2].hist(all_steps, bins=bins, color="tab:pink", edgecolor="white")
-    if n_maxed > 0:
-        axes[2].axvline(max_steps, color="red", linestyle="--", linewidth=1,
-                        label=f"Max steps hit ({n_maxed}x)")
-        axes[2].legend()
-    axes[2].set_title("Steps until convergence")
-    axes[2].set_xlabel("Steps")
-    axes[2].set_ylabel("Count")
-    axes[2].text(0.05, 0.95,
-                 f"Mean: {all_steps.mean():.1f}\nStd: {all_steps.std():.1f}\n"
-                 f"Min: {all_steps.min()}\nMax: {all_steps.max()}",
-                 transform=axes[2].transAxes, verticalalignment="top",
-                 fontsize=9, bbox=dict(boxstyle="round", facecolor="white", alpha=0.7))
-
-    plt.tight_layout()
-    fname = f"{output_dir}/plot_{tag}.png"
-    plt.savefig(fname, dpi=150)
-    plt.close()
-    print(f"Saved: {fname}")
+        plt.tight_layout()
+        fname = f"{OUTPUT_FOLDER}/plot_{tag}.png"
+        plt.savefig(fname, dpi=150)
+        plt.close()
+        print(f"Saved: {fname}")
 
 
-    fig2, axes2 = plt.subplots(1, 2, figsize=(12, 4))
-    fig2.suptitle(
-        f"Clustering metrics — density={params['density']}  defector_frac={params['defector_frac']}  "
-        f"neighbourhood_count={params['neighbourhood_count']}  activation_rate={params['activation_rate']}  "
-        f"(N={N} seeds)",
-        fontsize=10,
-    )
+        fig2, axes2 = plt.subplots(1, 2, figsize=(12, 4))
+        fig2.suptitle(
+            f"Clustering metrics — density={params['density']}  defector_frac={params['defector_frac']}  "
+            f"neighbourhood_count={params['neighbourhood_count']}  activation_rate={params['activation_rate']}  "
+            f"(N={N} seeds)",
+            fontsize=10,
+        )
 
-    # Moran's I distribution across seeds
-    ax = axes2[0]
-    if len(all_morans) > 1 and all_morans.std() > 0:
-        kde = gaussian_kde(all_morans)
-        x = np.linspace(-1, 1, 200)
-        ax.plot(x, kde(x), color="tab:green", linewidth=2)
-        ax.fill_between(x, kde(x), alpha=0.3, color="tab:green")
-    ax.scatter(all_morans, np.zeros_like(all_morans) - 0.02,
-            color="tab:green", s=40, zorder=5, label="Seeds")
-    ax.axvline(all_morans.mean(), color="black", linestyle="--",
-            linewidth=1, label=f"Mean: {all_morans.mean():.3f}")
-    ax.axvline(0, color="gray", linewidth=0.8, linestyle=":")
-    ax.set_title("Moran's I (income clustering)")
-    ax.set_xlabel("Moran's I")
-    ax.set_xlim(-1, 1)
-    ax.legend()
-    ax.text(0.05, 0.95,
-            f"Mean: {all_morans.mean():.3f}\nStd: {all_morans.std():.3f}\n"
-            f"Min: {all_morans.min():.3f}\nMax: {all_morans.max():.3f}",
-            transform=ax.transAxes, verticalalignment="top",
-            fontsize=9, bbox=dict(boxstyle="round", facecolor="white", alpha=0.7))
+        # Moran's I distribution across seeds
+        ax = axes2[0]
+        if len(all_morans) > 1 and all_morans.std() > 0:
+            kde = gaussian_kde(all_morans)
+            x = np.linspace(-1, 1, 200)
+            ax.plot(x, kde(x), color="tab:green", linewidth=2)
+            ax.fill_between(x, kde(x), alpha=0.3, color="tab:green")
+        ax.scatter(all_morans, np.zeros_like(all_morans) - 0.02,
+                color="tab:green", s=40, zorder=5, label="Seeds")
+        ax.axvline(all_morans.mean(), color="black", linestyle="--",
+                linewidth=1, label=f"Mean: {all_morans.mean():.3f}")
+        ax.axvline(0, color="gray", linewidth=0.8, linestyle=":")
+        ax.set_title("Moran's I (income clustering)")
+        ax.set_xlabel("Moran's I")
+        ax.set_xlim(-1, 1)
+        ax.legend()
+        ax.text(0.05, 0.95,
+                f"Mean: {all_morans.mean():.3f}\nStd: {all_morans.std():.3f}\n"
+                f"Min: {all_morans.min():.3f}\nMax: {all_morans.max():.3f}",
+                transform=ax.transAxes, verticalalignment="top",
+                fontsize=9, bbox=dict(boxstyle="round", facecolor="white", alpha=0.7))
 
-    # Neighbourhood income variance
-    ax = axes2[1]
-    if len(all_nb_var) > 1 and all_nb_var.std() > 0:
-        kde = gaussian_kde(all_nb_var)
-        x = np.linspace(0, 1, 200)
-        ax.plot(x, kde(x), color="tab:purple", linewidth=2)
-        ax.fill_between(x, kde(x), alpha=0.3, color="tab:purple")
-    ax.scatter(all_nb_var, np.zeros_like(all_nb_var) - 0.02,
-            color="tab:purple", s=40, zorder=5, label="Seeds")
-    ax.axvline(all_nb_var.mean(), color="black", linestyle="--",
-            linewidth=1, label=f"Mean: {all_nb_var.mean():.3f}")
-    ax.set_title("Between-neighbourhood income variance (normalized)")
-    ax.set_xlabel("Variance (0=mixed, 1=segregated)")
-    ax.set_xlim(0, 1)
-    ax.legend()
-    ax.text(0.05, 0.95,
-            f"Mean: {all_nb_var.mean():.3f}\nStd: {all_nb_var.std():.3f}\n"
-            f"Min: {all_nb_var.min():.3f}\nMax: {all_nb_var.max():.3f}",
-            transform=ax.transAxes, verticalalignment="top",
-            fontsize=9, bbox=dict(boxstyle="round", facecolor="white", alpha=0.7))
+        # Neighbourhood income variance
+        ax = axes2[1]
+        if len(all_nb_var) > 1 and all_nb_var.std() > 0:
+            kde = gaussian_kde(all_nb_var)
+            x = np.linspace(0, 1, 200)
+            ax.plot(x, kde(x), color="tab:purple", linewidth=2)
+            ax.fill_between(x, kde(x), alpha=0.3, color="tab:purple")
+        ax.scatter(all_nb_var, np.zeros_like(all_nb_var) - 0.02,
+                color="tab:purple", s=40, zorder=5, label="Seeds")
+        ax.axvline(all_nb_var.mean(), color="black", linestyle="--",
+                linewidth=1, label=f"Mean: {all_nb_var.mean():.3f}")
+        ax.set_title("Between-neighbourhood income variance (normalized)")
+        ax.set_xlabel("Variance (0=mixed, 1=segregated)")
+        ax.set_xlim(0, 1)
+        ax.legend()
+        ax.text(0.05, 0.95,
+                f"Mean: {all_nb_var.mean():.3f}\nStd: {all_nb_var.std():.3f}\n"
+                f"Min: {all_nb_var.min():.3f}\nMax: {all_nb_var.max():.3f}",
+                transform=ax.transAxes, verticalalignment="top",
+                fontsize=9, bbox=dict(boxstyle="round", facecolor="white", alpha=0.7))
 
-    plt.tight_layout()
-    fname2 = f"{output_dir}/clustering_{tag}.png"
-    plt.savefig(fname2, dpi=150)
-    plt.close()
-    print(f"Saved: {fname2}")
+        plt.tight_layout()
+        fname2 = f"{OUTPUT_FOLDER}/clustering_{tag}.png"
+        plt.savefig(fname2, dpi=150)
+        plt.close()
+        print(f"Saved: {fname2}")
 
 
 if __name__ == "__main__":
@@ -238,10 +238,6 @@ if __name__ == "__main__":
     parser.add_argument("--n-seeds",   type=int, default=10)
     parser.add_argument("--max-steps", type=int, default=500)
     parser.add_argument("--params-file", type=str, default="params.json")
-    parser.add_argument("--plots", action="store_true",
-                        help="Also save per-combo PNG plots (off by default; use for test runs)")
-    parser.add_argument("--output-dir", type=str, default="output",
-                        help="Directory for npz + plot outputs (e.g. output_test for test runs)")
     args = parser.parse_args()
 
     # Load parameter combo for this task
@@ -254,17 +250,29 @@ if __name__ == "__main__":
     job_id = os.environ.get("SLURM_ARRAY_JOB_ID",
              os.environ.get("SLURM_JOB_ID", "local"))
 
-    results = []
-    for seed in range(args.n_seeds):
-        result = run_single(
-        seed=seed,
+    # results = []
+    # for seed in range(args.n_seeds):
+    #     result = run_single(
+    #     seed=seed,
+    #     max_steps=args.max_steps,
+    #     density=params["density"],
+    #     defector_frac=params["defector_frac"],
+    #     neighbourhood_count=params["neighbourhood_count"],
+    #     activation_rate=params["activation_rate"],
+    #     )
+    #     results.append(result)
+
+    # parallel seed processing;
+    fn = functools.partial(
+        run_single,
         max_steps=args.max_steps,
         density=params["density"],
         defector_frac=params["defector_frac"],
         neighbourhood_count=params["neighbourhood_count"],
         activation_rate=params["activation_rate"],
-        )
-        results.append(result)
+    )
 
-    save_combo_results(results, args.combo_idx, params, job_id, args.max_steps,
-                       save_plots=args.plots, output_dir=args.output_dir)
+    with ProcessPoolExecutor(max_workers=args.n_seeds) as executor:
+        results = list(executor.map(fn, range(args.n_seeds)))
+
+    save_combo_results(results, args.combo_idx, params, job_id, args.max_steps)
