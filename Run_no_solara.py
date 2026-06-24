@@ -276,7 +276,4 @@ if __name__ == "__main__":
     with ProcessPoolExecutor(max_workers=args.n_seeds) as executor:
         results = list(executor.map(fn, range(args.n_seeds)))
 
-    with ProcessPoolExecutor(max_workers=args.n_seeds) as executor:
-        results = list(executor.map(fn, range(args.n_seeds)))
-
     save_combo_results(results, args.combo_idx, params, job_id, args.max_steps)
