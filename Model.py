@@ -236,7 +236,7 @@ class Schelling(Model):
                     quality_weight = scenario.quality_weight,
                     cost_weight= scenario.cost_weight,
                 )
-        self.max_contribution = max(agent.income for agent in self.agents) * 0.05
+        self.max_contribution = max((agent.income for agent in self.agents), default=0) * 0.05
         self.add_neighbourhood_values()
         for i in self.neighbourhoods.values():
             i.update_cost()
