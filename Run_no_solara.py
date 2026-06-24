@@ -229,6 +229,7 @@ def save_combo_results(results: list[dict], combo_idx: int, params: dict,
         plt.savefig(fname2, dpi=150)
         plt.close()
         print(f"Saved: {fname2}")
+   
 
 
 if __name__ == "__main__":
@@ -238,6 +239,10 @@ if __name__ == "__main__":
     parser.add_argument("--n-seeds",   type=int, default=10)
     parser.add_argument("--max-steps", type=int, default=500)
     parser.add_argument("--params-file", type=str, default="params.json")
+    parser.add_argument("--plots", action="store_true",
+                        help="Also save per-combo PNG plots (off by default; use for test runs)")
+    parser.add_argument("--output-dir", type=str, default="output",
+                        help="Directory for npz + plot outputs (e.g. output_test for test runs)")
     args = parser.parse_args()
 
     # Load parameter combo for this task
@@ -275,4 +280,5 @@ if __name__ == "__main__":
     with ProcessPoolExecutor(max_workers=args.n_seeds) as executor:
         results = list(executor.map(fn, range(args.n_seeds)))
 
-    save_combo_results(results, args.combo_idx, params, job_id, args.max_steps)
+    save_combo_results(results, args.combo_idx, params, job_id, args.max_steps,
+                       save_plots=args.plots, output_dir=args.output_dir)

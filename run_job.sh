@@ -4,7 +4,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=4G
-#SBATCH --array=0-5999%200                        # 10000 combos (10x10x10x10)
+#SBATCH --array=0-9999%200                        # 10000 combos (10x10x10x10)
 #SBATCH --output=output/schelling_%A_%a.out       # %A = array job ID, %a = task index
 
 mkdir -p output
@@ -18,4 +18,4 @@ uv run python /gpfs/home4/scur0391/projects/ABM/Run_no_solara.py \
     --combo-idx $SLURM_ARRAY_TASK_ID \
     --n-seeds 10 \
     --max-steps 500 \
-    --params-file /path/to/results_saltelli/saltelli_params.json
+    --params-file /gpfs/home4/scur0391/projects/ABM/params.json
