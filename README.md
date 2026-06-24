@@ -324,6 +324,12 @@ uv run python SensitivityAnalysis.py
 ```
 Saves the H-convergence plots into the `sobol_output` directory.
 
+### 10. Run Heatmap.py
+```bash
+uv run python Heatmap.py
+```
+Saves scatter plots and heatmaps into `sobol_output` directory. The parameters these plots are created with hardcoded as the parameters with the highest effects. 
+
 ## Files
  
 | File | Description |
@@ -334,6 +340,7 @@ Saves the H-convergence plots into the `sobol_output` directory.
 | `Collect_outputs.py` | After all SLURM jobs finish, loads all `.npz` files and collapses each to a single scalar per output (mean over seeds, final timestep). Saves `Y_H.npy`, `Y_morans.npy`, `Y_nb_var.npy`, `Y_steps.npy`. Missing combos (failed jobs) are filled with the mean. |
 | `Analyse_sobol.py` | Runs SALib's Sobol estimator on the Y vectors. Saves `sobol_indices.png` (bar chart of S1 and ST per output) and `sobol_indices.csv` (full results table with confidence intervals). |
 | `SensitivityAnalysis.py`| Runs on the npz files generated through sampling to create H convergence plots. The files are saved in a results folder called `sobol_output` and the files created are called `sa_H_trajectories.png`, and `sa_H_trajectories_all.png`|
+| `Heatmap.py`| Runs on `results_summary.csv` to create heatmaps and scatter plots of each convergence metrics (H-convergence, nb variance, and morans I). The files are saved in a results folder called `sobol_output` and the files created are called `sa_heatmap.png`, `sa_scatter.png`, `sa_heatmap_morans.png`, `sa_scatter_morans.png`, `sa_heatmap_nb_variance.png`, and `sa_scatter_nb_variance.png`|
  
 ## Output files (not tracked by git)
  

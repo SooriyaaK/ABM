@@ -14,7 +14,7 @@ problem = {
     'num_vars': 4, # number of params we are varying
     'names': ['density', 'defector_frac', 'neighbourhood_count', 'activation_rate'], # labels for plots
     'bounds': [ # samples uniformly between these bounds
-        [0.0,  1.0],   # density
+        [0.05,  1.0],   # density
         [0.0,  1.0],   # defector_frac
         [5,   200],     # neighbourhood_count (treat as continuous, round in model)
         [0.0,  1.0],   # activation_rate
