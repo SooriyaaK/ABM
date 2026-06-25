@@ -44,7 +44,7 @@ print(f"Generated {len(combos)} combos")  # → 10,000
 
 # Also save the problem + raw param_values for analysis later
 
-# shape (6000, 4) numpy array — the actual numbers SALib generated
+# shape (6000, 4) numpy array (the actual numbers SALib generated)
 # needed later so sobol.analyze() knows the exact sample structure
 np.save("results_saltelli/saltelli_problem_X.npy", param_values) # raw array; X for 'input'
 
