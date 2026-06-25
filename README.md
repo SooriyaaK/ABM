@@ -306,7 +306,12 @@ print(f'Length: {len(Y)}')       # should be 6144
 print(f'Any NaN: {np.isnan(Y).sum()}')  # should be 0
 "
 ```
- 
+Optional to generate heatmap plots: you can run the below command to create a csv file called `results_summary.csv` to get a summarized version of the npz files for easier plotting
+
+```bash
+uv run python Aggregate.py
+```
+
 ### 8. Run the Sobol analysis
 ```bash
 uv run python Analyse_sobol.py
