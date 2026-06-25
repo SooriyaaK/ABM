@@ -306,11 +306,7 @@ print(f'Length: {len(Y)}')       # should be 6144
 print(f'Any NaN: {np.isnan(Y).sum()}')  # should be 0
 "
 ```
-Optional: you can run the below command to create a csv file called `results_summary.csv` to get a summarized version of the npz files for easier plotting
-
-```bash
-uv run python Collect_outputs.py
-```
+This also creates a csv file called `results_summary.csv` to get a summarized version of the npz files for easier plotting.
  
 ### 8. Run the Sobol analysis
 ```bash
