@@ -46,7 +46,8 @@ def analyse_npz(npz_glob: str, results_dir: str, tail: int = 50):
     ax2.set_title("Mean segregation trajectory over all parameter combinations")
     ax2.legend()
     plt.tight_layout()
-    plt.savefig(f"{results_dir}/sa_H_trajectories_all.png", dpi=150); plt.close()
+    plt.savefig(f"{results_dir}/sa_H_trajectories_all.png", dpi=150)
+    plt.close()
 
 
 if __name__ == "__main__":
