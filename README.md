@@ -35,6 +35,8 @@ After all these steps your environment will be ready with all the packages. Afte
 uv run solara run App.py
 ```
 
+----
+
 ### Mixed logit
 
 The model uses a mixed logit: every agent draws its own price-sensitivity once from a lognormal distribution, so two agents with the same income can still react differently to the same prices. This price-sensitivity controls how strongly an agent reacts when a neighbourhood costs more than it can comfortably afford: a high value means the agent strongly avoids overpriced areas, while a low value means it tolerates them. Drawing it from a lognormal distribution keeps the value positive and gives a realistic spread, with most agents near a typical sensitivity and a few much more reactive. The spread of this distribution is a single dial: set it to zero and everyone behaves identically, turn it up and the population becomes more varied.
@@ -73,14 +75,14 @@ This module implements the **income segregation metric** and the tools needed to
 
 #### What it measures
 
-We compute the **Multigroup Entropy Index** H (https://www.researchgate.net/publication/266452850_The_Multigroup_Entropy_Index_Also_Known_as_Theil's_H_or_the_Information_Theory_Index), which measures how strongly agents are spatially sorted by **income group** across neighbourhoods:
+We compute the **Multigroup Entropy Index** $H$ (https://www.researchgate.net/publication/266452850_The_Multigroup_Entropy_Index_Also_Known_as_Theil's_H_or_the_Information_Theory_Index), which measures how strongly agents are spatially sorted by **income group** across neighbourhoods:
 
-- H = 0 → no income segregation (every neighbourhood has the same income-group distribution as the whole population).
-- H = 1 → complete segregation (each neighbourhood contains only one income group).
+- $H = 0$ → no income segregation (every neighbourhood has the same income-group distribution as the whole population).
+- $H = 1$ → complete segregation (each neighbourhood contains only one income group).
 
-H is computed at each time step to track how the segregation pattern evolves and to decide when the system has converged.
+$H$ is computed at each time step to track how the segregation pattern evolves and to decide when the system has converged.
 
-> **Note:** H is computed over the three **discrete income groups** (low = 1000, middle = 2000, high = 4000), not over a continuous income rank or percentile. 
+> **Note:** $H$ is computed over the three **discrete income groups** (low = 1000, middle = 2000, high = 4000), not over a continuous income rank or percentile.
 
 ---
 
@@ -88,23 +90,23 @@ H is computed at each time step to track how the segregation pattern evolves and
 
 Given a list of `SchellingAgent` objects and `Neighbourhood` objects, the module:
 
-1. **Computes global entropy E_T** (`f_overall_entropy`) — the Shannon entropy of the income-group distribution across *all* agents:
+1. **Computes global entropy $E_T$** (`f_overall_entropy`) — the Shannon entropy of the income-group distribution across *all* agents:
 
-   E_T = -sum_g  p_g * log2(p_g)
+$$E_T = -\sum_{g} p_g \log_2 p_g$$
 
-   where p_g is the fraction of all agents belonging to income group g in {1000, 2000, 4000}.
+where $p_g$ is the fraction of all agents belonging to income group $g \in \{1000, 2000, 4000\}$.
 
-2. **Computes neighbourhood entropy E_n** (`f_neighbourhood_entropy`) — the same Shannon entropy, but computed only over the agents residing in neighbourhood n:
+2. **Computes neighbourhood entropy $E_n$** (`f_neighbourhood_entropy`) — the same Shannon entropy, but computed only over the agents residing in neighbourhood $n$:
 
-   E_n = -sum_g  p_ng * log2(p_ng)
+$$E_n = -\sum_{g} p_{ng} \log_2 p_{ng}$$
 
-   where p_ng is the fraction of agents in neighbourhood n belonging to group g.
+where $p_{ng}$ is the fraction of agents in neighbourhood $n$ belonging to group $g$.
 
-3. **Computes the Multigroup Entropy Index H** (`compute_H`) — a weighted average of how much each neighbourhood's entropy deviates from the global entropy:
+3. **Computes the Multigroup Entropy Index $H$** (`compute_H`) — a weighted average of how much each neighbourhood's entropy deviates from the global entropy:
 
-   H = sum_n  (t_n / T) * (E_T - E_n) / E_T
+$$H = \sum_{n} \frac{t_n}{T} \cdot \frac{E_T - E_n}{E_T}$$
 
-   where t_n is the number of agents in neighbourhood n and T is the total number of agents. Empty neighbourhoods are skipped. If E_T = 0 (all agents belong to the same income group), H is defined as 0.
+where $t_n$ is the number of agents in neighbourhood $n$ and $T$ is the total number of agents. Empty neighbourhoods are skipped. If $E_T = 0$ (all agents belong to the same income group), $H$ is defined as $0$.
 
 ---
 
@@ -117,12 +119,12 @@ H = compute_H(list(self.neighbourhoods.values()), list(self.agents))
 self.H_history.append(H)
 ```
 
-The model then checks a **convergence criterion**. The simulation is declared converged and halted early if the following hold:
+The model then checks a **convergence criterion**. The simulation is declared converged and halted early if *all* of the following hold:
 
 - At least `min_step_count = 150` steps have been completed.
-- The range of H over the last 50 steps is below epsilon = 0.01:
+- The range of $H$ over the last 50 steps is below $\varepsilon = 0.01$:
 
-  max(H_{t-49}, ..., H_t) - min(H_{t-49}, ..., H_t) < epsilon
+$$\max(H_{t-49},\ \ldots,\ H_t) - \min(H_{t-49},\ \ldots,\ H_t) < \varepsilon$$
 
 If this criterion is not met, the simulation continues until `max_steps = 500` is reached.
 
